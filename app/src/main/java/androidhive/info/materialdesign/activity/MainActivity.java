@@ -2,6 +2,7 @@ package androidhive.info.materialdesign.activity;
 
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
     private FragmentDrawer drawerFragment;
     private SharedPreferences.Editor editor;
     public static final String MY_PREFS = "ScreenHeight";
+    //private MaterialMenuDrawable materialMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +38,14 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
-        getSupportActionBar().show();
+       // getSupportActionBar().setTitle("");
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
+        //getSupportActionBar().show();
+        mToolbar.setNavigationIcon(R.drawable.ic_menu_black);
+       // materialMenu = new MaterialMenuDrawable(this, Color.WHITE, Stroke.THIN);
 
         //To save Screen, Actionbar and Statusbar Height
         editor = getSharedPreferences(MY_PREFS, MODE_PRIVATE).edit();
