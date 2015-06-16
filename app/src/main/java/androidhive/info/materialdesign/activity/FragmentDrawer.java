@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -70,6 +71,7 @@ public class FragmentDrawer extends Fragment {
                              Bundle savedInstanceState) {
         // Inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        //mDrawerLayout.isDrawerOpen(Gravity.RIGHT);
         recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
 
         adapter = new NavigationDrawerAdapter(getActivity(), getData());
