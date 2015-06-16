@@ -30,29 +30,14 @@ public class TestActionBar extends Activity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.filter);
+            setContentView(R.layout.plan_your_trip);
 
            // toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
            // setSupportActionBar(toolbar);
            // Setting toolbar as the ActionBar with setSupportActionBar() call
             // Setup the new range seek bar
 // Setup the new range seek bar
-            RangeSeekBar<Integer> rangeSeekBar = new RangeSeekBar<Integer>(this);
-            // Set the range
-            rangeSeekBar.setRangeValues(12000, 110000);
-            rangeSeekBar.setSelectedMinValue(12000);
-            rangeSeekBar.setSelectedMaxValue(110000);
-            rangeSeekBar.setNotifyWhileDragging(true);
-            // Add to layout
-            LinearLayout layout = (LinearLayout) findViewById(R.id.seekbar_placeholder);
-            layout.addView(rangeSeekBar);
 
-            rangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
-                @Override
-                public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Integer minValue, Integer maxValue) {
-                    Log.i("SeekBar", "Min :" + minValue + " Max :" + maxValue);
-                }
-            });
 
         }
 
