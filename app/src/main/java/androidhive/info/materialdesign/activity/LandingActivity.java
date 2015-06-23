@@ -5,19 +5,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -31,11 +24,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidhive.info.materialdesign.adapter.LandingAdapter;
-import androidhive.info.materialdesign.model.Landing;
+import androidhive.info.materialdesign.model.LandingModel;
 import androidhive.info.materialdesign.volley.AppController;
 import androidhive.info.materialdesign.R;
 
@@ -52,7 +43,7 @@ public class LandingActivity extends Fragment {
 
     private ListView listView;
     private LandingAdapter adapter;
-    private List<androidhive.info.materialdesign.model.Landing> landingList = new ArrayList<androidhive.info.materialdesign.model.Landing>();
+    private List<LandingModel> landingList = new ArrayList<LandingModel>();
     private AutoCompleteTextView searchText;
     private ArrayList<String> region_;
     private ArrayAdapter<String> region_adapter;
@@ -197,7 +188,7 @@ public class LandingActivity extends Fragment {
                     for (int i = 0; i < response.getJSONArray("payload").length(); i++) {
 
                        JSONObject jsonarr = response.getJSONArray("payload").getJSONObject(i);
-                       androidhive.info.materialdesign.model.Landing landing_model = new androidhive.info.materialdesign.model.Landing();
+                       LandingModel landing_model = new LandingModel();
 
                      if(jsonarr.getString("Popular").equalsIgnoreCase("1")) {
                            landing_model.setRegion_Id(jsonarr.getInt("Region_Id"));

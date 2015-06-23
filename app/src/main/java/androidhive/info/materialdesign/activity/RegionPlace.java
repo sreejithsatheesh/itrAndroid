@@ -1,11 +1,10 @@
 package androidhive.info.materialdesign.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,11 +12,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -26,18 +25,17 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import androidhive.info.materialdesign.R;
-import androidhive.info.materialdesign.adapter.LandingAdapter;
 import androidhive.info.materialdesign.adapter.RegionPlaceAdapter;
-import androidhive.info.materialdesign.model.Landing;
+import androidhive.info.materialdesign.dragsort.DragAndSort;
 import androidhive.info.materialdesign.model.RegionPlaceModel;
 import androidhive.info.materialdesign.volley.AppController;
 
@@ -58,6 +56,7 @@ public class RegionPlace extends ActionBarActivity {
     int toggle =0;
     private Button filter_btn;
     private LinearLayout filter_details;
+    private Bundle bundle;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +154,7 @@ public class RegionPlace extends ActionBarActivity {
         });
 
         //Bundle to read value from another activity
-        Bundle bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
         //Print
         System.out.println("RegionID: " + bundle.getInt("RegionID"));
         url= url + bundle.getInt("RegionID");
@@ -168,6 +167,14 @@ public class RegionPlace extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.listView);
         adapter = new RegionPlaceAdapter(this, regionList);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+
+            }
+        });
 
         JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,
                 url, new Response.Listener<JSONObject>() {
@@ -202,11 +209,27 @@ public class RegionPlace extends ActionBarActivity {
 
 
                            Iterator<?> destinationKeys = jsonobj.getJSONObject("Destination").keys();
+                           int i = 0;
+                           String destinationKeyValue = null;
+                           String destinationValue = null;
                            while(destinationKeys.hasNext() ) {
                                String destinationKey = (String) destinationKeys.next();
+                               if(i == 0)
+                               {
+                                   destinationKeyValue = destinationKey;
+                                   destinationValue = jsonobj.getJSONObject("Destination").getString(destinationKey).toString();
+                                   i++;
+                               }
+                               else{
+                                   destinationKeyValue = destinationKeyValue + "," + destinationKey;
+                                   destinationValue = destinationValue + "," +jsonobj.getJSONObject("Destination").getString(destinationKey).toString();
+                               }
                                //Log.i("KeyDestination", "" + jsonobj.getJSONObject("Destination").getString(destinationKey));
-                               region_adp.setDestination(region_adp.getDuration_Day()+ "D & " + (region_adp.getDuration_Day()-1) + "N "+jsonobj.getJSONObject("Destination").getString(destinationKey));
+                               region_adp.setDestination_Key(destinationKeyValue);
+                               region_adp.setDestination(destinationValue);
                            }
+                           Log.i("Key_DestinationValue", "" + destinationKeyValue);
+                           Log.i("Key_Destination", "" + destinationValue);
                            //region_adp.setDestination("Testing");
                            Log.d("Discount", "" +region_adp.getDiscount());
                            regionList.add(region_adp);

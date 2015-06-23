@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="@dimen/item_height"
+  android:orientation="horizontal">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+
+        android:id="@+id/linearLayout4"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+
+          android:id="@id/drag_handle"
+          android:background="@android:color/holo_blue_light"
+          android:layout_width="match_parent"
+          android:layout_height="70dp"
+          android:layout_gravity="center"
+          android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="A"
+            android:id="@+id/destination_imageText"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+      </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+    android:id="@+id/destination_name"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/item_height"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:gravity="center_vertical"
+    android:paddingLeft="8dp"
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@+id/linearLayout4"
+        android:layout_toLeftOf="@+id/linearLayout5"
+        android:layout_toStartOf="@+id/linearLayout5" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/linearLayout5"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical">
+
+        <Button
+            android:layout_width="49dp"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:id="@+id/minus_btn" />
+
+        <TextView
+            android:layout_width="33dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="2"
+            android:id="@+id/days"
+            android:gravity="center" />
+
+        <Button
+            android:layout_width="51dp"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:id="@+id/plus_btn" />
+    </LinearLayout>
+</RelativeLayout>

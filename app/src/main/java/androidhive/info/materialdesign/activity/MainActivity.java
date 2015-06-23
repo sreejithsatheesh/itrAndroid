@@ -1,6 +1,5 @@
 package androidhive.info.materialdesign.activity;
 
-
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -13,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +27,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
+    private DrawerLayout mDrawerlayout;
     private SharedPreferences.Editor editor;
     public static final String MY_PREFS = "ScreenHeight";
     //private MaterialMenuDrawable materialMenu;
@@ -125,7 +126,6 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml
-
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement

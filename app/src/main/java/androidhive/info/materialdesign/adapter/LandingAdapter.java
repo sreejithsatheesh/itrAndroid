@@ -11,25 +11,24 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
  
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import androidhive.info.materialdesign.R;
-import androidhive.info.materialdesign.model.Landing;
+import androidhive.info.materialdesign.model.LandingModel;
 import androidhive.info.materialdesign.volley.AppController;
 
 public class LandingAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<Landing> LandingItems;
+    private List<LandingModel> LandingItems;
     public static final String MY_PREFS = "ScreenHeight";
     private  int _screen_height;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
  
-    public LandingAdapter(Activity activity, List<Landing> LandingItems) {
+    public LandingAdapter(Activity activity, List<LandingModel> LandingItems) {
         this.activity = activity;
         this.LandingItems = LandingItems;
     }
@@ -76,7 +75,7 @@ public class LandingAdapter extends BaseAdapter {
         frame_lay.setLayoutParams(lp);
 
         // getting data for the row
-        Landing m = LandingItems.get(position);
+        LandingModel m = LandingItems.get(position);
 
         // thumbnail image
         thumbNail.setImageUrl("http://stage.itraveller.com/backend/images/destinations/" + m.getRegion_Name().toLowerCase() + ".jpg" , imageLoader);

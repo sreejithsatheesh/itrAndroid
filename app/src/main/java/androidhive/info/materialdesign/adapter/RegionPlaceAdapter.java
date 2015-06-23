@@ -2,7 +2,9 @@ package androidhive.info.materialdesign.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidhive.info.materialdesign.R;
-import androidhive.info.materialdesign.model.Landing;
+import androidhive.info.materialdesign.dragsort.DragAndSort;
 import androidhive.info.materialdesign.model.RegionPlaceModel;
 import androidhive.info.materialdesign.volley.AppController;
 
@@ -60,7 +62,7 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             if (inflater == null)
                 inflater = (LayoutInflater) activity
@@ -100,6 +102,24 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
             title.setText(m.getTitle());
             destination.setText(m.getDestination());
             discountRs.setText("Rs: "+m.getDiscount());
+            final Bundle bundle = activity.getIntent().getExtras();
+            //Print
+            //System.out.println("RegionID: " + bundle.getInt("RegionID"));
+            // Listen for ListView Item Click
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    final Intent i = new Intent(activity, DragAndSort.class);
+                    i.putExtra("Image", Places.get(position).getImage());
+                    i.putExtra("Duration", Places.get(position).getDuration_Day());
+                    i.putExtra("Title", Places.get(position).getTitle());
+                    i.putExtra("Destinations", Places.get(position).getDestination());
+                    i.putExtra("ArrivalPort", Places.get(position).getArrival_Port_Id());
+                    i.putExtra("DeparturePort", Places.get(position).getDeparture_Port_Id());
+                    i.putExtra("RegionID", bundle.getInt("RegionID"));
+                    activity.startActivity(i);
+                }
+            });
 
             return convertView;
         }

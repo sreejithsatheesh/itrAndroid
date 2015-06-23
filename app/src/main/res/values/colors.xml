@@ -17,4 +17,7 @@
     <color name="white">#FFFFFF</color>
     <color name="filterbtn">#00E5FF</color>
     <color name="filterButtonBG">#E0E0E0</color>
+
+    <color name="ColorPrimaryButton">#FF5722</color>
+    <color name="ColorPrimaryDarkButton">#E64A19</color>
 </resources>
