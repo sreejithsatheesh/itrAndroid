@@ -23,9 +23,9 @@ import androidhive.info.materialdesign.volley.AppController;
 public class AirportAdapter extends BaseAdapter implements Filterable{
     private Activity activity;
     private LayoutInflater inflater;
-    private List<AirportModel> AirportItems;
+    public static List<AirportModel> AirportItems;
     public  List<AirportModel> FilterAirportItems;
-    public static List<AirportModel> airportList;
+    public List<AirportModel> airportList;
     private  int _screen_height;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
@@ -91,8 +91,6 @@ public class AirportAdapter extends BaseAdapter implements Filterable{
 
                             AirportModel am = new AirportModel();
                             am.setName(FilterAirportItems.get(i).getName());
-
-
                             airportList.add(am);
                         }
                     }

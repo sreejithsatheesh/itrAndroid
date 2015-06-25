@@ -2,7 +2,6 @@ package androidhive.info.materialdesign.adapter;
 
         import android.app.Activity;
         import android.content.Context;
-        import android.content.Intent;
         import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
@@ -18,14 +17,13 @@ package androidhive.info.materialdesign.adapter;
         import java.util.List;
 
         import androidhive.info.materialdesign.R;
-        import androidhive.info.materialdesign.dragsort.DragAndSort;
         import androidhive.info.materialdesign.model.PortAndLocModel;
         import androidhive.info.materialdesign.volley.AppController;
 
 public class PortAndLocAdapter extends BaseAdapter implements Filterable {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<PortAndLocModel> PortandLocItems;
+    public static List<PortAndLocModel> PortandLocItems;
     private List<PortAndLocModel> FilterPortandLocItems;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
@@ -68,7 +66,7 @@ public class PortAndLocAdapter extends BaseAdapter implements Filterable {
         PortAndLocModel m = PortandLocItems.get(position);
 
         // title
-        title.setText(m.getDestination_Name());
+        title.setText(m.getValue());
        /* convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -109,11 +107,11 @@ public class PortAndLocAdapter extends BaseAdapter implements Filterable {
                     List<PortAndLocModel> portandLocList = new ArrayList<PortAndLocModel>();
 
                     for (int i = 0; i < FilterPortandLocItems.size(); i++) {
-                        if ((FilterPortandLocItems.get(i).getDestination_Name().toUpperCase())
+                        if ((FilterPortandLocItems.get(i).getValue().toUpperCase())
                                 .contains(constraint.toString().toUpperCase())) {
 
                             PortAndLocModel am = new PortAndLocModel();
-                            am.setDestination_Name(FilterPortandLocItems.get(i).getDestination_Name());
+                            am.setValue(FilterPortandLocItems.get(i).getValue());
 
 
                             portandLocList.add(am);

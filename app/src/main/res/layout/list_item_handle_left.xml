@@ -11,26 +11,24 @@
         android:layout_height="match_parent"
 
         android:id="@+id/linearLayout4"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
 
         <RelativeLayout
 
           android:id="@id/drag_handle"
           android:background="@android:color/holo_blue_light"
           android:layout_width="match_parent"
-          android:layout_height="70dp"
-          android:layout_gravity="center"
-          android:gravity="center">
+          android:layout_height="match_parent"
+            android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="A"
-            android:id="@+id/destination_imageText"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:id="@+id/destination_imageText" />
       </RelativeLayout>
     </LinearLayout>
 
@@ -43,21 +41,21 @@
     android:paddingLeft="8dp"
         android:layout_gravity="center"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp"
         android:layout_toRightOf="@+id/linearLayout4"
         android:layout_toLeftOf="@+id/linearLayout5"
-        android:layout_toStartOf="@+id/linearLayout5" />
+        android:layout_toStartOf="@+id/linearLayout5"
+        android:layout_alignParentBottom="true" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:id="@+id/linearLayout5"
+        android:gravity="center_vertical"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/linearLayout5"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical">
+        android:layout_alignParentBottom="true">
 
         <Button
             android:layout_width="49dp"

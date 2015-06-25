@@ -217,12 +217,15 @@ public class RegionPlace extends ActionBarActivity {
                                if(i == 0)
                                {
                                    destinationKeyValue = destinationKey;
-                                   destinationValue = jsonobj.getJSONObject("Destination").getString(destinationKey).toString();
+                                   JSONObject destobj = jsonobj.getJSONObject("Destination").getJSONObject(destinationKey);
+                                   destinationValue = destobj.getString("name");
+
                                    i++;
                                }
                                else{
                                    destinationKeyValue = destinationKeyValue + "," + destinationKey;
-                                   destinationValue = destinationValue + "," +jsonobj.getJSONObject("Destination").getString(destinationKey).toString();
+                                   JSONObject destobj = jsonobj.getJSONObject("Destination").getJSONObject(destinationKey);
+                                   destinationValue = destinationValue + "," + destobj.getString("name").toString();
                                }
                                //Log.i("KeyDestination", "" + jsonobj.getJSONObject("Destination").getString(destinationKey));
                                region_adp.setDestination_Key(destinationKeyValue);

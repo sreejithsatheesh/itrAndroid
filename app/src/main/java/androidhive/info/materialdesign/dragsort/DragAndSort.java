@@ -1,31 +1,23 @@
 package androidhive.info.materialdesign.dragsort;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.android.volley.Request;
@@ -42,12 +34,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import androidhive.info.materialdesign.R;
-import androidhive.info.materialdesign.activity.RegionPlace;
 import androidhive.info.materialdesign.adapter.AirportAdapter;
 import androidhive.info.materialdesign.adapter.PortAndLocAdapter;
 import androidhive.info.materialdesign.adapter.RearrangePlaceAdapter;
 import androidhive.info.materialdesign.model.AirportModel;
-import androidhive.info.materialdesign.model.LandingModel;
 import androidhive.info.materialdesign.model.PortAndLocModel;
 import androidhive.info.materialdesign.model.RearrangePlaceModel;
 import androidhive.info.materialdesign.volley.AppController;
@@ -77,6 +67,12 @@ public class DragAndSort extends ActionBarActivity
     private int check_bit = 0;
     private ScrollView scroll;
 
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        Log.i("Dp to px",""+px);
+        return px;
+    }
 
 
    private DragSortListView.DropListener onDrop = new DragSortListView.DropListener()
@@ -100,7 +96,7 @@ public class DragAndSort extends ActionBarActivity
         public void remove(int which)
         {
             adapter_rearrange.remove(adapter_rearrange.getList().get(which));
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()*70 );
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()* (dpToPx(70)));
             listView.setLayoutParams(lp);
         }
     };
@@ -178,7 +174,7 @@ public class DragAndSort extends ActionBarActivity
             }
         });
 
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()*70 );
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()* (dpToPx(70)) );
         listView.setLayoutParams(lp);
 
         adapter_rearrange.notifyDataSetChanged();
@@ -282,26 +278,26 @@ public class DragAndSort extends ActionBarActivity
                 //view.getId();
                 Log.i("Hellon","Test "+check_bit);
              if(check_bit == 1) {
-                 from_home.setText(airportList.get(position).getName());
-                 to_home.setText(airportList.get(position).getName());
+                 from_home.setText(AirportAdapter.AirportItems.get(position).getName());
+                 to_home.setText(AirportAdapter.AirportItems.get(position).getName());
              }
                 else if(check_bit == 2)
              {
-                 from_travel.setText(portandLocList.get(position).getDestination_Name());
-                 to_travel.setText(portandLocList.get(position).getDestination_Name());
+                 from_travel.setText(PortAndLocAdapter.PortandLocItems.get(position).getValue());
+                 to_travel.setText(PortAndLocAdapter.PortandLocItems.get(position).getValue());
              }
                 else if(check_bit == 3)
              {
-                 to_travel.setText(portandLocList.get(position).getDestination_Name());
+                 to_travel.setText(PortAndLocAdapter.PortandLocItems.get(position).getValue());
              }
                 else if(check_bit == 4)
              {
-                 to_home.setText(airportList.get(position).getName());
+                 to_home.setText(AirportAdapter.AirportItems.get(position).getName());
              }
                 else if(check_bit == 5){
 
                  RearrangePlaceModel m = new RearrangePlaceModel();
-                 m.setPlace(portandLocList.get(position).getDestination_Name());
+                 m.setPlace(portandLocList.get(position).getValue());
                  m.setNights("0");
                  rearrangeList.add(m);
                  adapter_rearrange.notifyDataSetChanged();
@@ -363,7 +359,9 @@ public class DragAndSort extends ActionBarActivity
                         {
                             PortAndLocModel portandloc_model = new PortAndLocModel();
 
-                            portandloc_model.setDestination_Id(jsonarr.getInt("Destination_Id"));
+                            portandloc_model.setValue(jsonarr.getString("value"));
+                            portandloc_model.setKey(jsonarr.getInt("key"));
+                            /*portandloc_model.setDestination_Id(jsonarr.getInt("Destination_Id"));
                             portandloc_model.setDestination_Name(jsonarr.getString("Destination_Name"));
                             portandloc_model.setDistrict(jsonarr.getString("District"));
                             portandloc_model.setState(jsonarr.getString("State"));
@@ -385,7 +383,7 @@ public class DragAndSort extends ActionBarActivity
                             portandloc_model.setWinter_Temp(jsonarr.getString("Winter_Temp"));
                             portandloc_model.setRegion(jsonarr.getInt("Region"));
                             portandloc_model.setDate(jsonarr.getString("Date"));
-                            portandloc_model.setAdmin_Id(jsonarr.getString("admin_Id"));
+                            portandloc_model.setAdmin_Id(jsonarr.getString("admin_Id"));*/
 
                             portandLocList.add(portandloc_model);
 
