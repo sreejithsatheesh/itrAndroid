@@ -4,102 +4,30 @@ package androidhive.info.materialdesign.model;
  * Created by VNK on 6/17/2015.
  */
 public class AirportModel {
-    int Id,Status;
-    String Code,Name,Lat,Long,Timezone,City,Country,Country_Code;
+
+    String value, key;
 
     public AirportModel() {
     }
 
-    public AirportModel(int id, int status, String code, String name, String lat, String aLong, String timezone, String city, String country, String country_Code) {
-        Id = id;
-        Status = status;
-        Code = code;
-        Name = name;
-        Lat = lat;
-        Long = aLong;
-        Timezone = timezone;
-        City = city;
-        Country = country;
-        Country_Code = country_Code;
+    public AirportModel(String key, String value) {
+        this.key = key;
+        this.value = value;
     }
 
-    public int getId() {
-        return Id;
+    public String getKey() {
+        return key;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public int getStatus() {
-        return Status;
+    public String getValue() {
+        return value;
     }
 
-    public void setStatus(int status) {
-        Status = status;
-    }
-
-    public String getCode() {
-        return Code;
-    }
-
-    public void setCode(String code) {
-        Code = code;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getLat() {
-        return Lat;
-    }
-
-    public void setLat(String lat) {
-        Lat = lat;
-    }
-
-    public String getLong() {
-        return Long;
-    }
-
-    public void setLong(String aLong) {
-        Long = aLong;
-    }
-
-    public String getTimezone() {
-        return Timezone;
-    }
-
-    public void setTimezone(String timezone) {
-        Timezone = timezone;
-    }
-
-    public String getCity() {
-        return City;
-    }
-
-    public void setCity(String city) {
-        City = city;
-    }
-
-    public String getCountry() {
-        return Country;
-    }
-
-    public void setCountry(String country) {
-        Country = country;
-    }
-
-    public String getCountry_Code() {
-        return Country_Code;
-    }
-
-    public void setCountry_Code(String country_Code) {
-        Country_Code = country_Code;
+    public void setValue(String value) {
+        this.value = value;
     }
 }

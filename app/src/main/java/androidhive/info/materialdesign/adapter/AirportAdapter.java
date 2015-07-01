@@ -68,7 +68,7 @@ public class AirportAdapter extends BaseAdapter implements Filterable{
         AirportModel m = AirportItems.get(position);
 
         // title
-        title.setText(m.getName());
+        title.setText(m.getValue());
  
         return convertView;
     }
@@ -86,11 +86,11 @@ public class AirportAdapter extends BaseAdapter implements Filterable{
                     airportList = new ArrayList<AirportModel>();
 
                     for (int i = 0; i < FilterAirportItems.size(); i++) {
-                        if ((FilterAirportItems.get(i).getName().toUpperCase())
+                        if ((FilterAirportItems.get(i).getValue().toUpperCase())
                                 .contains(constraint.toString().toUpperCase())) {
 
                             AirportModel am = new AirportModel();
-                            am.setName(FilterAirportItems.get(i).getName());
+                            am.setValue(FilterAirportItems.get(i).getValue());
                             airportList.add(am);
                         }
                     }

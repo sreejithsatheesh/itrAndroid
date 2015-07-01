@@ -29,8 +29,11 @@
             android:name=".dragsort.DragAndSort">
         </activity>
         <activity
-            android:name=".dragsort.AirportList">
+            android:name=".activity.PlanTrip">
         </activity>
+        <activity
+        android:name=".dragsort.AirportList">
+    </activity>
     </application>
 
 </manifest>
