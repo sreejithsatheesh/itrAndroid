@@ -18,6 +18,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Filter;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -25,16 +26,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import androidhive.info.materialdesign.adapter.LandingAdapter;
 import androidhive.info.materialdesign.model.LandingModel;
+import androidhive.info.materialdesign.model.SearchBarModel;
 import androidhive.info.materialdesign.volley.AppController;
 import androidhive.info.materialdesign.R;
 
@@ -46,6 +50,7 @@ public class LandingActivity extends Fragment {
     private List<LandingModel> landingList = new ArrayList<LandingModel>();
     private AutoCompleteTextView searchText;
     private ArrayList<String> region_;
+    private ArrayList<SearchBarModel> Filterregion_;
     private ArrayAdapter<String> region_adapter;
     private int preLast = 0;
     // Animation
@@ -67,6 +72,8 @@ public class LandingActivity extends Fragment {
         View rootView = inflater.inflate(R.layout.landing_listview, container, false);
 
         String url = "http://stage.itraveller.com/backend/api/v1/region";
+        String search_url = "http://stage.itraveller.com/backend/api/v1/region/places";
+        Filterregion_ = new ArrayList<SearchBarModel>();
         region_ = new ArrayList<String>();
         listView = (ListView) rootView.findViewById(R.id.list);
 
@@ -76,19 +83,23 @@ public class LandingActivity extends Fragment {
         searchText.setThreshold(1);//will start working from first character
         searchText.setAdapter(region_adapter);//setting the adapter data into the AutoCompleteTextView
         //searchText.setTextColor(Color.RED);
-        searchText.setOnClickListener(new View.OnClickListener() {
+        searchText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Log.i("OnCLick", "Clicked");
-                // searchText.setFocusableInTouchMode(true);
-                // searchText.setSelected(true);
-                //searchText.setFocusable(true);
-                //searchText.requestFocus();
-                /*
-                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.SHOW_FORCED);*/
-
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int postion, long l) {
+                for(int i=0;i<Filterregion_.size();i++)
+                {
+                    if(Filterregion_.get(i).getValue().equalsIgnoreCase(searchText.getText().toString()))
+                    {
+                        //Log.i("OnCLick", "Clicked" + Filterregion_.get(i).getKey());
+                        String[] Region_id = Filterregion_.get(i).getKey().trim().split("/");
+                        int length = Filterregion_.get(i).getKey().trim().split("/").length;
+                        Log.i("OnCLick", "Clicked" + Integer.parseInt(Region_id[length-1]));
+                        final Intent in = new Intent(getActivity(), RegionPlace.class);
+                        in.putExtra("RegionID", Integer.parseInt(Region_id[length-1]));
+                        in.putExtra("RegionName", Filterregion_.get(i).getValue());
+                        startActivity(in);
+                    }
+                }
             }
         });
         adapter = new LandingAdapter(getActivity(), landingList);
@@ -209,7 +220,6 @@ public class LandingActivity extends Fragment {
                            landing_model.setDate(jsonarr.getString("Date"));
                            landing_model.setAdmin_Id(jsonarr.getString("admin_Id"));
                            landing_model.setPopular(jsonarr.getInt("Popular"));
-                           region_.add(jsonarr.getString("Region_Name"));
                            landingList.add(landing_model);
                       }
                     }
@@ -218,10 +228,7 @@ public class LandingActivity extends Fragment {
                     e.printStackTrace();
                 }
                 pDialog.hide();
-                region_adapter.notifyDataSetChanged();
                 adapter.notifyDataSetChanged();
-                //searchText.startAnimation(animFadein);
-                searchText.setFocusableInTouchMode(true);
 
             }
         }, new Response.ErrorListener() {
@@ -236,7 +243,52 @@ public class LandingActivity extends Fragment {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq);
         // Inflate the layout for this fragment
+        serachJson(search_url);
         return rootView;
+    }
+
+    public void serachJson(String url)
+    {
+        JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,
+                url, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.d("Boolean", ""+response.getBoolean("success"));
+                    Log.d("Error", ""+response.getJSONObject("error"));
+                    Log.d("Payload", ""+response.getJSONArray("payload"));
+                    // JSONObject jsonobj = response.getJSONObject("payload").get;
+                    // Parsing json
+                    for (int i = 0; i < response.getJSONArray("payload").length(); i++) {
+
+                        JSONObject jsonarr = response.getJSONArray("payload").getJSONObject(i);
+                        SearchBarModel search_bar = new SearchBarModel();
+                        search_bar.setValue(jsonarr.getString("value"));
+                        search_bar.setKey(jsonarr.getString("key"));
+                        Filterregion_.add(search_bar);
+                        region_.add(jsonarr.getString("value"));
+
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                region_adapter.notifyDataSetChanged();
+                searchText.setFocusableInTouchMode(true);
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Volley Error", "Error: " + error.getMessage());
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq);
     }
 
     @Override
@@ -248,4 +300,6 @@ public class LandingActivity extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }
+

@@ -37,6 +37,7 @@ import androidhive.info.materialdesign.R;
 import androidhive.info.materialdesign.adapter.AirportAdapter;
 import androidhive.info.materialdesign.adapter.PortAndLocAdapter;
 import androidhive.info.materialdesign.adapter.RearrangePlaceAdapter;
+import androidhive.info.materialdesign.constant.Utility;
 import androidhive.info.materialdesign.model.AirportModel;
 import androidhive.info.materialdesign.model.PortAndLocModel;
 import androidhive.info.materialdesign.model.RearrangePlaceModel;
@@ -59,7 +60,7 @@ public class DragAndSort extends ActionBarActivity
     private List<RearrangePlaceModel> rearrangeList = new ArrayList<RearrangePlaceModel>();
     private RearrangePlaceAdapter adapter_rearrange;
 
-    private ListView listview;
+    public static ListView listview;
     private SearchView search_airport;
     private TextView from_home , from_travel , to_home ,to_travel;
     private String url;
@@ -67,13 +68,16 @@ public class DragAndSort extends ActionBarActivity
     private int check_bit = 0;
     private ScrollView scroll;
 
-    public int dpToPx(int dp) {
+
+    private LinearLayout destination_page;
+    private LinearLayout airportlist_page;
+   /* public int dpToPx(int dp) {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
         Log.i("Dp to px",""+px);
         return px;
     }
-
+*/
 
    private DragSortListView.DropListener onDrop = new DragSortListView.DropListener()
     {
@@ -96,8 +100,9 @@ public class DragAndSort extends ActionBarActivity
         public void remove(int which)
         {
             adapter_rearrange.remove(adapter_rearrange.getList().get(which));
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()* (dpToPx(70)));
-            listView.setLayoutParams(lp);
+         //   LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()* (dpToPx(70)));
+          //  listView.setLayoutParams(lp);
+            Utility.setListViewHeightBasedOnChildren(listView);
         }
     };
 
@@ -116,9 +121,15 @@ public class DragAndSort extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         //Main Layout
-        final LinearLayout destination_page = (LinearLayout) findViewById(R.id.destination_page);
-        final LinearLayout airportlist_page = (LinearLayout) findViewById(R.id.airport_listview);
+        destination_page = (LinearLayout) findViewById(R.id.destination_page);
+        airportlist_page = (LinearLayout) findViewById(R.id.airport_listview);
 
         LinearLayout from_airport_sp = (LinearLayout) findViewById(R.id.from_home_airport);
         LinearLayout from_port_sp = (LinearLayout) findViewById(R.id.from_travel_port);
@@ -169,13 +180,13 @@ public class DragAndSort extends ActionBarActivity
                 airportlist_page.setVisibility(View.VISIBLE);
                 url = "http://stage.itraveller.com/backend/api/v1/destination?regionId=" + region_id + "&port=0";
                 airportJSON(url, false);
-
                 check_bit = 5;
             }
         });
 
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()* (dpToPx(70)) );
-        listView.setLayoutParams(lp);
+        //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()* (dpToPx(70)) );
+        //listView.setLayoutParams(lp);
+        Utility.setListViewHeightBasedOnChildren(listView);
 
         adapter_rearrange.notifyDataSetChanged();
 
@@ -275,11 +286,12 @@ public class DragAndSort extends ActionBarActivity
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
                 //view.getId();
                 Log.i("Hellon","Test "+check_bit);
              if(check_bit == 1) {
-                 from_home.setText(AirportAdapter.AirportItems.get(position).getName());
-                 to_home.setText(AirportAdapter.AirportItems.get(position).getName());
+                 from_home.setText(AirportAdapter.AirportItems.get(position).getValue());
+                 to_home.setText(AirportAdapter.AirportItems.get(position).getValue());
              }
                 else if(check_bit == 2)
              {
@@ -292,7 +304,7 @@ public class DragAndSort extends ActionBarActivity
              }
                 else if(check_bit == 4)
              {
-                 to_home.setText(AirportAdapter.AirportItems.get(position).getName());
+                 to_home.setText(AirportAdapter.AirportItems.get(position).getValue());
              }
                 else if(check_bit == 5){
 
@@ -301,9 +313,11 @@ public class DragAndSort extends ActionBarActivity
                  m.setNights("0");
                  rearrangeList.add(m);
                  adapter_rearrange.notifyDataSetChanged();
-                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()*70 );
-                 listView.setLayoutParams(lp);
+                // LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()*70 );
+                // listView.setLayoutParams(lp);
+                 Utility.setListViewHeightBasedOnChildren(listView);
              }
+                check_bit=0;
                 destination_page.setVisibility(View.VISIBLE);
                 airportlist_page.setVisibility(View.GONE);
             }
@@ -331,7 +345,7 @@ public class DragAndSort extends ActionBarActivity
                     Log.i("Test", "Testing" + response);
                     Log.d("Boolean", "" + response.getBoolean("success"));
                     Log.d("Error", "" + response.getJSONObject("error"));
-                    Log.d("Payload", ""+response.getJSONArray("payload"));
+                    Log.d("PayloadValue", ""+ airport);
                     airportList.clear();
                     portandLocList.clear();
                     // JSONObject jsonobj = response.getJSONObject("payload").get;
@@ -342,16 +356,17 @@ public class DragAndSort extends ActionBarActivity
 
                             AirportModel airport_model = new AirportModel();
 
-                            airport_model.setId(jsonarr.getInt("Id"));
-                            airport_model.setCode(jsonarr.getString("Code"));
-                            airport_model.setName(jsonarr.getString("Name"));
-                            airport_model.setLat(jsonarr.getString("Lat"));
+                            Log.i("AirportValue",""+jsonarr.getString("value"));
+                            airport_model.setKey(jsonarr.getString("key"));
+                            //airport_model.setCode(jsonarr.getString("Code"));
+                            airport_model.setValue(jsonarr.getString("value"));
+                            /*airport_model.setLat(jsonarr.getString("Lat"));
                             airport_model.setLong(jsonarr.getString("Long"));
                             airport_model.setTimezone(jsonarr.getString("Timezone"));
                             airport_model.setCity(jsonarr.getString("City"));
                             airport_model.setCountry(jsonarr.getString("Country"));
                             airport_model.setCountry_Code(jsonarr.getString("Country_Code"));
-                            airport_model.setStatus(jsonarr.getInt("Status"));
+                            airport_model.setStatus(jsonarr.getInt("Status"));*/
                             airportList.add(airport_model);
                             listview.setAdapter(adapter_airport);
                         }
@@ -441,19 +456,20 @@ public class DragAndSort extends ActionBarActivity
                     Log.d("Boolean", "" + response.getBoolean("success"));
                     Log.d("Error", ""+response.getJSONObject("error"));
                     Log.d("Payload", ""+response.getJSONArray("payload"));
-
+                    Log.d("KeyValueKey", "Arr"+arrival);
                     // JSONObject jsonobj = response.getJSONObject("payload").get;
                     // Parsing json
                     for (int i = 0; i < response.getJSONArray("payload").length(); i++) {
                         JSONObject jsonarr = response.getJSONArray("payload").getJSONObject(i);
-                         if(jsonarr.getInt("Destination_Id") == arrival)
+                        Log.d("KeyValueKey", ""+jsonarr.getInt("key"));
+                         if(jsonarr.getInt("key") == arrival)
                          {
-                              from_travel.setText(jsonarr.getString("Destination_Name"));
-                             to_travel.setText(jsonarr.getString("Destination_Name"));
+                              from_travel.setText(jsonarr.getString("value"));
+                             to_travel.setText(jsonarr.getString("value"));
                          }
-                        else if(jsonarr.getInt("Destination_Id") == departure)
+                        else if(jsonarr.getInt("key") == departure)
                          {
-                                to_travel.setText(jsonarr.getString("Destination_Name"));
+                                to_travel.setText(jsonarr.getString("value"));
                          }
                      }
 
@@ -470,6 +486,18 @@ public class DragAndSort extends ActionBarActivity
             }
         });
         AppController.getInstance().addToRequestQueue(strReq);
+    }
+
+    public void onBackPressed() {
+        if(check_bit==0)
+        {
+            finish();
+        }
+        else
+        {
+            destination_page.setVisibility(View.GONE);
+            airportlist_page.setVisibility(View.VISIBLE);
+        }
     }
 }
 

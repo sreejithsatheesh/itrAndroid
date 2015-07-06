@@ -6,12 +6,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidhive.info.materialdesign.R;
+import androidhive.info.materialdesign.dragsort.DragAndSort;
 import androidhive.info.materialdesign.model.AirportModel;
 import androidhive.info.materialdesign.model.RearrangePlaceModel;
 import androidhive.info.materialdesign.volley.AppController;
@@ -35,7 +39,28 @@ public class RearrangePlaceAdapter extends BaseAdapter {
         this.activity = activity;
         this.RearrangeItems = rearrangeItems;
     }
- 
+
+    /*public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0) {
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, AbsListView.LayoutParams.WRAP_CONTENT));
+            }
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }*/
     @Override
     public int getCount() {
         return RearrangeItems.size();
@@ -70,7 +95,7 @@ public class RearrangePlaceAdapter extends BaseAdapter {
 
         // getting data for the row
         final RearrangePlaceModel m = RearrangeItems.get(position);
-
+        //setListViewHeightBasedOnChildren(DragAndSort.listview);
         // title
         title.setText(m.getPlace());
         days.setText(m.getNights());

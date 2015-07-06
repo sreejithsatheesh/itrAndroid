@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidhive.info.materialdesign.R;
+import androidhive.info.materialdesign.activity.PlanTrip;
 import androidhive.info.materialdesign.dragsort.DragAndSort;
 import androidhive.info.materialdesign.model.RegionPlaceModel;
 import androidhive.info.materialdesign.volley.AppController;
@@ -109,7 +110,7 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    final Intent i = new Intent(activity, DragAndSort.class);
+                    final Intent i = new Intent(activity, PlanTrip.class);
                     i.putExtra("Image", Places.get(position).getImage());
                     i.putExtra("Duration", Places.get(position).getDuration_Day());
                     i.putExtra("Title", Places.get(position).getTitle());

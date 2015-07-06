@@ -84,7 +84,7 @@ public class HotelRoomActvity extends Activity {
                 } else if( error instanceof TimeoutError) {
                 }
 
-                VolleyLog.d("Volley Error", "Error: " + error.getMessage());
+                VolleyLog.d("Volley Error", "Error: " + error);
             }
         });
 

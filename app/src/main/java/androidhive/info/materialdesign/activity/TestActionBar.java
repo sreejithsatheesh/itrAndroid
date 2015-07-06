@@ -30,7 +30,7 @@ public class TestActionBar extends Activity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.plan_your_trip);
+            setContentView(R.layout.plan_your_trip_test);
 
            // toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
            // setSupportActionBar(toolbar);
