@@ -9,6 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsoluteLayout;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
@@ -41,9 +48,62 @@ public class HotelRoomActvity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hotel_single);
-         String url = "http://stage.itraveller.com/backend/api/v1/hotelRoom/hotelId/[2]";
+        String url = "http://stage.itraveller.com/backend/api/v1/hotelRoom/hotelId/[2]";
         //url = "http://stage.itraveller.com/backend/api/v1/internationalflight?travelFrom=BOM&arrivalPort=MRU&departDate=2015-07-26&returnDate=2015-08-01&adults=2&children=0&infants=0&departurePort=MRU&travelTo=BOM";
         hotelRooms(url);
+        //ViewGroup roompick = (ViewGroup) findViewById(R.id.hour_radio_group);  // This is the id of the RadioGroup we defined
+        LinearLayout ll = (LinearLayout) findViewById(R.id.main);
+        final RadioButton[] button = new RadioButton[5];
+
+        for (int i = 0; i < 5; i++) {
+            //Declaration for
+            button[i]  = new RadioButton(this);
+            final Button plus = new Button(this);
+            final Button minus = new Button(this);
+
+            plus.setText("+");
+            minus.setText("-");
+            button[i].setText(Integer.toString(i));
+
+            plus.setId(i);
+            minus.setId(i);
+            button[i].setId(i);
+
+            button[i].setChecked(false); // Only select button with same index as currently selected number of hours
+            //button.setBackgroundResource(R.drawable.item_selector); // This is a custom button drawable, defined in XML
+            //roompick.addView(button);
+            ll.addView(plus);
+            ll.addView(minus);
+            ll.addView(button[i]);
+
+            button[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // ((RadioGroup) view.getParent()).check(view.getId());
+                    for (int index = 0; index < 5; index++) {
+                        Log.i("Test", "" + view.getId());
+                        if (view.getId() == button[index].getId())
+                            button[index].setChecked(true);
+                        else
+                            button[index].setChecked(false);
+                    }
+                }
+            });
+            plus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i("Test", "" + plus.getId());
+                }
+            });
+            minus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.i("Test", "" + minus.getId());
+                }
+            });
+
+        }
+
     }
 
     public void hotelRooms(String url)
