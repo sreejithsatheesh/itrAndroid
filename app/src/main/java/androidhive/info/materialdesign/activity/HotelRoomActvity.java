@@ -42,7 +42,7 @@ public class HotelRoomActvity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hotel_single);
          String url = "http://stage.itraveller.com/backend/api/v1/hotelRoom/hotelId/[2]";
-        url = "http://stage.itraveller.com/backend/api/v1/internationalflight?travelFrom=BOM&arrivalPort=MRU&departDate=2015-07-26&returnDate=2015-08-01&adults=2&children=0&infants=0&departurePort=MRU&travelTo=BOM";
+        //url = "http://stage.itraveller.com/backend/api/v1/internationalflight?travelFrom=BOM&arrivalPort=MRU&departDate=2015-07-26&returnDate=2015-08-01&adults=2&children=0&infants=0&departurePort=MRU&travelTo=BOM";
         hotelRooms(url);
     }
 
@@ -76,15 +76,9 @@ public class HotelRoomActvity extends Activity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                if( error instanceof NetworkError) {
-                } else if( error instanceof ServerError) {
-                } else if( error instanceof AuthFailureError) {
-                } else if( error instanceof ParseError) {
-                } else if( error instanceof NoConnectionError) {
-                } else if( error instanceof TimeoutError) {
-                }
 
-                VolleyLog.d("Volley Error", "Error: " + error);
+                    VolleyLog.d("Volley Error", "Error: " + error.networkResponse);
+
             }
         });
 
