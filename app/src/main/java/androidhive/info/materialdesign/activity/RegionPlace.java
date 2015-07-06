@@ -1,9 +1,7 @@
 package androidhive.info.materialdesign.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -28,14 +26,12 @@ import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import androidhive.info.materialdesign.R;
 import androidhive.info.materialdesign.adapter.RegionPlaceAdapter;
-import androidhive.info.materialdesign.dragsort.DragAndSort;
 import androidhive.info.materialdesign.model.RegionPlaceModel;
 import androidhive.info.materialdesign.volley.AppController;
 
@@ -77,7 +73,7 @@ public class RegionPlace extends ActionBarActivity {
                 onBackPressed();
             }
         });
-        filter_btn = (Button) findViewById(R.id.filterbutton);
+        filter_btn = (Button) findViewById(R.id.addbtnfilter);
         final TextView minval = (TextView) findViewById(R.id.minvalue);
         final TextView maxval = (TextView) findViewById(R.id.maxvalue);
         filter_details = (LinearLayout) findViewById(R.id.filterdetails);
@@ -86,7 +82,7 @@ public class RegionPlace extends ActionBarActivity {
         sub_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(toggle > 1) {
+                if(toggle > 0) {
                     toggle--;
                     day_night.setText("Day " + toggle);
                 }
@@ -102,7 +98,7 @@ public class RegionPlace extends ActionBarActivity {
                 day_night.setText("Day "+ toggle);
             }
         });
-        final Button filter_btn = (Button) findViewById(R.id.filterbutton);
+        final Button filter_btn = (Button) findViewById(R.id.addbtnfilter);
 
         filter_btn.setOnClickListener(new View.OnClickListener() {
             @Override

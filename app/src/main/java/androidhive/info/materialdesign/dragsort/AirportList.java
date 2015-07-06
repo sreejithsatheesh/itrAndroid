@@ -84,8 +84,8 @@ public class AirportList extends Activity {
                 editor = getSharedPreferences(MY_PREFS, MODE_PRIVATE).edit();
                if(click_btn == 1)
                {
-                   editor.putString("From_Home_Destination", airportList.get(position).getName().toString());
-                   editor.putString("To_Home_Destination",airportList.get(position).getName().toString());
+                   editor.putString("From_Home_Destination", airportList.get(position).getValue().toString());
+                   editor.putString("To_Home_Destination",airportList.get(position).getValue().toString());
                }
                 editor.commit();
             }
@@ -128,16 +128,16 @@ public class AirportList extends Activity {
                         JSONObject jsonarr = response.getJSONArray("payload").getJSONObject(i);
                         AirportModel airport_model = new AirportModel();
 
-                        airport_model.setId(jsonarr.getInt("Id"));
-                        airport_model.setCode(jsonarr.getString("Code"));
-                        airport_model.setName(jsonarr.getString("Name"));
+                        airport_model.setKey(jsonarr.getString("key"));
+                        airport_model.setValue(jsonarr.getString("value"));
+                       /* airport_model.setName(jsonarr.getString("Name"));
                         airport_model.setLat(jsonarr.getString("Lat"));
                         airport_model.setLong(jsonarr.getString("Long"));
                         airport_model.setTimezone(jsonarr.getString("Timezone"));
                         airport_model.setCity(jsonarr.getString("City"));
                         airport_model.setCountry(jsonarr.getString("Country"));
                         airport_model.setCountry_Code(jsonarr.getString("Country_Code"));
-                        airport_model.setStatus(jsonarr.getInt("Status"));
+                        airport_model.setStatus(jsonarr.getInt("Status"));*/
                         airportList.add(airport_model);
                     }
 
