@@ -192,36 +192,39 @@ public class LandingActivity extends Fragment {
                 try {
                     Log.d("Boolean", ""+response.getBoolean("success"));
                     Log.d("Error", ""+response.getJSONObject("error"));
-                    Log.d("Payload", ""+response.getJSONArray("payload"));
+                    Log.d("Payload_regions", ""+response.getJSONArray("payload").length());
 
                    // JSONObject jsonobj = response.getJSONObject("payload").get;
                     // Parsing json
                     for (int i = 0; i < response.getJSONArray("payload").length(); i++) {
 
+                        //Log.i("i value", "" + i);
+
                        JSONObject jsonarr = response.getJSONArray("payload").getJSONObject(i);
                        LandingModel landing_model = new LandingModel();
 
-                     if(jsonarr.getString("Popular").equalsIgnoreCase("1")) {
-                           landing_model.setRegion_Id(jsonarr.getInt("Region_Id"));
-                           landing_model.setRegion_Name(jsonarr.getString("Region_Name"));
-                           landing_model.setEnable_Flag(jsonarr.getString("Enable_Flag"));
-                           landing_model.setAlias(jsonarr.getString("Alias"));
-                           landing_model.setSlider(jsonarr.getInt("Slider"));
-                           landing_model.setHome_Page(jsonarr.getInt("Home_Page"));
-                           landing_model.setTourism_Story(jsonarr.getString("Tourism_Story"));
-                           landing_model.setRegion_Story(jsonarr.getString("Region_Story"));
-                           landing_model.setLeft_Alias(jsonarr.getString("Left_Alias"));
-                           landing_model.setPlaces_To_Visit(jsonarr.getString("Places_To_Visit"));
-                           landing_model.setPage_Title(jsonarr.getString("Page_Title"));
-                           landing_model.setPage_Description(jsonarr.getString("Page_Description"));
-                           landing_model.setPage_Heading(jsonarr.getString("Page_Heading"));
-                           landing_model.setAdvance(jsonarr.getInt("Advance"));
-                           landing_model.setIntermediate_Payment(jsonarr.getInt("Intermediate_Payment"));
-                           landing_model.setDate(jsonarr.getString("Date"));
-                           landing_model.setAdmin_Id(jsonarr.getString("admin_Id"));
-                           landing_model.setPopular(jsonarr.getInt("Popular"));
-                           landingList.add(landing_model);
-                      }
+                        if(jsonarr.getInt("Slider") == 1) {
+
+                            landing_model.setRegion_Id(jsonarr.getInt("Region_Id"));
+                            landing_model.setRegion_Name(jsonarr.getString("Region_Name"));
+                            landing_model.setEnable_Flag(jsonarr.getString("Enable_Flag"));
+                            landing_model.setAlias(jsonarr.getString("Alias"));
+                            landing_model.setSlider(jsonarr.getInt("Slider"));
+                            landing_model.setHome_Page(jsonarr.getInt("Home_Page"));
+                            landing_model.setTourism_Story(jsonarr.getString("Tourism_Story"));
+                            landing_model.setRegion_Story(jsonarr.getString("Region_Story"));
+                            landing_model.setLeft_Alias(jsonarr.getString("Left_Alias"));
+                            landing_model.setPlaces_To_Visit(jsonarr.getString("Places_To_Visit"));
+                            landing_model.setPage_Title(jsonarr.getString("Page_Title"));
+                            landing_model.setPage_Description(jsonarr.getString("Page_Description"));
+                            landing_model.setPage_Heading(jsonarr.getString("Page_Heading"));
+                            landing_model.setAdvance(jsonarr.getInt("Advance"));
+                            landing_model.setIntermediate_Payment(jsonarr.getInt("Intermediate_Payment"));
+                            landing_model.setDate(jsonarr.getString("Date"));
+                            landing_model.setAdmin_Id(jsonarr.getString("admin_Id"));
+                            landing_model.setPopular(jsonarr.getString("Popular"));
+                            landingList.add(landing_model);
+                        }
                     }
 
                 } catch (JSONException e) {
