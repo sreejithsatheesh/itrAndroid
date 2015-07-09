@@ -260,6 +260,7 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
                         hotel_model.setIFSC_Code(jsonarr.getString("IFSC_Code"));
                         hotel_model.setDate(jsonarr.getString("Date"));
                         hotel_model.setAdmin_Id(jsonarr.getString("admin_Id"));
+                        hotel_model.setChecked(true);
                         hotelList.add(hotel_model);
 
                     }
