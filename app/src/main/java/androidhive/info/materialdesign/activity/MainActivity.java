@@ -46,6 +46,9 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
         //getSupportActionBar().show();
         mToolbar.setNavigationIcon(R.drawable.ic_menu_black);
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
+        getSupportActionBar().show();
        // materialMenu = new MaterialMenuDrawable(this, Color.WHITE, Stroke.THIN);
 
         //To save Screen, Actionbar and Statusbar Height
