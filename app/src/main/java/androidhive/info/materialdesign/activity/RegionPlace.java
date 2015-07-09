@@ -194,8 +194,8 @@ public class RegionPlace extends ActionBarActivity {
                            region_adp.setTitle(jsonobj.getJSONObject("Master").getString("Title"));
                            region_adp.setLink(jsonobj.getJSONObject("Master").getString("Link"));
                            //region_adp.setImage(jsonobj.getJSONObject("Master").getString("Image"));
-                           region_adp.setImage("http://stage.itraveller.com/backend/userdata/packages/" + jsonobj.getJSONObject("Master").getInt("Itinerary_Id") + ".jpg");
-                           Log.d("Images:", "http://stage.itraveller.com/backend/userdata/packages/" + jsonobj.getJSONObject("Master").getInt("Itinerary_Id") + ".jpg");
+                           region_adp.setImage("http://stage.itraveller.com/backend/images/packages/" + jsonobj.getJSONObject("Master").getInt("Itinerary_Id") + ".jpg");
+                           Log.d("Images:", "http://stage.itraveller.com/backend/images/packages/" + jsonobj.getJSONObject("Master").getInt("Itinerary_Id") + ".jpg");
                            region_adp.setArrival_Port_Id(jsonobj.getJSONObject("Master").getInt("Arrival_Port_Id"));
                            region_adp.setDeparture_Port_Id(jsonobj.getJSONObject("Master").getInt("Departure_Port_Id"));
                            region_adp.setItinerary_Id(jsonobj.getJSONObject("Master").getInt("Itinerary_Id"));

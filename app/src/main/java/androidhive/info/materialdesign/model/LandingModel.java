@@ -5,12 +5,12 @@ package androidhive.info.materialdesign.model;
  */
 public class LandingModel {
 
-    private int Region_Id, Slider, Home_Page, Advance, Intermediate_Payment, Popular;
+    private int Region_Id, Slider, Home_Page, Advance, Intermediate_Payment;
 
     private String Region_Name, Enable_Flag, Alias, Tourism_Story, Region_Story, Left_Alias, Places_To_Visit, Page_Title, Page_Description,
-            Page_Heading, Date, admin_Id;
+            Page_Heading, Date, admin_Id , Popular;
 
-    public LandingModel(int region_Id, int slider, int home_Page, int advance, int intermediate_Payment, int popular, String region_Name, String enable_Flag, String alias, String tourism_Story, String region_Story, String left_Alias, String places_To_Visit, String page_Title, String page_Description, String page_Heading, String date, String admin_Id) {
+    public LandingModel(int region_Id, int slider, int home_Page, int advance, int intermediate_Payment, String popular, String region_Name, String enable_Flag, String alias, String tourism_Story, String region_Story, String left_Alias, String places_To_Visit, String page_Title, String page_Description, String page_Heading, String date, String admin_Id) {
         Region_Id = region_Id;
         Slider = slider;
         Home_Page = home_Page;
@@ -76,11 +76,11 @@ public class LandingModel {
         Intermediate_Payment = intermediate_Payment;
     }
 
-    public int getPopular() {
+    public String getPopular() {
         return Popular;
     }
 
-    public void setPopular(int popular) {
+    public void setPopular(String popular) {
         Popular = popular;
     }
 
