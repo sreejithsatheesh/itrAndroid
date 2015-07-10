@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/ic_menu_black"
-            android:id="@+id/destination_imageText" />
+            android:id="@+id/destination_imageText"/>
       </RelativeLayout>
     </LinearLayout>
 
