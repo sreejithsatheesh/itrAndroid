@@ -5,7 +5,21 @@ package androidhive.info.materialdesign.model;
  */
 public class RearrangePlaceModel {
 
-    private String Place, Nights;;
+    private String Place, Nights;
+
+    private int PlaceID;
+
+    public RearrangePlaceModel() {
+
+    }
+
+    public int getPlaceID() {
+        return PlaceID;
+    }
+
+    public void setPlaceID(int placeID) {
+        PlaceID = placeID;
+    }
 
     public String getNights() {
         return Nights;
@@ -13,10 +27,6 @@ public class RearrangePlaceModel {
 
     public void setNights(String nights) {
         Nights = nights;
-    }
-
-    public RearrangePlaceModel() {
-
     }
 
     public String getPlace() {

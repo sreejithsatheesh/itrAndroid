@@ -61,7 +61,6 @@ public class RegionPlace extends ActionBarActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -208,6 +207,7 @@ public class RegionPlace extends ActionBarActivity {
                            int i = 0;
                            String destinationKeyValue = null;
                            String destinationValue = null;
+                           String destinationCount = null;
                            while(destinationKeys.hasNext() ) {
                                String destinationKey = (String) destinationKeys.next();
                                if(i == 0)
@@ -215,6 +215,7 @@ public class RegionPlace extends ActionBarActivity {
                                    destinationKeyValue = destinationKey;
                                    JSONObject destobj = jsonobj.getJSONObject("Destination").getJSONObject(destinationKey);
                                    destinationValue = destobj.getString("name");
+                                   destinationCount = destobj.getString("count");
 
                                    i++;
                                }
@@ -222,13 +223,16 @@ public class RegionPlace extends ActionBarActivity {
                                    destinationKeyValue = destinationKeyValue + "," + destinationKey;
                                    JSONObject destobj = jsonobj.getJSONObject("Destination").getJSONObject(destinationKey);
                                    destinationValue = destinationValue + "," + destobj.getString("name").toString();
+                                   destinationCount = destinationCount + "," + destobj.getString("count").toString();
                                }
                                //Log.i("KeyDestination", "" + jsonobj.getJSONObject("Destination").getString(destinationKey));
                                region_adp.setDestination_Key(destinationKeyValue);
                                region_adp.setDestination(destinationValue);
+                               region_adp.setDestination_Count(destinationCount);
                            }
                            Log.i("Key_DestinationValue", "" + destinationKeyValue);
                            Log.i("Key_Destination", "" + destinationValue);
+                           Log.i("Key_DestinationDayCount", "" + destinationCount);
                            //region_adp.setDestination("Testing");
                            Log.d("Discount", "" +region_adp.getDiscount());
                            regionList.add(region_adp);

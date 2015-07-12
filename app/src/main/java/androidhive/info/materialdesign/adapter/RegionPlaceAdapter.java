@@ -115,8 +115,11 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
                     i.putExtra("Duration", Places.get(position).getDuration_Day());
                     i.putExtra("Title", Places.get(position).getTitle());
                     i.putExtra("Destinations", Places.get(position).getDestination());
+                    i.putExtra("DestinationsID", Places.get(position).getDestination_Key());
+                    i.putExtra("DestinationsCount", Places.get(position).getDestination_Count());
                     i.putExtra("ArrivalPort", Places.get(position).getArrival_Port_Id());
                     i.putExtra("DeparturePort", Places.get(position).getDeparture_Port_Id());
+                    i.putExtra("ItineraryID", Places.get(position).getItinerary_Id());
                     i.putExtra("RegionID", bundle.getInt("RegionID"));
                     activity.startActivity(i);
                 }

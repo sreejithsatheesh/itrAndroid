@@ -5,14 +5,18 @@ package androidhive.info.materialdesign.activity;
  */
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import androidhive.info.materialdesign.R;
 import androidhive.info.materialdesign.adapter.ListViewPagerActivitiesAdapter;
+import androidhive.info.materialdesign.model.ActivitiesModel;
 import androidhive.info.materialdesign.model.HotelModel;
 
 
@@ -29,13 +33,40 @@ public class ActivitiesActivity extends Activity {
     int[] day = new int[10];
     int[] hotel_Id = new int [10];
     ListView lv1;
+    String[] destination_id, deatination_day_count;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get the view from viewpager_main.xml
         setContentView(R.layout.view_pager_list_view);
-        from_destination [0] = 86;
+
+        SharedPreferences prefs = getSharedPreferences("Itinerary", MODE_PRIVATE);
+        String Region_id = prefs.getString("RegionID", null);
+        //Log.i("Hoteldataaaaaa","RID"+ Region_id);
+
+        String Destinations = prefs.getString("DestinationID", null);
+        destination_id = Destinations.trim().split(",");
+        //Log.i("Hoteldataaaaaa","DID"+ Destinations);
+
+        String DayCount = prefs.getString("DestinationCount", null);
+        deatination_day_count = Destinations.trim().split(",");
+        //Log.i("Hoteldataaaaaa","DDC"+ DayCount);
+
+        String Arrival_port = prefs.getString("ArrivalPort", null);
+        //Log.i("Hoteldataaaaaa","AP"+ Arrival_port);
+        String Departure_port = prefs.getString("DeparturePort", null);
+        //Log.i("Hoteldataaaaaa","DP"+ Departure_port);
+
+        Set<String> HotelData = prefs.getStringSet("HotelRooms", null);
+        String[] HotelDataArray = HotelData.toArray(new String[HotelData.size()]);
+        for(int index =0 ; index< HotelDataArray.length ; index ++)
+        {
+            //Log.i("Hoteldataaaaaa",""+ HotelDataArray[index]);
+            String[] hotel_room_Data = HotelDataArray[index].trim().split(",");
+        }
+
+       /* from_destination [0] = 86;
         from_destination [1] = 99;
         from_destination [2] = 65;
         from_destination [3] = 86;
@@ -51,7 +82,7 @@ public class ActivitiesActivity extends Activity {
         region_Id [1] = 99;
         region_Id [2] = 86;
         region_Id [3] = 86;
-        region_Id [4] = 86;
+        region_Id [4] = 86;*/
 
 
         lv1 = (ListView) findViewById(
@@ -96,8 +127,8 @@ private void setData(){
 
         @Override
         public void OnImageClickListenerCustomPager(int childpostion) {
-           // ArrayList<HotelModel> modelRow=ListViewPagerActivitiesAdapter.mHotelModels.get(""+groupPosition);
-           // Log.i("PagerView Clicked",groupPosition+"Clicked"+childpostion+ " Check "+  modelRow.get(childpostion).getHotel_Name());
+           ArrayList<ActivitiesModel> modelRow=ListViewPagerActivitiesAdapter.mActivitiesModel.get(""+groupPosition);
+           Log.i("PagerView Clicked",groupPosition+"Clicked"+childpostion+ " Check "+  modelRow.get(childpostion).getHotel_Id());
         }
     }
 }

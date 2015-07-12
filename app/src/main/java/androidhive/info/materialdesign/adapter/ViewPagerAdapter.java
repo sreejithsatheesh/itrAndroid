@@ -19,6 +19,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.ArrayList;
 
 import androidhive.info.materialdesign.R;
+import androidhive.info.materialdesign.activity.HotelActivity;
 import androidhive.info.materialdesign.model.HotelModel;
 import androidhive.info.materialdesign.volley.AppController;
 
@@ -28,6 +29,7 @@ import androidhive.info.materialdesign.volley.AppController;
  */
 public class ViewPagerAdapter extends PagerAdapter {
 ListViewPagerAdapter.pagerCheckBoxChangedListner mPagerCheckBoxChangedListner;
+
 
     int check_bit=0;
     ArrayList<HotelModel> arrayModelClasses = new ArrayList<HotelModel>();
@@ -86,6 +88,7 @@ ListViewPagerAdapter.pagerCheckBoxChangedListner mPagerCheckBoxChangedListner;
 
             image.setImageUrl("http://stage.itraveller.com/backend/images/hotels/"+arrayModelClasses.get(position).getHotel_Id()+".jpg", imageLoader);
             itemText.setText(arrayModelClasses.get(position).getHotel_Name());
+            //checkBox.setChecked(false);
 
             if(arrayModelClasses.get(position).isChecked()){
                 if(check_bit == 0) {
@@ -103,8 +106,10 @@ ListViewPagerAdapter.pagerCheckBoxChangedListner mPagerCheckBoxChangedListner;
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked && buttonView.isPressed()) {
                         mPagerCheckBoxChangedListner.OnCheckedChangeListenerCustomPager(position, isChecked);
+                       // mPagerCheckBoxChangedListner1.OnCheckedChangeListenerCustomPager(position, isChecked);
                         Log.i("CheckedORNot", "checked" + position);
                     }
+
 
                 }
             });
@@ -112,6 +117,8 @@ ListViewPagerAdapter.pagerCheckBoxChangedListner mPagerCheckBoxChangedListner;
                 @Override
                 public void onClick(View view) {
                     mPagerCheckBoxChangedListner.OnImageClickListenerCustomPager(position);
+                    //mPagerCheckBoxChangedListner1.OnImageClickListenerCustomPager(position);
+
                 }
             });
 

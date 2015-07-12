@@ -34,13 +34,17 @@ import java.util.List;
 import java.util.Map;
 
 import androidhive.info.materialdesign.R;
+import androidhive.info.materialdesign.activity.HotelActivity;
 import androidhive.info.materialdesign.model.HotelModel;
 import androidhive.info.materialdesign.volley.AppController;
 
 
 public class ListViewPagerAdapter extends ArrayAdapter<String> {
     ViewPager[] vp;
-  // ViewPagerAdapter[] mViewPagerAdapter;
+    public static ViewPagerAdapter mViewPagerAdapter;
+   //ViewPagerAdapter viewpageradapter;
+
+  HotelActivity.pagerCheckBoxChangedListner1 ListviewChangedListener;
 
     private Context context;
     private ArrayList<String> navigationItems;
@@ -48,14 +52,16 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
   //  private int selectedIndex;
     private Map<Integer, Integer> mPagerPositions ;
 
-    public ListViewPagerAdapter(Context context, ArrayList<String> navigationItems) {
+    public ListViewPagerAdapter(Context context, ArrayList<String> navigationItems, HotelActivity.pagerCheckBoxChangedListner1 pagerviewlistener) {
         super(context, R.layout.view_pager_list_view, navigationItems);
         this.context = context;
         this.navigationItems = navigationItems;
+        this.ListviewChangedListener = pagerviewlistener;
         mHotelModels=new HashMap<>();
         for(int index=0;index<navigationItems.size();index++){
             mHotelModels.put(""+index,new ArrayList<HotelModel>());
         }
+
         mPagerPositions= new HashMap<Integer, Integer>();
      //mViewPagerAdapter=new ViewPagerAdapter[navigationItems.size()];
        vp=new ViewPager[navigationItems.size()];
@@ -87,7 +93,6 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
     @Override
     public View getView( final int position, View convertView, ViewGroup parent) {
        // ViewPager vp;
-       ViewPagerAdapter mViewPagerAdapter;
 
         if (convertView == null) {
           // setSelectedIndex(position);
@@ -260,7 +265,7 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
                         hotel_model.setIFSC_Code(jsonarr.getString("IFSC_Code"));
                         hotel_model.setDate(jsonarr.getString("Date"));
                         hotel_model.setAdmin_Id(jsonarr.getString("admin_Id"));
-                        hotel_model.setChecked(true);
+                        hotel_model.setChecked(false);
                         hotelList.add(hotel_model);
 
                     }
@@ -304,6 +309,7 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
         public ViewPageChangeListner(int selectPosition){
             this.selectPosition=selectPosition;
 
+
         }
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -328,7 +334,7 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
     }
 
 
-    private class PagerCheckedChangeListnerCustom implements pagerCheckBoxChangedListner{
+    public class PagerCheckedChangeListnerCustom implements pagerCheckBoxChangedListner{
         int groupPosition;
 
         public PagerCheckedChangeListnerCustom(int groupPosition) {
@@ -337,6 +343,7 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
 
         @Override
         public void OnCheckedChangeListenerCustomPager(int childPosition,boolean isChecked) {
+            ListviewChangedListener.OnCheckedChangeListenerCustomPager(childPosition, isChecked);
             ArrayList<HotelModel> modelRow=mHotelModels.get(""+groupPosition);
             for(int index =0 ; index<modelRow.size();index++) {
                 if(childPosition==index) {
@@ -347,14 +354,22 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
                     modelRow.get(index).setChecked(false);
 
             }
-
+            notifyDataSetChanged();
         }
 
         @Override
         public void OnImageClickListenerCustomPager(int childpostion) {
-            ArrayList<HotelModel> modelRow=mHotelModels.get(""+groupPosition);
+            ListviewChangedListener.OnImageClickListenerCustomPager(childpostion, groupPosition );
+            //ArrayList<HotelModel> modelRow=mHotelModels.get(""+groupPosition);
 
-            //Log.i("PagerView Clicked",groupPosition+"Clicked"+childpostion+ " Check "+  modelRow.get(childpostion).getHotel_Name());
+          //  Log.i("PagerView Clicked",groupPosition+"Clicked"+childpostion+ " Check "+  modelRow.get(childpostion).getHotel_Name());
+
+
         }
+    }
+
+    public void notify_fn()
+    {
+        notifyDataSetChanged();
     }
 }
