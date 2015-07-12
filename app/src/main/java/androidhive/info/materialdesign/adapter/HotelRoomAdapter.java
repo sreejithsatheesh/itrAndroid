@@ -2,6 +2,7 @@ package androidhive.info.materialdesign.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.android.volley.toolbox.ImageLoader;
 import java.util.List;
 
 import androidhive.info.materialdesign.R;
+import androidhive.info.materialdesign.activity.HotelActivity;
 import androidhive.info.materialdesign.model.HotelRoomModel;
 import androidhive.info.materialdesign.model.RearrangePlaceModel;
 import androidhive.info.materialdesign.volley.AppController;
@@ -27,10 +29,13 @@ public class HotelRoomAdapter extends BaseAdapter {
     private RadioButton mSelectedRB;
     private int mSelectedPosition = -1;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    HotelActivity.RadiobuttonListener RadioListener;
 
-    public HotelRoomAdapter(Activity activity, List<HotelRoomModel> Hotelroom) {
+
+    public HotelRoomAdapter(Activity activity, List<HotelRoomModel> Hotelroom , HotelActivity.RadiobuttonListener RadiobuttonListener) {
         this.activity = activity;
         this.HotelRooms = Hotelroom;
+        this.RadioListener = RadiobuttonListener;
     }
 
     @Override
@@ -83,7 +88,7 @@ public class HotelRoomAdapter extends BaseAdapter {
         // title
         holder.title.setText(m.getRoom_Type());
         holder.btn_count.setText("0");
-        holder.rate.setText(""+m.getCost());
+        holder.rate.setText(""+m.getDisplay_Tariff());
 
         holder.btn_plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +119,8 @@ public class HotelRoomAdapter extends BaseAdapter {
 
                 mSelectedPosition = position;
                 mSelectedRB = (RadioButton)v;
+                RadioListener.RadioChangeListenerCustom(m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff());
+                Log.i("Room Data", m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff());
             }
         });
 

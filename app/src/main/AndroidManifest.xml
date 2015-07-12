@@ -37,6 +37,12 @@
         <activity
         android:name=".dragsort.AirportList">
     </activity>
+        <activity
+            android:name=".activity.ActivitiesActivity">
+        </activity>
+        <activity
+            android:name=".activity.HotelActivity">
+        </activity>
     </application>
 
 </manifest>

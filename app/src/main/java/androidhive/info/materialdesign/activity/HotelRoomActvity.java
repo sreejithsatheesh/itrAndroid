@@ -7,29 +7,13 @@ package androidhive.info.materialdesign.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsoluteLayout;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toolbar;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -44,9 +28,7 @@ import java.util.List;
 
 import androidhive.info.materialdesign.R;
 import androidhive.info.materialdesign.adapter.HotelRoomAdapter;
-import androidhive.info.materialdesign.adapter.RegionPlaceAdapter;
 import androidhive.info.materialdesign.model.HotelRoomModel;
-import androidhive.info.materialdesign.model.LandingModel;
 import androidhive.info.materialdesign.volley.AppController;
 
 
@@ -72,7 +54,12 @@ public class HotelRoomActvity extends Activity {
         //hotelRoomsCheck(url_checkroom);
         listView = (ListView) findViewById(R.id.room_type);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        adapter = new HotelRoomAdapter(this, roomList);
+        adapter = new HotelRoomAdapter(this, roomList, new HotelActivity.RadiobuttonListener() {
+            @Override
+            public void RadioChangeListenerCustom(String position) {
+
+            }
+        });
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

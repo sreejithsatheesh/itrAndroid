@@ -7,6 +7,7 @@ package androidhive.info.materialdesign.activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import androidhive.info.materialdesign.R;
 import androidhive.info.materialdesign.dragsort.DragAndSort;
@@ -37,6 +39,7 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener{
         ImageButton adult_plus, adult_minus, children_plus, children_minus, child_plus, child_minus, bady_plus, bady_minus;
         Button adult_btn, children_btn, child_btn, baby_btn;
         int var_adult = 0,var_children = 0,var_child = 0,var_baby = 0;
+    Date d;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +52,10 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener{
 
 
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black);
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -65,7 +68,7 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener{
             TextView duration_sp = (TextView) findViewById(R.id.duration_rp);
             Bundle bundle = getIntent().getExtras();
             img.setImageUrl(bundle.getString("Image"), imageLoader);
-            duration_sp.setText(bundle.getInt("Duration") + " Nights / " + (bundle.getInt("Duration") - 1) + " Days");
+            duration_sp.setText((bundle.getInt("Duration") - 1) + " Nights / " + bundle.getInt("Duration") + " Days");
             title_sp.setText(bundle.getString("Title"));
 
             final String imageurl = bundle.getString("Image");
@@ -73,8 +76,11 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener{
             final String title = bundle.getString("Title");
             final int region_id = bundle.getInt("RegionID");
             final String destination_value = bundle.getString("Destinations");
+            final String destination_value_id = bundle.getString("DestinationsID");
+            final String destination_value_count = bundle.getString("DestinationsCount");
             final int arrival_port = bundle.getInt("ArrivalPort");
             final int dep_port = bundle.getInt("DeparturePort");
+            final int itinerary_id = bundle.getInt("ItineraryID");
 
             adult_plus = (ImageButton) findViewById(R.id.adultplus);
             adult_plus.setOnClickListener(this);
@@ -103,11 +109,32 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener{
             addDestination.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    SharedPreferences sharedpreferences = getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                    editor.putString("RegionID", ""+region_id);
+                    editor.putString("TravelDate", "15-07-2015");
+                    //editor.putString("DestinationID", destination_value_id);
+                    //editor.putString("DestinationCount", destination_value_count);
+                    editor.putString("Adults", adult_btn.getText().toString());
+                    editor.putString("Children_12_5", children_btn.getText().toString());
+                    editor.putString("Children_5_2", child_btn.getText().toString());
+                    editor.putString("Children_2_0", baby_btn.getText().toString());
+                    editor.putInt("ItineraryID", itinerary_id);
+                    editor.putInt("Duration", duration);
+                    d = new Date();
+                    Log.i("EndDate","Date :"+ addDays( d,duration-1).toString());
+                    editor.putString("EndDate", addDays( d,duration-1).toString());
+
+                    editor.commit();
+
             final Intent i = new Intent(PlanTrip.this, DragAndSort.class);
             i.putExtra("Image", imageurl);
             i.putExtra("Duration",duration);
             i.putExtra("Title", title);
             i.putExtra("Destinations", destination_value);
+            i.putExtra("DestinationsID", destination_value_id);
+                    i.putExtra("DestinationsCount", destination_value_count);
             i.putExtra("ArrivalPort", arrival_port);
             i.putExtra("DeparturePort", dep_port);
             i.putExtra("RegionID", region_id);
@@ -122,7 +149,6 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener{
                     final int mYear = c.get(Calendar.YEAR);
                     final int mMonth = c.get(Calendar.MONTH);
                     final int mDay = c.get(Calendar.DAY_OF_MONTH);
-
                     DatePickerDialog dpd = new DatePickerDialog(context,
                             new DatePickerDialog.OnDateSetListener() {
 
@@ -139,6 +165,9 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener{
                                     }
                                     travelDate.setText(dayOfMonth + "-"
                                             + (monthOfYear + 1) + "-" + year);
+                                    d.setMonth(monthOfYear);
+                                    d.setDate(dayOfMonth);
+                                    d.setYear(year);
                                 }
                             }, mYear, mMonth, mDay);
                     dpd.show();
@@ -193,6 +222,14 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener{
 
 
     }
+
+    public static Date addDays(Date baseDate, int daysToAdd) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(baseDate);
+        calendar.add(Calendar.DAY_OF_YEAR, daysToAdd);
+        return calendar.getTime();
+    }
+
     public void onBackPressed() {
         finish();
     }

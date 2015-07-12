@@ -33,13 +33,14 @@
         </LinearLayout>
 
         <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
             android:id="@+id/imageButton"
             android:layout_alignParentRight="true"
             android:background="@drawable/ic_add_black_24dp"
-            android:layout_above="@+id/destination_page" />
+            android:layout_above="@+id/destination_page"
+            android:layout_alignParentEnd="true" />
 
         <LinearLayout
             android:id="@+id/destination_page"
@@ -50,7 +51,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="0dp"
             android:layout_below="@+id/container_toolbar"
-            android:layout_above="@+id/button14">
+            android:layout_above="@+id/book_hotel">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -107,8 +108,11 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/round_edittext_day_night">
+                        android:background="@drawable/background_destination"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="2.5dp">
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -126,7 +130,7 @@
 
                         <LinearLayout
                             android:orientation="horizontal"
-                            android:layout_width="wrap_content"
+                            android:layout_width="65dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="10dp">
@@ -135,7 +139,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:text="Home Destination"
+                                android:text="From"
                                 android:id="@+id/textView3" />
                         </LinearLayout>
 
@@ -150,9 +154,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textColor="@color/black"
-                                android:id="@+id/from_home_destination" />
+                                android:id="@+id/from_home_destination"
+                                android:textSize="13dp"
+                                android:textIsSelectable="true" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -161,8 +166,11 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/round_edittext_day_night" >
+                        android:background="@drawable/background_destination"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginBottom="2.5dp">
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -186,10 +194,10 @@
                             android:layout_marginLeft="10dp" >
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="65dp"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:text="Travel Destination"
+                                android:text="Arrival"
                                 android:id="@+id/textView6" />
                         </LinearLayout>
 
@@ -198,14 +206,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginLeft="10dp">
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/arrival_layout">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textColor="@color/black"
-                                android:id="@+id/from_travel_destination" />
+                                android:id="@+id/from_travel_destination"
+                                android:textSize="13dp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -238,9 +247,12 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/round_edittext_day_night"
-                        android:layout_gravity="center_vertical">
+                        android:background="@drawable/background_destination"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="2.5dp">
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -264,10 +276,10 @@
                             android:layout_marginLeft="10dp" >
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="65dp"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:text="Travel Destination"
+                                android:text="Departure"
                                 android:id="@+id/textView8" />
                         </LinearLayout>
 
@@ -281,9 +293,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textColor="@color/black"
-                                android:id="@+id/to_travel_destination" />
+                                android:id="@+id/to_travel_destination"
+                                android:textSize="13dp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -292,8 +304,11 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/round_edittext_day_night" >
+                        android:background="@drawable/background_destination"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2.5dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="2.5dp">
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -317,10 +332,10 @@
                             android:layout_marginLeft="10dp" >
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="65dp"
                                 android:layout_height="wrap_content"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:text="Home Destination"
+                                android:text="To"
                                 android:id="@+id/textView10" />
                         </LinearLayout>
 
@@ -334,9 +349,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
                                 android:textColor="@color/black"
-                                android:id="@+id/to_home_destination" />
+                                android:id="@+id/to_home_destination"
+                                android:textSize="13dp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -350,7 +365,7 @@
             android:layout_height="wrap_content"
             android:text="Book Hotels"
             android:background="@drawable/style_filterbutton"
-            android:id="@+id/button14"
+            android:id="@+id/book_hotel"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"

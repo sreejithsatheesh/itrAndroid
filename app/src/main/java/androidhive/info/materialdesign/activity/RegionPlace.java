@@ -25,6 +25,7 @@ import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,12 +35,9 @@ import androidhive.info.materialdesign.R;
 import androidhive.info.materialdesign.adapter.RegionPlaceAdapter;
 import androidhive.info.materialdesign.model.RegionPlaceModel;
 import androidhive.info.materialdesign.volley.AppController;
-
 /**
  * Created by VNK on 6/9/2015.
  */
-
-
 public class RegionPlace extends ActionBarActivity {
 
     private String url = "http://stage.itraveller.com/backend/api/v1/itinerary/regionId/";
@@ -61,12 +59,11 @@ public class RegionPlace extends ActionBarActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,17 +74,20 @@ public class RegionPlace extends ActionBarActivity {
         final TextView minval = (TextView) findViewById(R.id.minvalue);
         final TextView maxval = (TextView) findViewById(R.id.maxvalue);
         filter_details = (LinearLayout) findViewById(R.id.filterdetails);
-        final Button day_night = (Button) findViewById(R.id.day_night);
+        final TextView day_night = (TextView) findViewById(R.id.day_night);
         final Button sub_btn = (Button) findViewById(R.id.subbtn);
         sub_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(toggle > 0) {
                     toggle--;
-                    day_night.setText("Day " + toggle);
+                    if(toggle == 1)
+                    day_night.setText(toggle + " Night");
+                    else
+                        day_night.setText(toggle + " Nights");
                 }
                 else
-                    day_night.setText("Day/Night");
+                    day_night.setText("Nights");
             }
         });
         final Button add_btn = (Button) findViewById(R.id.addbtn);
@@ -95,7 +95,10 @@ public class RegionPlace extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 toggle++;
-                day_night.setText("Day "+ toggle);
+                if(toggle == 1)
+                    day_night.setText(toggle + " Night");
+                else
+                    day_night.setText(toggle + " Nights");
             }
         });
         final Button filter_btn = (Button) findViewById(R.id.addbtnfilter);
@@ -208,6 +211,7 @@ public class RegionPlace extends ActionBarActivity {
                            int i = 0;
                            String destinationKeyValue = null;
                            String destinationValue = null;
+                           String destinationCount = null;
                            while(destinationKeys.hasNext() ) {
                                String destinationKey = (String) destinationKeys.next();
                                if(i == 0)
@@ -215,6 +219,7 @@ public class RegionPlace extends ActionBarActivity {
                                    destinationKeyValue = destinationKey;
                                    JSONObject destobj = jsonobj.getJSONObject("Destination").getJSONObject(destinationKey);
                                    destinationValue = destobj.getString("name");
+                                   destinationCount = destobj.getString("count");
 
                                    i++;
                                }
@@ -222,13 +227,16 @@ public class RegionPlace extends ActionBarActivity {
                                    destinationKeyValue = destinationKeyValue + "," + destinationKey;
                                    JSONObject destobj = jsonobj.getJSONObject("Destination").getJSONObject(destinationKey);
                                    destinationValue = destinationValue + "," + destobj.getString("name").toString();
+                                   destinationCount = destinationCount + "," + destobj.getString("count").toString();
                                }
                                //Log.i("KeyDestination", "" + jsonobj.getJSONObject("Destination").getString(destinationKey));
                                region_adp.setDestination_Key(destinationKeyValue);
                                region_adp.setDestination(destinationValue);
+                               region_adp.setDestination_Count(destinationCount);
                            }
                            Log.i("Key_DestinationValue", "" + destinationKeyValue);
                            Log.i("Key_Destination", "" + destinationValue);
+                           Log.i("Key_DestinationDayCount", "" + destinationCount);
                            //region_adp.setDestination("Testing");
                            Log.d("Discount", "" +region_adp.getDiscount());
                            regionList.add(region_adp);
