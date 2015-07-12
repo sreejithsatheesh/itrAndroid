@@ -8,26 +8,42 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Number of nights:"
+            android:gravity="center_vertical"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="49dp"
             android:layout_height="wrap_content"
             android:text="-"
-            android:id="@+id/button2" />
+            android:background="#fffefffd"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:id="@+id/button2"
+            android:layout_gravity="right"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Day/Night"
-            android:id="@+id/button3" />
+            android:text="All"
+            android:background="#fffefffd"
+            android:id="@+id/button3"
+            android:layout_gravity="right"/>
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="49dp"
             android:layout_height="wrap_content"
             android:text="+"
-            android:id="@+id/button4" />
+            android:background="#fffefffd"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:id="@+id/button4"
+            android:layout_gravity="right"/>
     </LinearLayout>
 
     <LinearLayout
