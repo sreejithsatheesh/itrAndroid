@@ -3,11 +3,13 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="@dimen/item_height"
-  android:orientation="horizontal">
+    android:layout_marginBottom="10dp"
+  android:orientation="horizontal"
+    android:background="@drawable/background_destination">
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="50dp"
+        android:layout_width="35dp"
         android:layout_height="@dimen/item_height"
 
         android:id="@+id/linearLayout4"
@@ -23,11 +25,15 @@
           android:layout_width="match_parent"
           android:layout_height="@dimen/item_height"
             android:gravity="center">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_menu_black"
-            android:id="@+id/destination_imageText"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_menu_black_24dp"
+                android:id="@+id/destination_imageText"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
       </RelativeLayout>
     </LinearLayout>
 
@@ -61,8 +67,11 @@
             android:layout_height="wrap_content"
             android:text="-"
             android:id="@+id/minus_btn"
-            android:background="#fffffbf0"
-            android:textSize="40dp" />
+
+            android:background="#fffefffd"
+            android:textStyle="bold"
+            android:textSize="25dp" />
+
 
         <TextView
             android:layout_width="33dp"
@@ -77,7 +86,8 @@
             android:layout_height="wrap_content"
             android:text="+"
             android:id="@+id/plus_btn"
-            android:background="#fffffbf0"
-            android:textSize="35dp" />
+  android:background="#fffefffd"
+            android:textSize="25dp" />
+
     </LinearLayout>
 </RelativeLayout>

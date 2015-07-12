@@ -45,10 +45,12 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
        // getSupportActionBar().setTitle("");
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
         //getSupportActionBar().show();
-        mToolbar.setNavigationIcon(R.drawable.ic_menu_black);
 
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
+        mToolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().show();
+
        // materialMenu = new MaterialMenuDrawable(this, Color.WHITE, Stroke.THIN);
 
         //To save Screen, Actionbar and Statusbar Height
@@ -112,7 +114,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         editor.putInt("ActionBar_Height", getActionBarHeight());
         editor.commit();
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().show();
         return true;
     }
