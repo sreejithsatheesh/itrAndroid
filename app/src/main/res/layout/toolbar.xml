@@ -7,6 +7,7 @@
     android:minHeight="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     android:navigationIcon="@drawable/ic_menu_black"
+    local:navigationIcon="@drawable/ic_menu_black"
     local:titleTextAppearance="@style/MyTheme.ActionBar.TitleTextStyle"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     local:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
