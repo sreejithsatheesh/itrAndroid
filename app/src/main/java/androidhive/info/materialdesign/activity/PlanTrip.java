@@ -82,6 +82,12 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener{
             final int dep_port = bundle.getInt("DeparturePort");
             final int itinerary_id = bundle.getInt("ItineraryID");
 
+            //Calander
+             Calendar c = Calendar.getInstance();
+             int mYear = c.get(Calendar.YEAR);
+             int mMonth = c.get(Calendar.MONTH);
+             int mDay = c.get(Calendar.DAY_OF_MONTH);
+
             adult_plus = (ImageButton) findViewById(R.id.adultplus);
             adult_plus.setOnClickListener(this);
             adult_minus = (ImageButton) findViewById(R.id.adultminus);
@@ -149,32 +155,23 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener{
                     final int mYear = c.get(Calendar.YEAR);
                     final int mMonth = c.get(Calendar.MONTH);
                     final int mDay = c.get(Calendar.DAY_OF_MONTH);
-                    DatePickerDialog dpd = new DatePickerDialog(context,
+                    //c.setMin
+
+                    final DatePickerDialog dpd = new DatePickerDialog(context,
                             new DatePickerDialog.OnDateSetListener() {
 
                                 @Override
                                 public void onDateSet(DatePicker view, int year,
                                                       int monthOfYear, int dayOfMonth) {
-                                    if(year<=mYear && monthOfYear<=mMonth)
-                                    {
-                                       if(monthOfYear<=mMonth && dayOfMonth<=mDay)
-                                       {
-
-                                       }
-
-                                    }
+                                    //.getDatePicker().setMinDate(new Date());
                                     travelDate.setText(dayOfMonth + "-"
                                             + (monthOfYear + 1) + "-" + year);
-                                    d.setMonth(monthOfYear);
-                                    d.setDate(dayOfMonth);
-                                    d.setYear(year);
                                 }
                             }, mYear, mMonth, mDay);
                     dpd.show();
                 }
             });
-
-
+            travelDate.setText(mDay + "-" + (mMonth + 1) + "-" + mYear);
         }
 
     @Override

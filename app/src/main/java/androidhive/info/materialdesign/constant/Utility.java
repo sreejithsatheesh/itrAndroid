@@ -3,6 +3,9 @@ package androidhive.info.materialdesign.constant;
 /**
  * Created by VNK on 6/29/2015.
  */
+    import android.app.AlertDialog;
+    import android.content.DialogInterface;
+    import android.content.Intent;
     import android.view.View;
     import android.view.ViewGroup;
     import android.view.View.MeasureSpec;
@@ -29,6 +32,45 @@ package androidhive.info.materialdesign.constant;
             params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
             listView.setLayoutParams(params);
             listView.requestLayout();
+        }
+
+        public void Custom_alert(String msg) {
+           /* AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                    getActivity());
+
+            // Setting Dialog Title
+            alertDialog2.setTitle("Exenta");
+
+            // Setting Dialog Message
+            alertDialog2.setMessage(msg);
+
+            // Setting Icon to Dialog
+//		alertDialog2.setIcon(R.drawable.ic_launcher);
+
+            // Setting Positive "Yes" Btn
+            alertDialog2.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Write your code here to execute after dialog
+
+                            Intent intent = new Intent(getActivity(), Leave_Request.class);
+                            startActivity(intent);
+
+                        }
+                    });
+            // Setting Negative "NO" Btn
+	*//*	alertDialog2.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						// Write your code here to execute after dialog
+						Toast.makeText(getActivity(), "Cancelled",
+								Toast.LENGTH_SHORT).show();
+						dialog.cancel();
+					}
+				});*//*
+
+            // Showing Alert Dialog
+            alertDialog2.show();*/
         }
     }
 
