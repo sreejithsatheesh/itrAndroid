@@ -27,9 +27,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import androidhive.info.materialdesign.R;
+import androidhive.info.materialdesign.constant.Constants;
+import androidhive.info.materialdesign.constant.CustomLoading;
+import androidhive.info.materialdesign.constant.Utility;
+import androidhive.info.materialdesign.model.FlightModel;
+import androidhive.info.materialdesign.model.OnwardFlightModel;
+import androidhive.info.materialdesign.model.ReturnFlightModel;
 import androidhive.info.materialdesign.volley.AppController;
 
 
@@ -37,12 +44,18 @@ public class FlightActivity extends Activity {
 /* When using Appcombat support library
    you need to extend Main Activity to ActionBarActivity.*/
 
-        private Toolbar toolbar; // Declaring the Toolbar Object
+    private Toolbar toolbar; // Declaring the Toolbar Object
+    private ArrayList<FlightModel> flight_model = new ArrayList<FlightModel>();
+    private ArrayList<OnwardFlightModel> onward_model = new ArrayList<OnwardFlightModel>();
+    private ArrayList<ReturnFlightModel> return_model = new ArrayList<ReturnFlightModel>();
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.plan_your_trip_test);
+
+
+            CustomLoading.LoadingScreen(FlightActivity.this, false);
 
             String url ="http://stage.itraveller.com/backend/api/v1/internationalflight?travelFrom=BOM&arrivalPort=MRU&departDate=2015-07-26&returnDate=2015-08-01&adults=2&children=0&infants=0&departurePort=MRU&travelTo=BOM";
 
@@ -58,49 +71,88 @@ public class FlightActivity extends Activity {
                         JSONObject jsonobj = response.getJSONObject("payload").getJSONObject("AvailResponse").getJSONObject("OriginDestinationOptions");
                         JSONArray jsonarr = jsonobj.getJSONArray("OriginDestinationOption");
                         for (int i = 0; i < jsonarr.length(); i++) {
+                            FlightModel mflight = new FlightModel();
                             JSONObject flight_fare = jsonarr.getJSONObject(i).getJSONObject("FareDetails");
-                            flight_fare.getString("ActualBaseFare");
-                            flight_fare.getString("Tax");
-                            flight_fare.getString("STax");
-                            flight_fare.getString("TCharge");
-                            flight_fare.getString("SCharge");
-                            flight_fare.getString("TDiscount");
-                            flight_fare.getString("TMarkup");
-                            flight_fare.getString("TPartnerCommission");
-                            flight_fare.getString("TSdiscount");
-                            flight_fare.getString("ocTax");
+                            mflight.setActualBaseFare(flight_fare.getString("ActualBaseFare").toString());
+                            mflight.setTax(flight_fare.getString("Tax").toString());
+                            mflight.setSTax(flight_fare.getString("STax").toString());
+                            mflight.setTCharge(flight_fare.getString("TCharge").toString());
+                            mflight.setSCharge(flight_fare.getString("SCharge").toString());
+                            mflight.setTDiscount(flight_fare.getString("TDiscount").toString());
+                            mflight.setTMarkup(flight_fare.getString("TMarkup").toString());
+                            mflight.setTPartnerCommission(flight_fare.getString("TPartnerCommission").toString());
+                            mflight.setTSdiscount(flight_fare.getString("TSdiscount").toString());
+                            mflight.setOcTax(flight_fare.getString("ocTax").toString());
 
                             JSONObject flight_onward = jsonarr.getJSONObject(i).getJSONObject("onward").getJSONObject("FlightSegments");
                             JSONArray onward_arr = flight_onward.getJSONArray("FlightSegment");
                             for(int j = 0 ;j < onward_arr.length(); j++) {
-                                onward_arr.getJSONObject(j).getString("AirEquipType");
-                                onward_arr.getJSONObject(j).getString("ArrivalAirportCode");
-                                onward_arr.getJSONObject(j).getString("ArrivalAirportName");
-                                onward_arr.getJSONObject(j).getString("ArrivalDateTime");
-                                onward_arr.getJSONObject(j).getString("DepartureAirportCode");
-                                onward_arr.getJSONObject(j).getString("DepartureAirportName");
-                                onward_arr.getJSONObject(j).getString("DepartureDateTime");
-                                onward_arr.getJSONObject(j).getString("FlightNumber");
-                                onward_arr.getJSONObject(j).getString("MarketingAirlineCode");
-                                onward_arr.getJSONObject(j).getString("OperatingAirlineCode");
-                                onward_arr.getJSONObject(j).getString("OperatingAirlineName");
-                                onward_arr.getJSONObject(j).getString("OperatingAirlineFlightNumber");
-                                onward_arr.getJSONObject(j).getString("NumStops");
-                                onward_arr.getJSONObject(j).getString("LinkSellAgrmnt");
-                                onward_arr.getJSONObject(j).getString("Conx");
-                                onward_arr.getJSONObject(j).getString("AirpChg");
-                                onward_arr.getJSONObject(j).getString("InsideAvailOption");
-                                onward_arr.getJSONObject(j).getString("GenTrafRestriction");
-                                onward_arr.getJSONObject(j).getString("DaysOperates");
-                                onward_arr.getJSONObject(j).getString("JrnyTm");
-                                onward_arr.getJSONObject(j).getString("EndDt");
-                                onward_arr.getJSONObject(j).getString("StartTerminal");
-                                onward_arr.getJSONObject(j).getString("EndTerminal");
+                                OnwardFlightModel monward = new OnwardFlightModel();
+                                monward.setAirEquipType(onward_arr.getJSONObject(j).getString("AirEquipType").toString());
+                                monward.setArrivalAirportCode(onward_arr.getJSONObject(j).getString("ArrivalAirportCode").toString());
+                                monward.setArrivalAirportName(onward_arr.getJSONObject(j).getString("ArrivalAirportName").toString());
+                                monward.setArrivalDateTime(onward_arr.getJSONObject(j).getString("ArrivalDateTime").toString());
+                                monward.setDepartureAirportCode(onward_arr.getJSONObject(j).getString("DepartureAirportCode").toString());
+                                monward.setDepartureAirportName(onward_arr.getJSONObject(j).getString("DepartureAirportName").toString());
+                                monward.setDepartureDateTime(onward_arr.getJSONObject(j).getString("DepartureDateTime").toString());
+                                monward.setFlightNumber(onward_arr.getJSONObject(j).getString("FlightNumber").toString());
+                                monward.setMarketingAirlineCode(onward_arr.getJSONObject(j).getString("MarketingAirlineCode").toString());
+                                monward.setOperatingAirlineCode(onward_arr.getJSONObject(j).getString("OperatingAirlineCode").toString());
+                                monward.setOperatingAirlineName(onward_arr.getJSONObject(j).getString("OperatingAirlineName").toString());
+                                monward.setOperatingAirlineFlightNumber(onward_arr.getJSONObject(j).getString("OperatingAirlineFlightNumber").toString());
+                                monward.setNumStops(onward_arr.getJSONObject(j).getString("NumStops").toString());
+                                monward.setLinkSellAgrmnt(onward_arr.getJSONObject(j).getString("LinkSellAgrmnt").toString());
+                                monward.setConx(onward_arr.getJSONObject(j).getString("Conx").toString());
+                                monward.setAirpChg(onward_arr.getJSONObject(j).getString("AirpChg").toString());
+                                monward.setInsideAvailOption(onward_arr.getJSONObject(j).getString("InsideAvailOption").toString());
+                                monward.setGenTrafRestriction(onward_arr.getJSONObject(j).getString("GenTrafRestriction").toString());
+                                monward.setDaysOperates(onward_arr.getJSONObject(j).getString("DaysOperates").toString());
+                                monward.setJrnyTm(onward_arr.getJSONObject(j).getString("JrnyTm").toString());
+                                monward.setEndDt(onward_arr.getJSONObject(j).getString("EndDt").toString());
+                                monward.setStartTerminal(onward_arr.getJSONObject(j).getString("StartTerminal").toString());
+                                monward.setEndTerminal(onward_arr.getJSONObject(j).getString("EndTerminal").toString());
+                                onward_model.add(monward);
                             }
 
-                            JSONObject flight_return = jsonarr.getJSONObject(i).getJSONObject("Return");
-                            String flight_id = jsonarr.getJSONObject(i).getString("id");
-                            String flight_key = jsonarr.getJSONObject(i).getString("key");
+                            JSONObject flight_return = jsonarr.getJSONObject(i).getJSONObject("Return").getJSONObject("FlightSegments");
+                            JSONArray return_arr = flight_onward.getJSONArray("FlightSegment");
+                            for(int j = 0 ;j < onward_arr.length(); j++) {
+                                ReturnFlightModel mreturn = new ReturnFlightModel();
+                                mreturn.setAirEquipType(onward_arr.getJSONObject(j).getString("AirEquipType").toString());
+                                mreturn.setArrivalAirportCode(onward_arr.getJSONObject(j).getString("ArrivalAirportCode").toString());
+                                mreturn.setArrivalAirportName(onward_arr.getJSONObject(j).getString("ArrivalAirportName").toString());
+                                mreturn.setArrivalDateTime(onward_arr.getJSONObject(j).getString("ArrivalDateTime").toString());
+                                mreturn.setDepartureAirportCode(onward_arr.getJSONObject(j).getString("DepartureAirportCode").toString());
+                                mreturn.setDepartureAirportName(onward_arr.getJSONObject(j).getString("DepartureAirportName").toString());
+                                mreturn.setDepartureDateTime(onward_arr.getJSONObject(j).getString("DepartureDateTime").toString());
+                                mreturn.setFlightNumber(onward_arr.getJSONObject(j).getString("FlightNumber").toString());
+                                mreturn.setMarketingAirlineCode(onward_arr.getJSONObject(j).getString("MarketingAirlineCode").toString());
+                                mreturn.setOperatingAirlineCode(onward_arr.getJSONObject(j).getString("OperatingAirlineCode").toString());
+                                mreturn.setOperatingAirlineName(onward_arr.getJSONObject(j).getString("OperatingAirlineName").toString());
+                                mreturn.setOperatingAirlineFlightNumber(onward_arr.getJSONObject(j).getString("OperatingAirlineFlightNumber").toString());
+                                mreturn.setNumStops(onward_arr.getJSONObject(j).getString("NumStops").toString());
+                                mreturn.setLinkSellAgrmnt(onward_arr.getJSONObject(j).getString("LinkSellAgrmnt").toString());
+                                mreturn.setConx(onward_arr.getJSONObject(j).getString("Conx").toString());
+                                mreturn.setAirpChg(onward_arr.getJSONObject(j).getString("AirpChg").toString());
+                                mreturn.setInsideAvailOption(onward_arr.getJSONObject(j).getString("InsideAvailOption").toString());
+                                mreturn.setGenTrafRestriction(onward_arr.getJSONObject(j).getString("GenTrafRestriction").toString());
+                                mreturn.setDaysOperates(onward_arr.getJSONObject(j).getString("DaysOperates").toString());
+                                mreturn.setJrnyTm(onward_arr.getJSONObject(j).getString("JrnyTm").toString());
+                                mreturn.setEndDt(onward_arr.getJSONObject(j).getString("EndDt").toString());
+                                mreturn.setStartTerminal(onward_arr.getJSONObject(j).getString("StartTerminal").toString());
+                                mreturn.setEndTerminal(onward_arr.getJSONObject(j).getString("EndTerminal").toString());
+                                return_model.add(mreturn);
+                            }
+
+                            mflight.setOnward_model(onward_model);
+                            mflight.setReturn_model(return_model);
+
+                            String flight_id = jsonarr.getJSONObject(i).getString("id").toString();
+                            String flight_key = jsonarr.getJSONObject(i).getString("key").toString();
+
+                            mflight.setId(flight_id);
+                            mflight.setKey(flight_key);
+                            flight_model.add(mflight);
 
                         }
                     } catch (JSONException e) {
