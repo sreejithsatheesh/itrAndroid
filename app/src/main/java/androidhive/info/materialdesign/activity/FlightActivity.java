@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
@@ -31,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import androidhive.info.materialdesign.R;
+import androidhive.info.materialdesign.adapter.FlightAdapter;
+import androidhive.info.materialdesign.adapter.RegionPlaceAdapter;
 import androidhive.info.materialdesign.constant.Constants;
 import androidhive.info.materialdesign.constant.CustomLoading;
 import androidhive.info.materialdesign.constant.Utility;
@@ -46,18 +50,33 @@ public class FlightActivity extends Activity {
 
     private Toolbar toolbar; // Declaring the Toolbar Object
     private ArrayList<FlightModel> flight_model = new ArrayList<FlightModel>();
-    private ArrayList<OnwardFlightModel> onward_model = new ArrayList<OnwardFlightModel>();
-    private ArrayList<ReturnFlightModel> return_model = new ArrayList<ReturnFlightModel>();
+
+    FlightAdapter adapter;
+    ListView listview;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.plan_your_trip_test);
-
+            setContentView(R.layout.flights_list);
 
             CustomLoading.LoadingScreen(FlightActivity.this, false);
+            listview = (ListView) findViewById(R.id.flights_list);
+            adapter = new FlightAdapter(this, flight_model);
+            listview.setAdapter(adapter);
+            Bundle bundle = getIntent().getExtras();
 
-            String url ="http://stage.itraveller.com/backend/api/v1/internationalflight?travelFrom=BOM&arrivalPort=MRU&departDate=2015-07-26&returnDate=2015-08-01&adults=2&children=0&infants=0&departurePort=MRU&travelTo=BOM";
+
+
+            String url ="http://stage.itraveller.com/backend/api/v1/internationalflight?" +
+                    "travelFrom=" + bundle.getString("Image").toString() +
+                    "&arrivalPort=" + bundle.getString("ArrivalPort").toString() +
+                    "&departDate=" + bundle.getString("TravelDate").toString() +
+                    "&returnDate=" + bundle.getString("EndDate").toString() +
+                    "&adults=" + bundle.getString("Adults").toString() +
+                    "&children=" + bundle.getString("Children_12_5").toString() +
+                    "&infants=" + bundle.getString("Children_5_2").toString() +
+                    "&departurePort=" + bundle.getString("DeparturePort").toString() +
+                    "&travelTo=" + bundle.getString("Image").toString();
 
             JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,
                     url, new Response.Listener<JSONObject>() {
@@ -71,6 +90,9 @@ public class FlightActivity extends Activity {
                         JSONObject jsonobj = response.getJSONObject("payload").getJSONObject("AvailResponse").getJSONObject("OriginDestinationOptions");
                         JSONArray jsonarr = jsonobj.getJSONArray("OriginDestinationOption");
                         for (int i = 0; i < jsonarr.length(); i++) {
+                            ArrayList<OnwardFlightModel> onward_model = new ArrayList<OnwardFlightModel>();
+                            ArrayList<ReturnFlightModel> return_model = new ArrayList<ReturnFlightModel>();
+
                             FlightModel mflight = new FlightModel();
                             JSONObject flight_fare = jsonarr.getJSONObject(i).getJSONObject("FareDetails");
                             mflight.setActualBaseFare(flight_fare.getString("ActualBaseFare").toString());
@@ -115,35 +137,36 @@ public class FlightActivity extends Activity {
                             }
 
                             JSONObject flight_return = jsonarr.getJSONObject(i).getJSONObject("Return").getJSONObject("FlightSegments");
-                            JSONArray return_arr = flight_onward.getJSONArray("FlightSegment");
-                            for(int j = 0 ;j < onward_arr.length(); j++) {
+                            JSONArray return_arr = flight_return.getJSONArray("FlightSegment");
+                            for(int j = 0 ;j < return_arr.length(); j++) {
                                 ReturnFlightModel mreturn = new ReturnFlightModel();
-                                mreturn.setAirEquipType(onward_arr.getJSONObject(j).getString("AirEquipType").toString());
-                                mreturn.setArrivalAirportCode(onward_arr.getJSONObject(j).getString("ArrivalAirportCode").toString());
-                                mreturn.setArrivalAirportName(onward_arr.getJSONObject(j).getString("ArrivalAirportName").toString());
-                                mreturn.setArrivalDateTime(onward_arr.getJSONObject(j).getString("ArrivalDateTime").toString());
-                                mreturn.setDepartureAirportCode(onward_arr.getJSONObject(j).getString("DepartureAirportCode").toString());
-                                mreturn.setDepartureAirportName(onward_arr.getJSONObject(j).getString("DepartureAirportName").toString());
-                                mreturn.setDepartureDateTime(onward_arr.getJSONObject(j).getString("DepartureDateTime").toString());
-                                mreturn.setFlightNumber(onward_arr.getJSONObject(j).getString("FlightNumber").toString());
-                                mreturn.setMarketingAirlineCode(onward_arr.getJSONObject(j).getString("MarketingAirlineCode").toString());
-                                mreturn.setOperatingAirlineCode(onward_arr.getJSONObject(j).getString("OperatingAirlineCode").toString());
-                                mreturn.setOperatingAirlineName(onward_arr.getJSONObject(j).getString("OperatingAirlineName").toString());
-                                mreturn.setOperatingAirlineFlightNumber(onward_arr.getJSONObject(j).getString("OperatingAirlineFlightNumber").toString());
-                                mreturn.setNumStops(onward_arr.getJSONObject(j).getString("NumStops").toString());
-                                mreturn.setLinkSellAgrmnt(onward_arr.getJSONObject(j).getString("LinkSellAgrmnt").toString());
-                                mreturn.setConx(onward_arr.getJSONObject(j).getString("Conx").toString());
-                                mreturn.setAirpChg(onward_arr.getJSONObject(j).getString("AirpChg").toString());
-                                mreturn.setInsideAvailOption(onward_arr.getJSONObject(j).getString("InsideAvailOption").toString());
-                                mreturn.setGenTrafRestriction(onward_arr.getJSONObject(j).getString("GenTrafRestriction").toString());
-                                mreturn.setDaysOperates(onward_arr.getJSONObject(j).getString("DaysOperates").toString());
-                                mreturn.setJrnyTm(onward_arr.getJSONObject(j).getString("JrnyTm").toString());
-                                mreturn.setEndDt(onward_arr.getJSONObject(j).getString("EndDt").toString());
-                                mreturn.setStartTerminal(onward_arr.getJSONObject(j).getString("StartTerminal").toString());
-                                mreturn.setEndTerminal(onward_arr.getJSONObject(j).getString("EndTerminal").toString());
+                                mreturn.setAirEquipType(return_arr.getJSONObject(j).getString("AirEquipType").toString());
+                                mreturn.setArrivalAirportCode(return_arr.getJSONObject(j).getString("ArrivalAirportCode").toString());
+                                mreturn.setArrivalAirportName(return_arr.getJSONObject(j).getString("ArrivalAirportName").toString());
+                                mreturn.setArrivalDateTime(return_arr.getJSONObject(j).getString("ArrivalDateTime").toString());
+                                mreturn.setDepartureAirportCode(return_arr.getJSONObject(j).getString("DepartureAirportCode").toString());
+                                mreturn.setDepartureAirportName(return_arr.getJSONObject(j).getString("DepartureAirportName").toString());
+                                mreturn.setDepartureDateTime(return_arr.getJSONObject(j).getString("DepartureDateTime").toString());
+                                mreturn.setFlightNumber(return_arr.getJSONObject(j).getString("FlightNumber").toString());
+                                mreturn.setMarketingAirlineCode(return_arr.getJSONObject(j).getString("MarketingAirlineCode").toString());
+                                mreturn.setOperatingAirlineCode(return_arr.getJSONObject(j).getString("OperatingAirlineCode").toString());
+                                mreturn.setOperatingAirlineName(return_arr.getJSONObject(j).getString("OperatingAirlineName").toString());
+                                mreturn.setOperatingAirlineFlightNumber(return_arr.getJSONObject(j).getString("OperatingAirlineFlightNumber").toString());
+                                mreturn.setNumStops(return_arr.getJSONObject(j).getString("NumStops").toString());
+                                mreturn.setLinkSellAgrmnt(return_arr.getJSONObject(j).getString("LinkSellAgrmnt").toString());
+                                mreturn.setConx(return_arr.getJSONObject(j).getString("Conx").toString());
+                                mreturn.setAirpChg(return_arr.getJSONObject(j).getString("AirpChg").toString());
+                                mreturn.setInsideAvailOption(return_arr.getJSONObject(j).getString("InsideAvailOption").toString());
+                                mreturn.setGenTrafRestriction(return_arr.getJSONObject(j).getString("GenTrafRestriction").toString());
+                                mreturn.setDaysOperates(return_arr.getJSONObject(j).getString("DaysOperates").toString());
+                                mreturn.setJrnyTm(return_arr.getJSONObject(j).getString("JrnyTm").toString());
+                                mreturn.setEndDt(return_arr.getJSONObject(j).getString("EndDt").toString());
+                                mreturn.setStartTerminal(return_arr.getJSONObject(j).getString("StartTerminal").toString());
+                                mreturn.setEndTerminal(return_arr.getJSONObject(j).getString("EndTerminal").toString());
                                 return_model.add(mreturn);
                             }
 
+                            Log.i("Onward Value",""+onward_model.size());
                             mflight.setOnward_model(onward_model);
                             mflight.setReturn_model(return_model);
 
@@ -159,7 +182,8 @@ public class FlightActivity extends Activity {
                         Log.d("Error Catched","" +e.getMessage());
                     }
 
-
+                    adapter.notifyDataSetChanged();
+                    CustomLoading.LoadingHide();
                 }
             }, new Response.ErrorListener() {
 

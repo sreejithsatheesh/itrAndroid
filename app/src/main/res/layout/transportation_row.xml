@@ -64,8 +64,20 @@
                     android:id="@+id/textView_Km" />
             </LinearLayout>
 
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_btn"
+                android:layout_gravity="right"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:checked="false"
+                android:layout_marginRight="20dp" />
+
         </RelativeLayout>
 
-     </FrameLayout>
+    </FrameLayout>
 
 </LinearLayout>

@@ -79,6 +79,7 @@ public class DragAndSort extends ActionBarActivity
     private String[] destination_ID;
     private String[] destination_Count;
     private int arrival_id,departure_id;
+    private String travelfrom , travelto;
 
 
     private LinearLayout destination_page;
@@ -263,6 +264,8 @@ public class DragAndSort extends ActionBarActivity
                 editor.putString("DestinationName", Destination_Name);
                 editor.putString("ArrivalPort",""+arrival_id);
                 editor.putString("DeparturePort",""+departure_id);
+                editor.putString("ArrivalAirport",""+travelfrom);
+                editor.putString("DepartureAirport",""+travelto);
                 editor.commit();
                 Intent intent = new Intent(DragAndSort.this, HotelActivity.class);
                 intent.putExtra("DestinationsIDs", Destination_Value);
@@ -348,7 +351,9 @@ public class DragAndSort extends ActionBarActivity
                 Log.i("Hellon","Test "+check_bit_new);
              if(check_bit_new == 1) {
                  from_home.setText(AirportAdapter.AirportItems.get(position).getValue());
+                 travelfrom = AirportAdapter.AirportItems.get(position).getKey();
                  to_home.setText(AirportAdapter.AirportItems.get(position).getValue());
+                 travelto = AirportAdapter.AirportItems.get(position).getKey();
              }
                 else if(check_bit_new == 2)
              {
@@ -362,6 +367,7 @@ public class DragAndSort extends ActionBarActivity
                 else if(check_bit_new == 4)
              {
                  to_home.setText(AirportAdapter.AirportItems.get(position).getValue());
+                 travelto = AirportAdapter.AirportItems.get(position).getKey();
              }
                 else if(check_bit_new == 5){
 
