@@ -36,7 +36,7 @@ import androidhive.info.materialdesign.volley.AppController;
 
 public class TransportationActivity extends ActionBarActivity {
 
-    private String url = "http://stage.itraveller.com/backend/api/v1/transportation?regionId=7";
+    private String url = "http://stage.itraveller.com/backend/api/v1/transportation?region=";
     private List<TransportationModel> transportationList = new ArrayList<TransportationModel>();
     private TransportationAdapter adapter;
     private ListView transportation_list;
@@ -46,11 +46,29 @@ public class TransportationActivity extends ActionBarActivity {
     int toggle =0;
     private Button filter_btn;
     private LinearLayout filter_details;
+    private SharedPreferences sharedpreferences;
+    private SharedPreferences.Editor editor;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transportation_list);
+
+        sharedpreferences = getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
+
+        SharedPreferences prefsData = getSharedPreferences("Itinerary", MODE_PRIVATE);
+        String Region_id = prefsData.getString("RegionID", null);
+        url = url + Region_id;
+        Log.i("Transportation_URL", "" + url);
+        Log.i("ArrivalAirport",""+prefsData.getString("ArrivalAirport", null));
+        Log.i("DepartureAirport",""+prefsData.getString("DepartureAirport", null));
+        Log.i("ArrivalPort",""+prefsData.getString("ArrivalPort", null));
+        Log.i("DeparturePort",""+prefsData.getString("DeparturePort", null));
+
+        String NewURL = "http://stage.itraveller.com/backend/api/v1/destination/destinationId/";
+        ShortName(NewURL + prefsData.getString("ArrivalAirport", null),"Arrival");
+        ShortName(NewURL + prefsData.getString("DepartureAirport", null),"Departure");
         //mToolbar = (Toolbar) findViewById(R.id.toolbar);
         /*setSupportActionBar(mToolbar);
 
@@ -65,14 +83,12 @@ public class TransportationActivity extends ActionBarActivity {
                 onBackPressed();
             }
         });
-
 */
         SharedPreferences prefs = getSharedPreferences(MY_PREFS, Context.MODE_PRIVATE);
         _screen_height = prefs.getInt("Screen_Height", 0)-(prefs.getInt("Status_Height", 0) + prefs.getInt("ActionBar_Height", 0));
         Log.i("iTraveller", "Screen Height: " + _screen_height);
         int width = prefs.getInt("Screen_Width", 0); //0 is the default value.
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width,(_screen_height - 60));
-
 
 
 
@@ -186,4 +202,57 @@ public class TransportationActivity extends ActionBarActivity {
             finish();
         }
     }*/
+
+    public void ShortName(String ShortnameURL, final String arr_dep)
+    {
+        Log.i("ShortNameURL " + arr_dep,""+ShortnameURL);
+        JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,
+                ShortnameURL, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.d("Boolean", ""+response.getBoolean("success"));
+                    Log.d("Error", ""+response.getJSONObject("error"));
+                    Log.d("Payload", ""+response.getJSONObject("payload"));
+
+                    // JSONObject jsonobj = response.getJSONObject("payload").get;
+                    // Parsing json
+                    for (int i = 0; i < response.getJSONObject("payload").length(); i++) {
+                        if(arr_dep.equalsIgnoreCase("Departure")) {
+                            if (response.getJSONObject("payload").getString("Code").equalsIgnoreCase("1")) {
+                                editor.putString("TravelFrom", "1");
+                            } else {
+                                editor.putString("TravelFrom", response.getJSONObject("payload").getString("Code"));
+                            }
+                        }else if(arr_dep.equalsIgnoreCase("Arrival")){
+                            if (response.getJSONObject("payload").getString("Code").equalsIgnoreCase("1")) {
+                                editor.putString("TravelTo", "1");
+                            } else {
+                                editor.putString("TravelTo", response.getJSONObject("payload").getString("Code"));
+                            }
+                        }
+                        editor.commit();
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                adapter.notifyDataSetChanged();
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Volley Error", "Error: " + error.getMessage());
+                //pDialog.hide();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq);
+    }
 }

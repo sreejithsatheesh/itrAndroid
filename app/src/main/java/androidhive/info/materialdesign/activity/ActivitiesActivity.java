@@ -5,10 +5,13 @@ package androidhive.info.materialdesign.activity;
  */
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -42,6 +45,16 @@ public class ActivitiesActivity extends Activity {
         super.onCreate(savedInstanceState);
         // Get the view from viewpager_main.xml
         setContentView(R.layout.view_pager_list_view);
+
+        Button proceed_activity = (Button) findViewById(R.id.to_activities);
+        proceed_activity.setText("Proceed");
+        proceed_activity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ActivitiesActivity.this, TransportationActivity.class);
+                startActivity(intent);
+            }
+        });
 
         SharedPreferences prefs = getSharedPreferences("Itinerary", MODE_PRIVATE);
         String Region_id = prefs.getString("RegionID", null);

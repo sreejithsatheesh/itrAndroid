@@ -166,7 +166,9 @@ public class DragAndSort extends ActionBarActivity
 
         //Default value set
         from_home.setText("MUMBAI");
+        travelfrom = "BOM";
         to_home.setText("MUMBAI");
+        travelto = "BOM";
         Bundle bundle = getIntent().getExtras();
         img.setImageUrl(bundle.getString("Image"), imageLoader);
         duration_sp.setText((bundle.getInt("Duration") - 1) + " Nights / " + bundle.getInt("Duration") + " Days");
@@ -176,7 +178,10 @@ public class DragAndSort extends ActionBarActivity
         final String Destination_Id = bundle.getString("DestinationsID");
         final String Destination_Count = bundle.getString("DestinationsCount");
 
-        airportJSONForText("http://stage.itraveller.com/backend/api/v1/destination?regionId=" + region_id + "&port=1", bundle.getInt("ArrivalPort"),bundle.getInt("DeparturePort"));
+        Log.i("PortID",""+bundle.getInt("ArrivalPort"));
+        Log.i("PortID",""+bundle.getInt("DeparturePort"));
+
+        airportJSONForText("http://stage.itraveller.com/backend/api/v1/destination?regionId=" + region_id + "&port=1", bundle.getInt("ArrivalPort"), bundle.getInt("DeparturePort"));
 
         listView = (DragSortListView) findViewById(R.id.listview);
         names = TestValue.trim().split(",");
@@ -351,23 +356,24 @@ public class DragAndSort extends ActionBarActivity
                 Log.i("Hellon","Test "+check_bit_new);
              if(check_bit_new == 1) {
                  from_home.setText(AirportAdapter.AirportItems.get(position).getValue());
-                 travelfrom = AirportAdapter.AirportItems.get(position).getKey();
                  to_home.setText(AirportAdapter.AirportItems.get(position).getValue());
-                 travelto = AirportAdapter.AirportItems.get(position).getKey();
              }
                 else if(check_bit_new == 2)
              {
                  from_travel.setText(PortAndLocAdapter.PortandLocItems.get(position).getValue());
+                 travelfrom = "" +PortAndLocAdapter.PortandLocItems.get(position).getKey();
                  to_travel.setText(PortAndLocAdapter.PortandLocItems.get(position).getValue());
+                 travelto = "" +PortAndLocAdapter.PortandLocItems.get(position).getKey();
+
              }
                 else if(check_bit_new == 3)
              {
                  to_travel.setText(PortAndLocAdapter.PortandLocItems.get(position).getValue());
+                 travelto = ""+PortAndLocAdapter.PortandLocItems.get(position).getKey();
              }
                 else if(check_bit_new == 4)
              {
                  to_home.setText(AirportAdapter.AirportItems.get(position).getValue());
-                 travelto = AirportAdapter.AirportItems.get(position).getKey();
              }
                 else if(check_bit_new == 5){
 
@@ -530,13 +536,13 @@ public class DragAndSort extends ActionBarActivity
                          {
                              arrival_id = arrival;
                              departure_id = arrival;
-                              from_travel.setText(jsonarr.getString("value"));
+                             from_travel.setText(jsonarr.getString("value"));
                              to_travel.setText(jsonarr.getString("value"));
                          }
                         else if(jsonarr.getInt("key") == departure)
                          {
                              departure_id = departure;
-                                to_travel.setText(jsonarr.getString("value"));
+                             to_travel.setText(jsonarr.getString("value"));
                          }
                      }
 
