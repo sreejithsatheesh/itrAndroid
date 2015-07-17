@@ -27,6 +27,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -126,7 +127,13 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
                 editor.putString("RegionID", "" + region_id);
-                editor.putString("TravelDate", "" + travelDate.getText());
+                DateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        date_format.parse(travelDate.getText().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                editor.putString("TravelDate", "" + travelDate.getText().toString());
                 //editor.putString("DestinationID", destination_value_id);
                 //editor.putString("DestinationCount", destination_value_count);
                 editor.putString("Adults", adult_btn.getText().toString());
@@ -143,7 +150,7 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
 
                 }
                 Log.i("EndDate", "Date :" + df.format(addDays(d, duration - 1)));
-                editor.putString("EndDate", df.format(addDays(d, duration - 1)));
+                editor.putString("EndDate", date_format.format(addDays(d, duration - 1)));
 
                 editor.commit();
 

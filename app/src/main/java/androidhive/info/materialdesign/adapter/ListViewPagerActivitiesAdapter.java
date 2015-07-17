@@ -318,7 +318,7 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
         @Override
         public void OnCheckedChangeListenerCustomPager(int childPosition,boolean isChecked) {
             ArrayList<ActivitiesModel> modelRow=mActivitiesModel.get(""+groupPosition);
-            for(int index =0 ; index<modelRow.size();index++) {
+            /*for(int index =0 ; index<modelRow.size();index++) {
                 if(childPosition==index) {
                     modelRow.get(index).setChecked(isChecked);
                     mActivitiesModel.put("" + groupPosition, modelRow);
@@ -326,7 +326,8 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
                 else
                     modelRow.get(index).setChecked(false);
 
-            }
+            }*/
+            modelRow.get(childPosition).setChecked(isChecked);
 
         }
 

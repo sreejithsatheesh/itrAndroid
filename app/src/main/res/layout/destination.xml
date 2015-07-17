@@ -30,17 +30,28 @@
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar"
                 />
+
         </LinearLayout>
 
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/imageButton"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/ic_add_black_24dp"
-            android:layout_above="@+id/destination_page"
-            android:layout_alignParentEnd="true" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="50dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/container_toolbar"
+            android:layout_alignParentRight="true">
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/imageButton"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/ic_add_black_24dp"
+                android:layout_above="@+id/destination_page"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/destination_page"
@@ -240,7 +251,9 @@
                         dslv:sort_enabled="true"
                         dslv:track_drag_sort="false"
                         dslv:use_default_controller="true"
-                        android:visibility="visible"  />
+                        android:visibility="visible"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp" />
 
                     <LinearLayout
                         android:id="@+id/to_travel_port"

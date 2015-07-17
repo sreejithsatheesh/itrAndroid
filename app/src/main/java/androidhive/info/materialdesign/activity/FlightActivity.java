@@ -5,6 +5,7 @@ package androidhive.info.materialdesign.activity;
  */
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -63,20 +64,21 @@ public class FlightActivity extends Activity {
             listview = (ListView) findViewById(R.id.flights_list);
             adapter = new FlightAdapter(this, flight_model);
             listview.setAdapter(adapter);
-            Bundle bundle = getIntent().getExtras();
 
-
+            SharedPreferences prefs = getSharedPreferences("Itinerary", MODE_PRIVATE);
 
             String url ="http://stage.itraveller.com/backend/api/v1/internationalflight?" +
-                    "travelFrom=" + bundle.getString("Image").toString() +
-                    "&arrivalPort=" + bundle.getString("ArrivalPort").toString() +
-                    "&departDate=" + bundle.getString("TravelDate").toString() +
-                    "&returnDate=" + bundle.getString("EndDate").toString() +
-                    "&adults=" + bundle.getString("Adults").toString() +
-                    "&children=" + bundle.getString("Children_12_5").toString() +
-                    "&infants=" + bundle.getString("Children_5_2").toString() +
-                    "&departurePort=" + bundle.getString("DeparturePort").toString() +
-                    "&travelTo=" + bundle.getString("Image").toString();
+                    "travelFrom=" + prefs.getString("ArrivalAirport", null) +
+                    "&arrivalPort=" + prefs.getString("TravelFrom", null) +
+                    "&departDate=" + prefs.getString("TravelDate", null) +
+                    "&returnDate=" + prefs.getString("EndDate", null) +
+                    "&adults=" + prefs.getString("Adults", "0") +
+                    "&children=" + prefs.getString("Children_12_5", "0") +
+                    "&infants=" + prefs.getString("Children_5_2", "0") +
+                    "&departurePort=" + prefs.getString("TravelTo", null) +
+                    "&travelTo=" + prefs.getString("DepartureAirport", null);
+
+            Log.i("Transportation_Cost","" + prefs.getString("TransportationCost", null));
 
             JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,
                     url, new Response.Listener<JSONObject>() {

@@ -1,6 +1,7 @@
 package androidhive.info.materialdesign.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -8,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -67,8 +69,8 @@ public class TransportationActivity extends ActionBarActivity {
         Log.i("DeparturePort",""+prefsData.getString("DeparturePort", null));
 
         String NewURL = "http://stage.itraveller.com/backend/api/v1/destination/destinationId/";
-        ShortName(NewURL + prefsData.getString("ArrivalAirport", null),"Arrival");
-        ShortName(NewURL + prefsData.getString("DepartureAirport", null),"Departure");
+        ShortName(NewURL + prefsData.getString("ArrivalPort", null),"Arrival");
+        ShortName(NewURL + prefsData.getString("DeparturePort", null),"Departure");
         //mToolbar = (Toolbar) findViewById(R.id.toolbar);
         /*setSupportActionBar(mToolbar);
 
@@ -91,6 +93,21 @@ public class TransportationActivity extends ActionBarActivity {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width,(_screen_height - 60));
 
 
+        Button next_btn = (Button) findViewById(R.id.to_payment);
+        next_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences prefsData = getSharedPreferences("Itinerary", MODE_PRIVATE);
+                if(prefsData.getString("TravelFrom", null).equalsIgnoreCase("1")||prefsData.getString("TravelTo", null).equalsIgnoreCase("1")) {
+
+                }
+                else
+                {
+                    Intent intent = new Intent(TransportationActivity.this, FlightActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
 
 

@@ -92,7 +92,7 @@ public class TransportationAdapter extends BaseAdapter {
         frame_lay.setLayoutParams(lp);
 
         // getting data for the row
-        TransportationModel m = TransportationItems.get(position);
+        final TransportationModel m = TransportationItems.get(position);
 
         // thumbnail image
         thumbNail.setImageUrl("http://cdn.wonderfulengineering.com/wp-content/uploads/2014/08/Mercedes-Benz-S-Class2.jpg" , imageLoader);
@@ -110,6 +110,11 @@ public class TransportationAdapter extends BaseAdapter {
                 if (position != mSelectedPosition && mSelectedRB != null) {
                     mSelectedRB.setChecked(false);
                 }
+
+                SharedPreferences sharedpreferences = activity.getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("TransportationCost",""+ m.getCost1());
+                editor.commit();
 
                 mSelectedPosition = position;
                 mSelectedRB = (RadioButton) v;
