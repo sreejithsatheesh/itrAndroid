@@ -29,6 +29,9 @@
             android:name=".activity.HotelRoomActvity">
         </activity>
         <activity
+            android:name=".activity.SummaryActivity">
+        </activity>
+        <activity
             android:name=".activity.TransportationActivity">
         </activity>
         <activity

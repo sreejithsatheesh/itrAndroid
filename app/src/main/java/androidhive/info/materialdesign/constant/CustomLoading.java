@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import androidhive.info.materialdesign.R;
 import androidhive.info.materialdesign.activity.FlightActivity;
+import androidhive.info.materialdesign.activity.SummaryActivity;
 
 public class CustomLoading {
 	static Dialog dialog;
@@ -32,7 +33,7 @@ public class CustomLoading {
 			@Override
 			public void onClick(View view) {
 				dialog.dismiss();
-				Intent intent = new Intent(finalContext.getApplicationContext(), FlightActivity.class);
+				Intent intent = new Intent(finalContext.getApplicationContext(), SummaryActivity.class);
 				finalContext.startActivity(intent);
 			}
 		});
