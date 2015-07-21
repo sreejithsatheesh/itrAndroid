@@ -19,6 +19,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.List;
 
 import androidhive.info.materialdesign.R;
+import androidhive.info.materialdesign.activity.TransportationActivity;
 import androidhive.info.materialdesign.model.TransportationModel;
 import androidhive.info.materialdesign.volley.AppController;
 
@@ -95,12 +96,12 @@ public class TransportationAdapter extends BaseAdapter {
         final TransportationModel m = TransportationItems.get(position);
 
         // thumbnail image
-        thumbNail.setImageUrl("http://cdn.wonderfulengineering.com/wp-content/uploads/2014/08/Mercedes-Benz-S-Class2.jpg" , imageLoader);
+        thumbNail.setImageUrl("http://stage.itraveller.com/backend/images/transportation/" + m.getImage() , imageLoader);
         //Log.i("ImageURL", "http://stage.itraveller.com/backend/images/destinations/" + m.getRegion_Name() + ".jpg");
         // title
         holder.title.setText(m.getTitle());
         holder.textView_persons.setText("Ideal for upto " + m.getMax_Person() + "persons");
-        holder.textView_Km.setText("" + m.getKM_Limit());
+        holder.textView_Km.setText("" + m.getCost());
 
         holder.radioButton.setOnClickListener(new View.OnClickListener() {
 
@@ -113,7 +114,7 @@ public class TransportationAdapter extends BaseAdapter {
 
                 SharedPreferences sharedpreferences = activity.getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
                 final SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putString("TransportationCost",""+ m.getCost1());
+                editor.putString("TransportationCost",""+ m.getCost());
                 editor.commit();
 
                 mSelectedPosition = position;
@@ -121,6 +122,14 @@ public class TransportationAdapter extends BaseAdapter {
             }
         });
 
+        /*if(mSelectedPosition != position){
+            holder.radioButton.setChecked(false);
+        }else{
+            holder.radioButton.setChecked(true);
+            if(mSelectedRB != null && holder.radioButton != mSelectedRB){
+                mSelectedRB = holder.radioButton;
+            }
+        }*/
         if(mSelectedPosition != position){
             holder.radioButton.setChecked(false);
         }else{
@@ -128,8 +137,13 @@ public class TransportationAdapter extends BaseAdapter {
             if(mSelectedRB != null && holder.radioButton != mSelectedRB){
                 mSelectedRB = holder.radioButton;
             }
+
         }
- 
+        if(m.getCost()== TransportationActivity.lowest_trans)
+        {
+            holder.radioButton.setChecked(true);
+             mSelectedRB = holder.radioButton;
+        }
         return convertView;
     }
 

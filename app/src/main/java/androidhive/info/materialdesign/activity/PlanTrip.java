@@ -33,6 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import androidhive.info.materialdesign.R;
+import androidhive.info.materialdesign.constant.Utility;
 import androidhive.info.materialdesign.dragsort.DragAndSort;
 import androidhive.info.materialdesign.volley.AppController;
 
@@ -44,7 +45,7 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
     Context context;
     ImageButton adult_plus, adult_minus, children_plus, children_minus, child_plus, child_minus, bady_plus, bady_minus;
     Button adult_btn, children_btn, child_btn, baby_btn;
-    int var_adult = 0, var_children = 0, var_child = 0, var_baby = 0;
+    int var_adult = 2, var_children = 0, var_child = 0, var_baby = 0;
     private int myear;
     private int mmonth;
     private int mday;
@@ -127,13 +128,7 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
                 editor.putString("RegionID", "" + region_id);
-                DateFormat date_format = new SimpleDateFormat("yyyy-MM-dd");
-                    try {
-                        date_format.parse(travelDate.getText().toString());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                editor.putString("TravelDate", "" + travelDate.getText().toString());
+
                 //editor.putString("DestinationID", destination_value_id);
                 //editor.putString("DestinationCount", destination_value_count);
                 editor.putString("Adults", adult_btn.getText().toString());
@@ -149,8 +144,13 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
                 catch(Exception e){
 
                 }
-                Log.i("EndDate", "Date :" + df.format(addDays(d, duration - 1)));
-                editor.putString("EndDate", date_format.format(addDays(d, duration - 1)));
+
+                Log.i("StartDate", "Date :" + Utility.addDays(travelDate.getText().toString(), duration - 1,"dd-MM-yyyy", "yyyy-MM-dd"));
+                Log.i("StartDate", "Date :" + Utility.addDays(travelDate.getText().toString(), 0,"dd-MM-yyyy", "dd-MM-yyyy"));
+
+                editor.putString("DefaultDate", "" + Utility.addDays(travelDate.getText().toString(), 0,"dd-MM-yyyy", "dd-MM-yyyy"));
+                editor.putString("TravelDate", "" + Utility.addDays(travelDate.getText().toString(), 0, "dd-MM-yyyy","yyyy-MM-dd"));
+                editor.putString("EndDate", Utility.addDays(travelDate.getText().toString(), duration - 1,"dd-MM-yyyy","yyyy-MM-dd"));
 
                 editor.commit();
 
@@ -216,12 +216,6 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
 
     }
 
-    public static Date addDays(Date baseDate, int daysToAdd) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(baseDate);
-        calendar.add(Calendar.DAY_OF_YEAR, daysToAdd);
-        return calendar.getTime();
-    }
 
     @SuppressLint("ValidFragment")
     public class DatePickerFrom extends DialogFragment implements

@@ -74,12 +74,21 @@
 
 
         <TextView
-            android:layout_width="33dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="2"
             android:id="@+id/days"
-            android:gravity="center" />
+            android:gravity="center"
+            android:layout_margin="0dp"
+            android:padding="0dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="N"
+            android:id="@+id/textView9" />
 
         <Button
             android:layout_width="51dp"

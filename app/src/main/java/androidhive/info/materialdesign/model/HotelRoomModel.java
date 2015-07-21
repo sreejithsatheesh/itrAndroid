@@ -6,6 +6,8 @@ public class HotelRoomModel {
 
     private int Hotel_Room_Id, Hotel_Id, Room_Status, Rack_Rate, Default_Number, Maximum_Number, Hotel_Room_Tariff_Id, TAC, Cost, Mark_Up, Display_Tariff, Company_Id;
     private String Room_Type, Room_Description, From, To;
+    private Boolean Check;
+
 
     public HotelRoomModel() {
     }
@@ -28,6 +30,14 @@ public class HotelRoomModel {
         From = from;
         To = to;
     }
+    public Boolean getCheck() {
+        return Check;
+    }
+
+    public void setCheck(Boolean check) {
+        Check = check;
+    }
+
 
     public int getHotel_Room_Id() {
         return Hotel_Room_Id;

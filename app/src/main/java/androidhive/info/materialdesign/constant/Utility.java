@@ -12,7 +12,13 @@ package androidhive.info.materialdesign.constant;
     import android.widget.ListAdapter;
     import android.widget.ListView;
 
-    public class Utility {
+    import java.text.DateFormat;
+    import java.text.ParseException;
+    import java.text.SimpleDateFormat;
+    import java.util.Calendar;
+    import java.util.Date;
+
+public class Utility {
         public static void setListViewHeightBasedOnChildren(ListView listView) {
             ListAdapter listAdapter = listView.getAdapter();
             if (listAdapter == null) {
@@ -72,5 +78,25 @@ package androidhive.info.materialdesign.constant;
             // Showing Alert Dialog
             alertDialog2.show();*/
         }
+
+    public static String addDays(String baseDate, int daysToAdd, String dateformatonward , String returnformat) {
+
+        String finalDate=null;
+        DateFormat df = new SimpleDateFormat(dateformatonward);
+        try {
+           Date d = df.parse(baseDate);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(d);
+            calendar.add(Calendar.DAY_OF_YEAR, daysToAdd);
+            //Format "yyyy-MM-dd"
+            DateFormat date_format = new SimpleDateFormat(returnformat);
+            finalDate = date_format.format(calendar.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return finalDate;
+    }
+
+
     }
 

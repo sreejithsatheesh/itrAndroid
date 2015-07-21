@@ -84,11 +84,13 @@ ListViewPagerAdapter.pagerCheckBoxChangedListner mPagerCheckBoxChangedListner;
 
         CheckBox checkBox=(CheckBox)view.findViewById(R.id.checkBox);
 
+
         try {
 
             image.setImageUrl("http://stage.itraveller.com/backend/images/hotels/"+arrayModelClasses.get(position).getHotel_Id()+".jpg", imageLoader);
             itemText.setText(arrayModelClasses.get(position).getHotel_Name());
-            //checkBox.setChecked(false);
+            //if(arrayModelClasses.get(position).get)
+            checkBox.setChecked(false);
 
             if(arrayModelClasses.get(position).isChecked()){
                 if(check_bit == 0) {

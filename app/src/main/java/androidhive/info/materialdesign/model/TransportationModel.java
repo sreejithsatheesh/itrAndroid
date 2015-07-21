@@ -5,12 +5,12 @@ package androidhive.info.materialdesign.model;
  */
 public class TransportationModel {
 
-    private int Id, Region_Id, Cost1, KM_Limit, Price_Per_KM, Max_Person;
+    private int Id, Region_Id, Cost1, KM_Limit, Price_Per_KM, Max_Person, Transportation_Id, Cost;
 
     private String Title, Image;
 
     public TransportationModel(int id, int region_Id, int cost1, int km_Limit, int price_Per_KM,
-                               int max_Person, int popular, String title, String image) {
+                               int max_Person, int popular, int transportation_Id, int cost, String title, String image) {
 
         Id = id;
         Region_Id = region_Id;
@@ -20,6 +20,8 @@ public class TransportationModel {
         Max_Person = max_Person;
         Title = title;
         Image = image;
+        Transportation_Id = transportation_Id;
+        Cost = cost;
 
     }
 
@@ -45,6 +47,15 @@ public class TransportationModel {
 
     public int getCost1() {
         return Cost1;
+    }
+
+    public int getTransportation_Id() {
+
+        return Transportation_Id;
+    }
+
+    public int getCost() {
+       return Cost;
     }
 
     public void setCost1(int cost1) {
@@ -89,5 +100,13 @@ public class TransportationModel {
 
     public void setImage(String image) {
         Image = image;
+    }
+
+    public void setTransportation_Id(int transportation_Id) {
+        Transportation_Id = transportation_Id;
+    }
+
+    public void setCost(int cost) {
+        Cost = cost;
     }
 }

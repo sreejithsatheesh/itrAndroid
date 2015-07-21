@@ -45,6 +45,7 @@ import androidhive.info.materialdesign.activity.RegionPlace;
 import androidhive.info.materialdesign.adapter.AirportAdapter;
 import androidhive.info.materialdesign.adapter.PortAndLocAdapter;
 import androidhive.info.materialdesign.adapter.RearrangePlaceAdapter;
+import androidhive.info.materialdesign.constant.Constants;
 import androidhive.info.materialdesign.constant.Utility;
 import androidhive.info.materialdesign.model.AirportModel;
 import androidhive.info.materialdesign.model.PortAndLocModel;
@@ -130,7 +131,6 @@ public class DragAndSort extends ActionBarActivity
 
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
@@ -191,6 +191,9 @@ public class DragAndSort extends ActionBarActivity
         adapter_rearrange = new RearrangePlaceAdapter(this,rearrangeList);
         listView.setAdapter(adapter_rearrange);
         //listView.setAdapter(adapter);
+        SharedPreferences sharedpreferences = getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedpreferences.edit();
+
         for(int i = 0; i<names.length ; i++)
         {
             RearrangePlaceModel m = new RearrangePlaceModel();
@@ -245,6 +248,10 @@ public class DragAndSort extends ActionBarActivity
                 String Destination_Value = null;
                 String Destination_Count = null;
                 String Destination_Name = null;
+                String Destination_Date = null;
+                String CheckDate = null;
+                SharedPreferences prefsData = getSharedPreferences("Itinerary", MODE_PRIVATE);
+
                 for(int i = 0; i< rearrangeList.size();i++) {
                    /* Log.v("TestData","Data :"+rearrangeList.get(i).getPlace());
                     Log.v("TestData","Data :"+rearrangeList.get(i).getPlaceID());*/
@@ -252,13 +259,19 @@ public class DragAndSort extends ActionBarActivity
                         Destination_Value = "" + rearrangeList.get(i).getPlaceID();
                         Destination_Count = "" + rearrangeList.get(i).getNights();
                         Destination_Name = "" + rearrangeList.get(i).getPlace();
+                        CheckDate = Utility.addDays(prefsData.getString("DefaultDate", null).toString(), 0,"dd-MM-yyyy","yyyy-MM-dd");
+                        Destination_Date = "" + CheckDate ;
                     }
                     else
                     {
+                        String Date_ = Utility.addDays(CheckDate,0,"yyyy-MM-dd","dd-MM-yyyy");
+                        CheckDate  = Utility.addDays(Date_, Integer.parseInt(rearrangeList.get(i-1).getNights()),"dd-MM-yyyy","yyyy-MM-dd");
+                        Destination_Date = Destination_Date + "," + CheckDate ;
                         Destination_Value = Destination_Value + "," + rearrangeList.get(i).getPlaceID();
                         Destination_Count = Destination_Count + "," + rearrangeList.get(i).getNights();
                         Destination_Name = Destination_Name + "," + rearrangeList.get(i).getPlace();
                     }
+                    Log.v("TestDataDate","Date :"+Destination_Date);
                 }
 
                 SharedPreferences sharedpreferences = getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
@@ -267,6 +280,7 @@ public class DragAndSort extends ActionBarActivity
                 editor.putString("DestinationID", Destination_Value);
                 editor.putString("DestinationCount", Destination_Count);
                 editor.putString("DestinationName", Destination_Name);
+                editor.putString("DestinationDate", Destination_Date);
                 editor.putString("ArrivalAirport",""+travelfrom);
                 editor.putString("DepartureAirport",""+travelto);
                 editor.putString("ArrivalPort",""+arrival_id);
@@ -386,7 +400,7 @@ public class DragAndSort extends ActionBarActivity
                  RearrangePlaceModel m = new RearrangePlaceModel();
                  m.setPlace(portandLocList.get(position).getValue());
                  m.setPlaceID(portandLocList.get(position).getKey());
-                 m.setNights("0");
+                 m.setNights("1");
                  rearrangeList.add(m);
                  adapter_rearrange.notifyDataSetChanged();
                 // LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rearrangeList.size()*70 );

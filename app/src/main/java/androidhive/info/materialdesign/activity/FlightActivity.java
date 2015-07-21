@@ -67,7 +67,8 @@ public class FlightActivity extends Activity {
 
             SharedPreferences prefs = getSharedPreferences("Itinerary", MODE_PRIVATE);
 
-            String url ="http://stage.itraveller.com/backend/api/v1/internationalflight?" +
+            String url = "http://stage.itraveller.com/backend/api/v1/internationalflight?travelFrom=BOM&arrivalPort=MRU&departDate=2015-07-26&returnDate=2015-08-01&adults=2&children=0&infants=0&departurePort=MRU&travelTo=BOM";
+            /*String url ="http://stage.itraveller.com/backend/api/v1/internationalflight?" +
                     "travelFrom=" + prefs.getString("ArrivalAirport", null) +
                     "&arrivalPort=" + prefs.getString("TravelFrom", null) +
                     "&departDate=" + prefs.getString("TravelDate", null) +
@@ -76,7 +77,7 @@ public class FlightActivity extends Activity {
                     "&children=" + prefs.getString("Children_12_5", "0") +
                     "&infants=" + prefs.getString("Children_5_2", "0") +
                     "&departurePort=" + prefs.getString("TravelTo", null) +
-                    "&travelTo=" + prefs.getString("DepartureAirport", null);
+                    "&travelTo=" + prefs.getString("DepartureAirport", null);*/
 
             Log.i("Transportation_Cost","" + prefs.getString("TransportationCost", null));
 

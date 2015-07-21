@@ -7,6 +7,7 @@ package androidhive.info.materialdesign.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -48,14 +49,17 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
 
     private Context context;
     private ArrayList<String> navigationItems;
+    private ArrayList<String> defaultHotelRoom;
     public static HashMap<String,ArrayList<HotelModel>> mHotelModels;
   //  private int selectedIndex;
     private Map<Integer, Integer> mPagerPositions ;
+    String[] hotel_destination;
 
-    public ListViewPagerAdapter(Context context, ArrayList<String> navigationItems, HotelActivity.pagerCheckBoxChangedListner1 pagerviewlistener) {
+    public ListViewPagerAdapter(Context context, ArrayList<String> navigationItems, ArrayList<String> defaultHotelRoom, HotelActivity.pagerCheckBoxChangedListner1 pagerviewlistener) {
         super(context, R.layout.view_pager_list_view, navigationItems);
         this.context = context;
         this.navigationItems = navigationItems;
+        this.defaultHotelRoom = defaultHotelRoom;
         this.ListviewChangedListener = pagerviewlistener;
         mHotelModels=new HashMap<>();
         for(int index=0;index<navigationItems.size();index++){
@@ -105,6 +109,11 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
         }else{
 
         }
+        SharedPreferences mysettings= context.getSharedPreferences("Itinerary", 0);
+        String Destintion_NAME = mysettings.getString("DestinationName", null);
+        hotel_destination = Destintion_NAME.trim().split(",");
+        TextView txtview = (TextView) convertView.findViewById(R.id.hotel_place_name);
+        txtview.setText("" + hotel_destination[position]);
         vp[position] = (ViewPager) convertView.findViewById(R.id.list_pager);
         mViewPagerAdapter = new ViewPagerAdapter(mHotelModels.get(""+position),new PagerCheckedChangeListnerCustom(position));
         vp[position].setAdapter(mViewPagerAdapter);
@@ -134,6 +143,7 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
         });*/
 
      if(mHotelModels.get(""+position).size()<1){
+
          airportJSONForText(navigationItems.get(position), position);
 
 
@@ -212,7 +222,6 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
 
     public void airportJSONForText (String url, final int position )
     {
-
         JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,
                 url, new Response.Listener<JSONObject>() {
 
@@ -231,41 +240,48 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
                         JSONObject jsonarr = response.getJSONArray("payload").getJSONObject(i);
 
                         HotelModel hotel_model = new HotelModel();
-                        hotel_model.setHotel_Id(jsonarr.getInt("Hotel_Id"));
-                        hotel_model.setRegion_Id(jsonarr.getString("Region_Id"));
-                        hotel_model.setDestination_Id(jsonarr.getString("Destination_Id"));
-                        hotel_model.setHotel_Name(jsonarr.getString("Hotel_Name"));
-                        hotel_model.setHotel_Email(jsonarr.getString("Hotel_Email"));
-                        hotel_model.setHotel_Description(jsonarr.getString("Hotel_Description"));
-                        hotel_model.setHotel_Tripadvisor(jsonarr.getString("Hotel_Tripadvisor"));
-                        hotel_model.setHotel_Meal_Plan(jsonarr.getString("Hotel_Meal_Plan"));
-                        hotel_model.setHotel_Image(jsonarr.getString("Hotel_Image"));
-                        hotel_model.setHotel_Status(jsonarr.getInt("Hotel_Status"));
-                        hotel_model.setHotel_Star_Rating(jsonarr.getString("Hotel_Star_Rating"));
-                        hotel_model.setHotel_Address(jsonarr.getString("Hotel_Address"));
-                        hotel_model.setHotel_Latitude(jsonarr.getString("Hotel_Latitude"));
-                        hotel_model.setHotel_Longitude(jsonarr.getString("Hotel_Longitude"));
-                        hotel_model.setHotel_URL(jsonarr.getString("Hotel_URL"));
-                        hotel_model.setHotel_Number(jsonarr.getString("Hotel_Number"));
-                        hotel_model.setDistrict(jsonarr.getString("District"));
-                        hotel_model.setState(jsonarr.getString("State"));
-                        hotel_model.setCountry(jsonarr.getString("Country"));
-                        hotel_model.setPincode(jsonarr.getString("Pincode"));
-                        hotel_model.setDinner(jsonarr.getInt("Dinner"));
-                        hotel_model.setLunch(jsonarr.getInt("Lunch"));
-                        hotel_model.setExtra_Adult(jsonarr.getInt("Extra_Adult"));
-                        hotel_model.setVisibility(jsonarr.getInt("Visibility"));
-                        hotel_model.setWebsite(jsonarr.getString("Website"));
-                        hotel_model.setB2C_Flag(jsonarr.getInt("B2C_Flag"));
-                        hotel_model.setTrip_Image(jsonarr.getString("Trip_Image"));
-                        hotel_model.setTrip_Script(jsonarr.getString("Trip_Script"));
-                        hotel_model.setAccount_Holder(jsonarr.getString("Account_Holder"));
-                        hotel_model.setAccount_Number(jsonarr.getString("Account_Number"));
-                        hotel_model.setBank(jsonarr.getString("Bank"));
-                        hotel_model.setIFSC_Code(jsonarr.getString("IFSC_Code"));
-                        hotel_model.setDate(jsonarr.getString("Date"));
-                        hotel_model.setAdmin_Id(jsonarr.getString("admin_Id"));
-                        hotel_model.setChecked(false);
+                        for(int index = 0;index < defaultHotelRoom.size();index++) {
+
+                            hotel_model.setHotel_Id(jsonarr.getInt("Hotel_Id"));
+                            hotel_model.setRegion_Id(jsonarr.getString("Region_Id"));
+                            hotel_model.setDestination_Id(jsonarr.getString("Destination_Id"));
+                            hotel_model.setHotel_Name(jsonarr.getString("Hotel_Name"));
+                            hotel_model.setHotel_Email(jsonarr.getString("Hotel_Email"));
+                            hotel_model.setHotel_Description(jsonarr.getString("Hotel_Description"));
+                            hotel_model.setHotel_Tripadvisor(jsonarr.getString("Hotel_Tripadvisor"));
+                            hotel_model.setHotel_Meal_Plan(jsonarr.getString("Hotel_Meal_Plan"));
+                            hotel_model.setHotel_Image(jsonarr.getString("Hotel_Image"));
+                            hotel_model.setHotel_Status(jsonarr.getInt("Hotel_Status"));
+                            hotel_model.setHotel_Star_Rating(jsonarr.getString("Hotel_Star_Rating"));
+                            hotel_model.setHotel_Address(jsonarr.getString("Hotel_Address"));
+                            hotel_model.setHotel_Latitude(jsonarr.getString("Hotel_Latitude"));
+                            hotel_model.setHotel_Longitude(jsonarr.getString("Hotel_Longitude"));
+                            hotel_model.setHotel_URL(jsonarr.getString("Hotel_URL"));
+                            hotel_model.setHotel_Number(jsonarr.getString("Hotel_Number"));
+                            hotel_model.setDistrict(jsonarr.getString("District"));
+                            hotel_model.setState(jsonarr.getString("State"));
+                            hotel_model.setCountry(jsonarr.getString("Country"));
+                            hotel_model.setPincode(jsonarr.getString("Pincode"));
+                            hotel_model.setDinner(jsonarr.getInt("Dinner"));
+                            hotel_model.setLunch(jsonarr.getInt("Lunch"));
+                            hotel_model.setExtra_Adult(jsonarr.getInt("Extra_Adult"));
+                            hotel_model.setVisibility(jsonarr.getInt("Visibility"));
+                            hotel_model.setWebsite(jsonarr.getString("Website"));
+                            hotel_model.setB2C_Flag(jsonarr.getInt("B2C_Flag"));
+                            hotel_model.setTrip_Image(jsonarr.getString("Trip_Image"));
+                            hotel_model.setTrip_Script(jsonarr.getString("Trip_Script"));
+                            hotel_model.setAccount_Holder(jsonarr.getString("Account_Holder"));
+                            hotel_model.setAccount_Number(jsonarr.getString("Account_Number"));
+                            hotel_model.setBank(jsonarr.getString("Bank"));
+                            hotel_model.setIFSC_Code(jsonarr.getString("IFSC_Code"));
+                            hotel_model.setDate(jsonarr.getString("Date"));
+                            hotel_model.setAdmin_Id(jsonarr.getString("admin_Id"));
+                            hotel_model.setChecked(false);
+                            String[] value = defaultHotelRoom.get(index).trim().split(",");
+                            if (Integer.parseInt(""+value[0]) == jsonarr.getInt("Hotel_Id")){
+                                hotel_model.setChecked(true);
+                            }
+                        }
                         hotelList.add(hotel_model);
 
                     }

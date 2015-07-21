@@ -39,6 +39,7 @@ public class ActivitiesActivity extends Activity {
     String[] destination_id, deatination_day_count, hotel_id_data;
     ArrayList<String> DataURL = new ArrayList<String>();
     int TotalCountDays = 0;
+    String[] ActivityData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,30 @@ public class ActivitiesActivity extends Activity {
         proceed_activity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ActivityData = new String[ListViewPagerActivitiesAdapter.mActivitiesModel.size()];
+                for(int i = 0; i<ListViewPagerActivitiesAdapter.mActivitiesModel.size();i++)
+                {
+                    ArrayList<ActivitiesModel> modelRow = ListViewPagerActivitiesAdapter.mActivitiesModel.get(""+i);
+                    String Datas = null;
+                    int x = 0;
+                    for(int j = 0; j< modelRow.size() ; j++)
+                    {
+                        if(modelRow.get(j).isChecked() == true) {
+                            if(x == 0) {
+                                Datas = "" + modelRow.get(j).getId() + "," + modelRow.get(j).getCost();
+                                x=1;
+                            }
+                            else{
+                                Datas = Datas + ":" + modelRow.get(j).getId() + "," + modelRow.get(j).getCost();
+                            }
+                            //Log.i("DataValue ", i + " Clicked " + j + " Check " + modelRow.get(j).isChecked());
+                        }
+
+                    }
+                    Log.i("ActivitiesData","" + ActivityData[i]);
+                    ActivityData[i] = ""+ Datas;
+                }
+
                 Intent intent = new Intent(ActivitiesActivity.this, TransportationActivity.class);
                 startActivity(intent);
             }
@@ -229,7 +254,7 @@ public class ActivitiesActivity extends Activity {
         @Override
         public void OnImageClickListenerCustomPager(int childpostion) {
             ArrayList<ActivitiesModel> modelRow = ListViewPagerActivitiesAdapter.mActivitiesModel.get("" + groupPosition);
-            Log.i("PagerView Clicked", groupPosition + "Clicked" + childpostion + " Check " + modelRow.get(childpostion).getHotel_Id());
+            Log.i("PagerView Clicked", groupPosition + "Clicked" + childpostion + " Check " + modelRow.get(childpostion).isChecked());
         }
     }
 }

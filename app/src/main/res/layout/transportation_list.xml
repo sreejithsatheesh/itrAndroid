@@ -8,7 +8,8 @@
         android:id="@+id/transportation_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:dividerHeight="1dp"/>
+        android:dividerHeight="1dp"
+        android:layout_above="@+id/to_payment" />
 
     <Button
         android:layout_width="match_parent"

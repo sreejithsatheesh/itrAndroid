@@ -50,6 +50,7 @@ public class TransportationActivity extends ActionBarActivity {
     private LinearLayout filter_details;
     private SharedPreferences sharedpreferences;
     private SharedPreferences.Editor editor;
+    public static int lowest_trans = 0;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,26 +142,14 @@ public class TransportationActivity extends ActionBarActivity {
                     for (int i = 0; i < response.getJSONArray("payload").length(); i++) {
 
                         JSONObject jsonarr = response.getJSONArray("payload").getJSONObject(i);
-                        TransportationModel transportation_model = new TransportationModel();
-
-                        transportation_model.setId(jsonarr.getInt("Region_Id"));
-                        transportation_model.setRegion_Id(jsonarr.getInt("Region_Id"));
-                        transportation_model.setTitle(jsonarr.getString("Title"));
-                        transportation_model.setCost1(jsonarr.getInt("Cost1"));
-                        transportation_model.setKM_Limit(jsonarr.getInt("KM_Limit"));
-                        transportation_model.setPrice_Per_KM(jsonarr.getInt("Price_Per_KM"));
-                        transportation_model.setMax_Person(jsonarr.getInt("Max_Person"));
-                        transportation_model.setImage(jsonarr.getString("Image"));
-
-                        transportationList.add(transportation_model);
-
+                        String Tra_url = "http://stage.itraveller.com/backend/api/v1/b2ctransportation?transportationId=";
+                        TransportationCost(Tra_url + jsonarr.getInt("Id"),jsonarr.getString("Title"),jsonarr.getInt("Max_Person"),jsonarr.getString("Image"),i);
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                adapter.notifyDataSetChanged();
 
             }
         }, new Response.ErrorListener() {
@@ -183,6 +172,62 @@ public class TransportationActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }*/
+
+    public void TransportationCost(String TransURL, final String title, final int max_person, final String img, final int index)
+    {
+        JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,
+                TransURL, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.d("Boolean", ""+response.getBoolean("success"));
+                    Log.d("Error", ""+response.getJSONObject("error"));
+                    Log.d("Payload", ""+response.getJSONObject("payload"));
+
+                    // JSONObject jsonobj = response.getJSONObject("payload").get;
+                    // Parsing json
+                        JSONObject jsonarr = response.getJSONObject("payload");
+                        TransportationModel transportation_model = new TransportationModel();
+                        if(index == 0) {
+                        lowest_trans = Integer.parseInt(""+jsonarr.getInt("Cost"));
+                        }
+                    else {
+                            if((lowest_trans >= Integer.parseInt(""+jsonarr.getInt("Cost"))) && (Integer.parseInt(""+jsonarr.getInt("Cost")) !=0) ){
+                                lowest_trans = Integer.parseInt(""+jsonarr.getInt("Cost"));
+                            }
+                        }
+                        transportation_model.setId(jsonarr.getInt("Id"));
+                        transportation_model.setTransportation_Id(jsonarr.getInt("Transportation_Id"));
+                        transportation_model.setTitle("" + title);
+                        transportation_model.setCost(jsonarr.getInt("Cost"));
+                        transportation_model.setCost1(jsonarr.getInt("Cost1"));
+                        transportation_model.setKM_Limit(jsonarr.getInt("KM_Limit"));
+                        transportation_model.setPrice_Per_KM(jsonarr.getInt("Price_Per_KM"));
+                        transportation_model.setMax_Person(max_person);
+                        transportation_model.setImage(img);
+
+                        transportationList.add(transportation_model);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                adapter.notifyDataSetChanged();
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Volley Error", "Error: " + error.getMessage());
+                //pDialog.hide();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

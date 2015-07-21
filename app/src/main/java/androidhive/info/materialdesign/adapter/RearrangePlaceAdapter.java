@@ -98,6 +98,9 @@ public class RearrangePlaceAdapter extends BaseAdapter {
         //setListViewHeightBasedOnChildren(DragAndSort.listview);
         // title
         title.setText(m.getPlace());
+        /*if(m.getNights().toString().equalsIgnoreCase("0"))
+            days.setText("1");
+        else*/
         days.setText(m.getNights());
 
         btn_plus.setOnClickListener(new View.OnClickListener() {
@@ -113,8 +116,11 @@ public class RearrangePlaceAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int x = Integer.parseInt(days.getText().toString()) - 1;
+
+                if(x>0)
+                {
                 days.setText(""+x);
-                m.setNights(""+x);
+                m.setNights(""+x);}
             }
         });
 

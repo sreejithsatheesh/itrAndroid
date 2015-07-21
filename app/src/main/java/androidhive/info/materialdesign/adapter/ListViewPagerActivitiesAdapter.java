@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -97,6 +98,8 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
         vp[position] = (ViewPager) convertView.findViewById(R.id.list_pager);
         mViewPagerAdapter = new ViewPagerActivitiesAdapter(mActivitiesModel.get(""+position),new PagerCheckedChangeListnerCustom(position));
         vp[position].setAdapter(mViewPagerAdapter);
+        TextView txtview = (TextView) convertView.findViewById(R.id.hotel_place_name);
+        txtview.setText("Day" + (position+1));
         //vp[position].setTag(position);
         vp[position].setOnClickListener(new ViewPagerClickListner(position));
         vp[position].setOnPageChangeListener(new ViewPageChangeListner(position));
