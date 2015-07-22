@@ -120,10 +120,23 @@ public class  HotelActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Set<String> set = new HashSet<String>();
-                for(int i =0; i< HotelRoomData.length;i++)
+              /*  for(int i =0; i< HotelRoomData.length;i++)
                 {
                     Log.i("Hotel Room "+i,""+ HotelRoomData[i]);
                     set.add("" + HotelRoomData[i]);
+                }*/
+                for(int i =0; i< lowesthotelList.size();i++)
+                {
+                    String datas = ""+ HotelRoomData[i];
+                    Log.i("lowestHotelData1 " + i, "" + lowesthotelList.get(i));
+                    Log.i("HotelData1 " + i, "" + HotelRoomData[i]);
+                    //if(datas.equalsIgnoreCase("null")) {
+                        set.add("" + lowesthotelList.get(i));
+                    /*}
+                    else{
+                    set.add("" + HotelRoomData[i]);}*/
+                    Log.i("Hotel Room 123" + i, "" + set.toArray()[i]);
+
                 }
                 editor.putStringSet("HotelRooms", set);
                 editor.commit();
@@ -299,67 +312,67 @@ public class  HotelActivity extends ActionBarActivity {
 
                         JSONObject jsonarr = response.getJSONObject("payload");
                         Log.i("DefaultData",""+ jsonarr.getString("Hotel_Id") + "," + jsonarr.getString("Hotel_Room_Id") + "," + jsonarr.getString("Display_Tariff"));
-                        lowesthotelList.add(jsonarr.getString("Hotel_Id") + "," + jsonarr.getString("Hotel_Room_Id") + "," + jsonarr.getString("Display_Tariff"));
+                        lowesthotelList.add(jsonarr.getString("Hotel_Id") + "," + jsonarr.getString("Hotel_Room_Id") + "," + jsonarr.getString("Display_Tariff") +",1");
                         //roomList.add();
                     //}
+                    if(depth==(hotel_destination.length-1)){
+                        listViewPagerAdapter = new ListViewPagerAdapter(HotelActivity.this, hotelList, lowesthotelList, new pagerCheckBoxChangedListner1() {
+                            @Override
+                            public void OnCheckedChangeListenerCustomPager(int childPosition, boolean isChecked) {
+                            }
+
+                            @Override
+                            public void OnImageClickListenerCustomPager(int childpostion, final int groupPosition) {
+                                cposition = childpostion;
+                                gposition = groupPosition;
+                                second.setVisibility(View.VISIBLE);
+                                lv1.setVisibility(View.GONE);
+                                roomList = new ArrayList<HotelRoomModel>();
+                                listView = (ListView) findViewById(R.id.room_type);
+                                listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+                                final ArrayList<HotelModel> modelRow = ListViewPagerAdapter.mHotelModels.get("" + groupPosition);
+                                adapter = new HotelRoomAdapter(HotelActivity.this, roomList, new RadiobuttonListener() {
+                                    @Override
+                                    public void RadioChangeListenerCustom(String Value) {
+
+
+                                        Log.i("TestPostion",""+ Value);
+                                        Log.i("TestPostionGroup",""+groupPosition);
+                                        lowesthotelList.set(groupPosition,""+Value);
+                                        HotelRoomData[gposition] = Value;
+                                        final ArrayList<HotelModel> modelRow = ListViewPagerAdapter.mHotelModels.get("" + gposition);
+                                        for(int index =0 ; index<modelRow.size();index++) {
+                                            if(index==cposition) {
+                                                modelRow.get(cposition).setChecked(true);
+                                            }
+                                            else {
+                                                modelRow.get(index).setChecked(false);
+                                            }
+                                        }
+                                        ListViewPagerAdapter.mViewPagerAdapter.notifyDataSetChanged();
+                                    }
+
+                                });
+                                listView.setAdapter(adapter);
+                                //ArrayList<HotelModel> modelRow = ListViewPagerAdapter.mHotelModels.get("" + groupPosition);
+                                //modelRow.get(childpostion).
+                                Log.i("PagerView Clicked", groupPosition + "Clicked" + childpostion + " Check " + modelRow.get(childpostion).getHotel_Name());
+                                String url = "http://stage.itraveller.com/backend/api/v1/hotelRoom?regionId=7&hotelIds=["+ modelRow.get(childpostion).getHotel_Id() +"]&checkInDate=" + destination_date[groupPosition];
+                                Log.i("URLForRooms", "" + groupPosition + " Url :" +url);
+                                hotelRooms(url,destination_date[groupPosition] );
+                                check_bit=1;
+                            }
+                        });
+
+
+                        // listViewPagerAdapter.add(null);
+                        lv1.setAdapter(listViewPagerAdapter);
+
+                    }
                 } catch (JSONException e) {
                     Log.d("Error Catched", "" + e.getMessage());
                 }
 
-if(depth==(hotel_destination.length-1)){
-    listViewPagerAdapter = new ListViewPagerAdapter(HotelActivity.this, hotelList, lowesthotelList, new pagerCheckBoxChangedListner1() {
-        @Override
-        public void OnCheckedChangeListenerCustomPager(int childPosition, boolean isChecked) {
-        }
-
-        @Override
-        public void OnImageClickListenerCustomPager(int childpostion, final int groupPosition) {
-            cposition = childpostion;
-            gposition = groupPosition;
-            second.setVisibility(View.VISIBLE);
-            lv1.setVisibility(View.GONE);
-            roomList = new ArrayList<HotelRoomModel>();
-            listView = (ListView) findViewById(R.id.room_type);
-            listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            final ArrayList<HotelModel> modelRow = ListViewPagerAdapter.mHotelModels.get("" + groupPosition);
-            adapter = new HotelRoomAdapter(HotelActivity.this, roomList, new RadiobuttonListener() {
-                @Override
-                public void RadioChangeListenerCustom(String Value) {
-
-
-                    Log.i("TestPostion",""+ Value);
-                    Log.i("TestPostionGroup",""+groupPosition);
-                    lowesthotelList.set(groupPosition,""+Value);
-                    HotelRoomData[gposition] = Value;
-                    final ArrayList<HotelModel> modelRow = ListViewPagerAdapter.mHotelModels.get("" + gposition);
-                    for(int index =0 ; index<modelRow.size();index++) {
-                        if(index==cposition) {
-                            modelRow.get(cposition).setChecked(true);
-                        }
-                        else {
-                            modelRow.get(index).setChecked(false);
-                        }
-                    }
-                    ListViewPagerAdapter.mViewPagerAdapter.notifyDataSetChanged();
-                }
-
-            });
-            listView.setAdapter(adapter);
-            //ArrayList<HotelModel> modelRow = ListViewPagerAdapter.mHotelModels.get("" + groupPosition);
-            //modelRow.get(childpostion).
-            Log.i("PagerView Clicked", groupPosition + "Clicked" + childpostion + " Check " + modelRow.get(childpostion).getHotel_Name());
-            String url = "http://stage.itraveller.com/backend/api/v1/hotelRoom?regionId=7&hotelIds=["+ modelRow.get(childpostion).getHotel_Id() +"]&checkInDate=" + destination_date[groupPosition];
-            Log.i("URLForRooms", "" + groupPosition + " Url :" +url);
-            hotelRooms(url,destination_date[groupPosition] );
-            check_bit=1;
-        }
-    });
-
-
-    // listViewPagerAdapter.add(null);
-    lv1.setAdapter(listViewPagerAdapter);
-
-}
             }
         }, new Response.ErrorListener() {
 

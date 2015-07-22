@@ -91,12 +91,13 @@ public class TransportationAdapter extends BaseAdapter {
         FrameLayout frame_lay = (FrameLayout) convertView.findViewById(R.id.imgMain);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width,_screen_height/2);
         frame_lay.setLayoutParams(lp);
-
+        SharedPreferences sharedpreferences = activity.getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedpreferences.edit();
         // getting data for the row
         final TransportationModel m = TransportationItems.get(position);
 
         // thumbnail image
-        thumbNail.setImageUrl("http://stage.itraveller.com/backend/images/transportation/" + m.getImage() , imageLoader);
+        thumbNail.setImageUrl("http://stage.itraveller.com/backend/images/transfers/" + m.getImage() , imageLoader);
         //Log.i("ImageURL", "http://stage.itraveller.com/backend/images/destinations/" + m.getRegion_Name() + ".jpg");
         // title
         holder.title.setText(m.getTitle());
@@ -112,8 +113,7 @@ public class TransportationAdapter extends BaseAdapter {
                     mSelectedRB.setChecked(false);
                 }
 
-                SharedPreferences sharedpreferences = activity.getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
-                final SharedPreferences.Editor editor = sharedpreferences.edit();
+
                 editor.putString("TransportationCost",""+ m.getCost());
                 editor.commit();
 
@@ -141,6 +141,8 @@ public class TransportationAdapter extends BaseAdapter {
         }
         if(m.getCost()== TransportationActivity.lowest_trans)
         {
+            editor.putString("TransportationCost",""+ m.getCost());
+            editor.commit();
             holder.radioButton.setChecked(true);
              mSelectedRB = holder.radioButton;
         }

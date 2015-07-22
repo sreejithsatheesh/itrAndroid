@@ -87,7 +87,7 @@ public class HotelRoomAdapter extends BaseAdapter {
         //setListViewHeightBasedOnChildren(DragAndSort.listview);
         // title
         holder.title.setText(m.getRoom_Type());
-        holder.btn_count.setText("0");
+        holder.btn_count.setText("1");
         holder.rate.setText("" + m.getDisplay_Tariff());
 
 
@@ -97,6 +97,7 @@ public class HotelRoomAdapter extends BaseAdapter {
             public void onClick(View view) {
                   int x = Integer.parseInt(finalHolder.btn_count.getText().toString()) + 1;
                   finalHolder.btn_count.setText("" + x);
+                RadioListener.RadioChangeListenerCustom(m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff()+ "," +finalHolder.btn_count.getText().toString() );
                   //m.set("" + x);
             }
         });
@@ -105,8 +106,10 @@ public class HotelRoomAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                int x = Integer.parseInt(finalHolder.btn_count.getText().toString()) - 1;
-                if(x>0)
-                finalHolder.btn_count.setText("" + x);
+                if (x > 0) {
+                    finalHolder.btn_count.setText("" + x);
+                    RadioListener.RadioChangeListenerCustom(m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff()+ "," +finalHolder.btn_count.getText().toString() );
+                }
                 //m.setNights("" + x);
             }
         });

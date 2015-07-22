@@ -1,10 +1,11 @@
 package androidhive.info.materialdesign.activity;
 
-/**
+/*
  * Created by VNK on 6/25/2015.
  */
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import androidhive.info.materialdesign.R;
@@ -52,6 +54,9 @@ public class ActivitiesActivity extends Activity {
         proceed_activity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Set<String> set = null;
+                SharedPreferences sharedpreferences = getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor = sharedpreferences.edit();
                 ActivityData = new String[ListViewPagerActivitiesAdapter.mActivitiesModel.size()];
                 for(int i = 0; i<ListViewPagerActivitiesAdapter.mActivitiesModel.size();i++)
                 {
@@ -72,9 +77,13 @@ public class ActivitiesActivity extends Activity {
                         }
 
                     }
-                    Log.i("ActivitiesData","" + ActivityData[i]);
+                    set = new HashSet<String>();
                     ActivityData[i] = ""+ Datas;
+                    set.add("" + ActivityData[i]);
+                    Log.i("ActivitiesData","" + ActivityData[i]);
                 }
+                editor.putStringSet("ActivitiesData", set);
+                editor.commit();
 
                 Intent intent = new Intent(ActivitiesActivity.this, TransportationActivity.class);
                 startActivity(intent);
@@ -106,6 +115,8 @@ public class ActivitiesActivity extends Activity {
         hotel_id_data = new String[HotelDataArray.length];
         for (int index = 0; index < HotelDataArray.length; index++) {   //Log.i("Hoteldataaaaaa",""+ HotelDataArray[index]);
             String[] hotel_room_Data = HotelDataArray[index].trim().split(",");
+
+
             hotel_id_data[index] = hotel_room_Data[index];
         }
 
@@ -134,7 +145,7 @@ public class ActivitiesActivity extends Activity {
                 Mat_Destination_ID.add(destination_id[Mat_count]);
                 Mat_count++;
             }
-            Log.i("DestinationMatcount", Mat_Destination_Count.get(index));
+            Log.i("DestinationMatcount", Mat_Destination_Hotel.get(index));
         }
 
         for (int index = 0; index < Mat_Destination_ID.size(); index++) {

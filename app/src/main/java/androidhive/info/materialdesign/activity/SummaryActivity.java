@@ -5,10 +5,12 @@ package androidhive.info.materialdesign.activity;
  */
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
@@ -26,6 +28,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Set;
+
 import androidhive.info.materialdesign.R;
 import androidhive.info.materialdesign.volley.AppController;
 
@@ -39,55 +43,62 @@ public class SummaryActivity extends Activity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.plan_your_trip_test);
+            setContentView(R.layout.payment_billing);
+            SharedPreferences prefs = getSharedPreferences("Itinerary", MODE_PRIVATE);
+            Set<String> HotelData = prefs.getStringSet("HotelRooms", null);
+            Set<String> ActivitiesData = prefs.getStringSet("ActivitiesData", null);
+            String transportation_rate = prefs.getString("TransportationCost", null);
 
-            String url ="http://stage.itraveller.com/backend/api/v1/internationalflight?travelFrom=BOM&arrivalPort=MRU&departDate=2015-07-26&returnDate=2015-08-01&adults=2&children=0&infants=0&departurePort=MRU&travelTo=BOM";
+            String[] HotelDataArray = HotelData.toArray(new String[HotelData.size()]);
+            String[] ActivitiesDataArray = ActivitiesData.toArray(new String[ActivitiesData.size()]);
 
-            JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,
-                    url, new Response.Listener<JSONObject>() {
-
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        Log.d("Boolean", "" + response.getBoolean("success"));
-                        Log.d("Error", ""+response.getJSONObject("error"));
-                        Log.d("Payload", ""+response.getJSONObject("payload"));
-
-
-                    } catch (JSONException e) {
-                        Log.d("Error Catched","" +e.getMessage());
-                    }
-
-
+            String DayCount = prefs.getString("DestinationCount", null);
+            String[] destination_day_count = DayCount.trim().split(",");
+            int rate_of_rooms =0;
+            for (int index = 0; index < HotelDataArray.length; index++) {   //Log.i("Hoteldataaaaaa",""+ HotelDataArray[index]);
+                String[] hotel_room_Data = HotelDataArray[index].trim().split(",");
+                //no fo rooms and price
+                int no_room_price = Integer.parseInt("" + hotel_room_Data[3]) * Integer.parseInt("" + hotel_room_Data[2]);
+                int room_rate = Integer.parseInt("" + destination_day_count[index]) * no_room_price;
+                if(index == 0)
+                {
+                    rate_of_rooms = room_rate;
                 }
-            }, new Response.ErrorListener() {
+                else{
+                    rate_of_rooms = rate_of_rooms + room_rate;
+                }
+                Log.i("RoomRates","" +rate_of_rooms);
+            }
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.err.println(error);
-                    // TODO Auto-generated method stub
-                    // Handle your error types accordingly.For Timeout & No connection error, you can show 'retry' button.
-                    // For AuthFailure, you can re login with user credentials.
-                    // For ClientError, 400 & 401, Errors happening on client side when sending api request.
-                    // In this case you can check how client is forming the api and debug accordingly.
-                    // For ServerError 5xx, you can do retry or handle accordingly.
-                    if( error instanceof NetworkError) {
-                    } else if( error instanceof ServerError) {
-                    } else if( error instanceof AuthFailureError) {
-                    } else if( error instanceof ParseError) {
-                    } else if( error instanceof NoConnectionError) {
-                    } else if( error instanceof TimeoutError) {
+            int activities_rate =0;
+            int count_bit= 0;
+            for (int index = 0; index < ActivitiesDataArray.length; index++) {   //Log.i("Hoteldataaaaaa",""+ HotelDataArray[index]);
+
+
+                if(!ActivitiesDataArray[index].toString().equalsIgnoreCase("null")) {
+
+                    String[] activities_Data = ActivitiesDataArray[index].trim().split(",");
+                    Log.i("ActivityData","" +activities_Data);
+                    if (count_bit == 0) {
+                        activities_rate = Integer.parseInt("" + activities_Data[1]);
+                        count_bit ++;
+                    } else {
+                        activities_rate = activities_rate + Integer.parseInt("" + activities_Data[1]);
                     }
                 }
-            }) {
-            };
-            strReq.setRetryPolicy(new DefaultRetryPolicy(10000,
-                    5,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            // Adding request to request queue
-            AppController.getInstance().addToRequestQueue(strReq);
+            }
+            Log.i("ActvitiesRates","" +activities_rate);
+            Log.i("TransportationRates","" +transportation_rate);
 
-
+            int total_price = rate_of_rooms + activities_rate + Integer.parseInt("" +transportation_rate);
+            double discount_val = 0.2;
+            Double total_discount = Double.parseDouble("" + total_price) * discount_val ;
+            TextView package_v = (TextView) findViewById(R.id.price_txt);
+            TextView total = (TextView) findViewById(R.id.total_p_txt);
+            TextView total_dis = (TextView) findViewById(R.id.booking_price_txt);
+            package_v.setText("Rs " + total_price);
+            total.setText("Rs " + total_price);
+            total_dis.setText("Rs " + total_discount);
         }
 
 
