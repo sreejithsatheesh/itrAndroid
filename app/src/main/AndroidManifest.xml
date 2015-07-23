@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="androidhive.info.materialdesign" >
+    package="androidhive.info.materialdesign">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,10 +9,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ilogo"
         android:label="@string/app_name"
-        android:theme="@style/MyMaterialTheme" >
+        android:theme="@style/MyMaterialTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,38 +20,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.RegionPlace">
+            android:name=".activity.RegionPlace"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.MainActivity" />
         </activity>
         <activity
-            android:name=".activity.HotelRoomActvity">
-        </activity>
+            android:name=".activity.HotelRoomActvity"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.SummaryActivity">
-        </activity>
+            android:name=".activity.SummaryActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.TransportationActivity">
-        </activity>
+            android:name=".activity.TransportationActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.PlanTrip">
-        </activity>
+            android:name=".activity.PlanTrip"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".dragsort.DragAndSort">
-        </activity>
+            android:name=".dragsort.DragAndSort"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.FlightActivity">
-        </activity>
+            android:name=".activity.FlightActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
-        android:name=".dragsort.AirportList">
-    </activity>
+            android:name=".dragsort.AirportList"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.ActivitiesActivity">
-        </activity>
+            android:name=".activity.ActivitiesActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.HotelActivity">
-        </activity>
+            android:name=".activity.HotelActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
