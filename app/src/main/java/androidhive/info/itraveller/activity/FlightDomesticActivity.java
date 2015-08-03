@@ -5,6 +5,7 @@ package androidhive.info.itraveller.activity;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -63,6 +65,7 @@ public class FlightDomesticActivity extends ActionBarActivity{
     private String[] Titles = { "Onward", "Return" };
     final static ArrayList<OnwardDomesticFlightModel> onward_domestic_model = new ArrayList<OnwardDomesticFlightModel>();
     final static ArrayList<ReturnDomesticFlightModel> return_domestic_model = new ArrayList<ReturnDomesticFlightModel>();
+    Button next;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +88,17 @@ public class FlightDomesticActivity extends ActionBarActivity{
             }
         });
         SharedPreferences prefs = getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
+        prefs.edit().putString("OnwardFlightPrice","0").commit();
+        prefs.edit().putString("ReturnFlightPrice", "0").commit();
         CustomLoading.LoadingScreen(FlightDomesticActivity.this, false);
+        next = (Button) findViewById(R.id.button);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(FlightDomesticActivity.this, SummaryActivity.class);
+                startActivity(in);
+            }
+        });
 
         String url ="http://stage.itraveller.com/backend/api/v1/domesticflight?" +
                 "travelFrom=" + prefs.getString("ArrivalAirport", null) +
@@ -350,7 +363,8 @@ public class FlightDomesticActivity extends ActionBarActivity{
     }
 
     public void onBackPressed() {
-        finish();
+
+        FlightDomesticActivity.this.finish();
     }
 }
 

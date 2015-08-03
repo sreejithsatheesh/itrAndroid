@@ -2,6 +2,7 @@ package androidhive.info.itraveller.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +28,14 @@ public class FlightDomesticReturnAdapter extends BaseAdapter {
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private RadioButton mSelectedRB;
     private int mSelectedPosition = -1;
+    final SharedPreferences.Editor editor;
 
 
     public FlightDomesticReturnAdapter(Activity activity, List<ReturnDomesticFlightModel> flightitems) {
         this.activity = activity;
         this.Flightitems = flightitems;
+        SharedPreferences sharedpreferences = activity.getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
     }
 
     @Override
@@ -96,8 +100,13 @@ public class FlightDomesticReturnAdapter extends BaseAdapter {
                 }
 
 
-                //editor.putString("FlightPrice",""+ m.getCost());
-                //editor.commit();
+                int flightcharge = Integer.parseInt(m.getActualBaseFare()) + Integer.parseInt(m.getTax()) + Integer.parseInt(m.getSTax()) +
+                        Integer.parseInt(m.getTCharge()) + Integer.parseInt(m.getSCharge()) + Integer.parseInt(m.getTDiscount()) +
+                        Integer.parseInt(m.getTMarkup()) + Integer.parseInt(m.getTPartnerCommission()) + Integer.parseInt(m.getTSdiscount());
+
+
+                editor.putString("ReturnFlightPrice",""+ flightcharge);
+                editor.commit();
 
                 mSelectedPosition = position;
                 mSelectedRB = (RadioButton) v;

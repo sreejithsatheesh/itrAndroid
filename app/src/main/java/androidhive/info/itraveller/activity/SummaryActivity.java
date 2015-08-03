@@ -24,7 +24,10 @@ public class SummaryActivity extends ActionBarActivity {
 /* When using Appcombat support library
    you need to extend Main Activity to ActionBarActivity.*/
 
-        private Toolbar mToolbar; // Declaring the Toolbar Object
+    private Toolbar mToolbar; // Declaring the Toolbar Object
+    String onward_flight_rate="";
+    String return_flight_rate="";
+    int flight_rate = 0;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,31 @@ public class SummaryActivity extends ActionBarActivity {
             Set<String> HotelData = prefs.getStringSet("HotelRooms", null);
             Set<String> ActivitiesData = prefs.getStringSet("ActivitiesData", null);
             String transportation_rate = prefs.getString("TransportationCost", null);
-            String flight_rate = prefs.getString("FlightPrice", null);
+
+
+            String F_bit = ""+prefs.getString("FlightBit",null);
+            int flightBit = Integer.parseInt("" + F_bit);
+            if(flightBit == 0)
+            {
+                String flight_dom = prefs.getString("FlightPrice", null);
+                if(!flight_dom.equalsIgnoreCase(""))
+                flight_rate = Integer.parseInt(flight_dom);
+            }
+            else{
+                onward_flight_rate = prefs.getString("OnwardFlightPrice", null);
+                return_flight_rate = prefs.getString("ReturnFlightPrice", null);
+
+
+                if(!((onward_flight_rate.equals("0"))&&(return_flight_rate.equals("0")))){
+                flight_rate = Integer.parseInt(onward_flight_rate) + Integer.parseInt(return_flight_rate);
+                }
+                else if(!onward_flight_rate.equals("0"))
+                    flight_rate = Integer.parseInt(onward_flight_rate);
+                else if(!return_flight_rate.equals("0"))
+                    flight_rate = Integer.parseInt(return_flight_rate);
+
+
+            }
 
             String[] HotelDataArray = HotelData.toArray(new String[HotelData.size()]);
             String[] ActivitiesDataArray = ActivitiesData.toArray(new String[ActivitiesData.size()]);
@@ -73,6 +100,7 @@ public class SummaryActivity extends ActionBarActivity {
                 Log.i("RoomRates","" +rate_of_rooms);
             }
 
+
             int activities_rate =0;
             int count_bit= 0;
             for (int index = 0; index < ActivitiesDataArray.length; index++) {   //Log.i("Hoteldataaaaaa",""+ HotelDataArray[index]);
@@ -94,13 +122,13 @@ public class SummaryActivity extends ActionBarActivity {
             Log.i("TransportationRates","" +transportation_rate);
             int total_price = 0;
 
-//            if(flight_rate.equalsIgnoreCase("null")||flight_rate.equalsIgnoreCase(""))
+            if(flight_rate == 0)
             {
                 total_price = rate_of_rooms + activities_rate + Integer.parseInt("" +transportation_rate);
             }
-           /* else{
+            else{
                  total_price = rate_of_rooms + activities_rate + Integer.parseInt("" +transportation_rate) + Integer.parseInt("" +flight_rate);
-            }*/
+            }
 
             double discount_val = 0.2;
             Double total_discount = Double.parseDouble("" + total_price) * discount_val ;
