@@ -59,11 +59,11 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Travel Data");
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        //mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +173,7 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                DialogFragment picker = new DatePickerFrom();
+                DialogFragment picker = new DatePicker();
                 picker.show(PlanTrip.this.getFragmentManager(), "datePicker");
             }
         });
@@ -216,7 +216,7 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
     }
 
 
-    @SuppressLint("ValidFragment")
+   /* @SuppressLint("ValidFragment")
     public class DatePickerFrom extends DialogFragment implements
             DatePickerDialog.OnDateSetListener {
 
@@ -247,14 +247,59 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
         }
 
         public void onDateSet(DatePicker view, int yy, int mm, int dd) {
-            Log.i ("Minimum Value",""+
-                    view.getMinDate());
             myear = yy;
             mmonth = mm;
             mday = dd;
             travelDate.setText(dd + "-" + (mm + 1) + "-" + yy);
         }
 
+    }*/
+
+    // ***************************************************************************************************//
+    // *********************************************DATE PICKER*******************************************//
+    // ***************************************************************************************************//
+
+    @SuppressLint("ValidFragment")
+    public class DatePicker extends DialogFragment implements
+            DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            final Calendar c = Calendar.getInstance();
+            myear = c.get(Calendar.YEAR);
+            mmonth = c.get(Calendar.MONTH);
+            mday = c.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog _date = new DatePickerDialog(getActivity(), this,
+                    myear, mmonth, mday) {
+                public void onDateChanged(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                    if (year < myear)
+                        updateDate(myear, mmonth, mday);
+
+                    if (monthOfYear < mmonth && year == myear)
+                        updateDate(myear, mmonth, mday);
+
+                    if (dayOfMonth < mday && year == myear
+                            && monthOfYear == mmonth)
+                        updateDate(myear, mmonth, mday);
+                }
+            };
+            final Calendar cc = Calendar.getInstance();
+            cc.get(Calendar.YEAR);
+            cc.get(Calendar.MONTH);
+            cc.get(Calendar.DAY_OF_MONTH);
+            return _date;
+        }
+
+        @Override
+        public void onDateSet(android.widget.DatePicker datePicker, int yy, int mm, int dd) {
+            myear = yy;
+            mmonth = mm;
+            mday = dd;
+            travelDate.setText(dd + "-" + (mm + 1) + "-" + yy);
+        }
     }
 
     public void onBackPressed() {

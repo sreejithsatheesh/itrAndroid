@@ -112,9 +112,9 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
         Log.i("iTraveller", "ActionBar_Height " + getActionBarHeight());
         editor.putInt("ActionBar_Height", getActionBarHeight());
         editor.commit();
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        /*getMenuInflater().inflate(R.menu.menu_main, menu);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-        getSupportActionBar().show();
+        getSupportActionBar().show();*/
         return true;
     }
 
@@ -177,7 +177,7 @@ public class MainActivity extends ActionBarActivity implements FragmentDrawer.Fr
             fragmentTransaction.commit();
 
             // set the toolbar title
-            //getSupportActionBar().setTitle(title);
+            getSupportActionBar().setTitle(title);
         }
     }
 }

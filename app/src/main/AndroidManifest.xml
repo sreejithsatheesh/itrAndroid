@@ -28,6 +28,9 @@
                 android:value="androidhive.info.itraveller.activity.MainActivity" />
         </activity>
         <activity
+            android:name="androidhive.info.itraveller.activity.TestActionBar"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="androidhive.info.itraveller.activity.HotelRoomActvity"
             android:screenOrientation="portrait"></activity>
         <activity

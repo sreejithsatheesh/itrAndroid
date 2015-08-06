@@ -3,6 +3,7 @@ package androidhive.info.itraveller.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import androidhive.info.itraveller.R;
@@ -91,6 +95,17 @@ public class FlightDomesticOnwardAdapter extends BaseAdapter {
             holder.fl_arr.setText(m.getDepartureAirportCode());
             holder.fl_dep.setText(m.getArrivalAirportCode());
             holder.fl_price.setText(m.getActualBaseFare());
+        Log.v("DepatureTime", ""+m.getDepartureDateTime());
+        String originalString = "2010-07-14 09:00:02";
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(originalString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String newString = new SimpleDateFormat("H:mm").format(date); // 9:00
+        Log.v("DepatureTime", ""+newString);
+
 
         holder.radioButton.setOnClickListener(new View.OnClickListener() {
 

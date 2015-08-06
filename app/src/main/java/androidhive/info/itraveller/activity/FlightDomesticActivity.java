@@ -60,11 +60,11 @@ public class FlightDomesticActivity extends ActionBarActivity{
 
     private Toolbar mToolbar; // Declaring the Toolbar Object
     private ViewPager pager;
-    private FlightViewPagerAdapter adapter;
+    private FlightViewPagerAdapter adapter = null;
     public SlidingTabLayout tabs;
     private String[] Titles = { "Onward", "Return" };
-    final static ArrayList<OnwardDomesticFlightModel> onward_domestic_model = new ArrayList<OnwardDomesticFlightModel>();
-    final static ArrayList<ReturnDomesticFlightModel> return_domestic_model = new ArrayList<ReturnDomesticFlightModel>();
+    ArrayList<OnwardDomesticFlightModel> onward_domestic_model = new ArrayList<OnwardDomesticFlightModel>();
+    ArrayList<ReturnDomesticFlightModel> return_domestic_model = new ArrayList<ReturnDomesticFlightModel>();
     Button next;
 
     @Override
@@ -74,13 +74,13 @@ public class FlightDomesticActivity extends ActionBarActivity{
         //String url ="http://stage.itraveller.com/backend/api/v1/domesticflight?travelFrom=BOM&arrivalPort=BLR&departDate=2015-08-05&returnDate=2015-08-08e&adults=2&children=0&infants=0&departurePort=BLR&travelTo=BOM";
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Activities");
+        getSupportActionBar().setTitle("Flight");
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        //mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +97,8 @@ public class FlightDomesticActivity extends ActionBarActivity{
             public void onClick(View view) {
                 Intent in = new Intent(FlightDomesticActivity.this, SummaryActivity.class);
                 startActivity(in);
+                finish();
+                //FlightReturnDomestic.adapter.
             }
         });
 
@@ -114,11 +116,11 @@ public class FlightDomesticActivity extends ActionBarActivity{
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new FlightViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length);
+        adapter =  new FlightViewPagerAdapter(getSupportFragmentManager(),Titles,Titles.length,onward_domestic_model,return_domestic_model);
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
-
+        adapter.notifyDataSetChanged();
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
@@ -363,8 +365,7 @@ public class FlightDomesticActivity extends ActionBarActivity{
     }
 
     public void onBackPressed() {
-
-        FlightDomesticActivity.this.finish();
+        finish();
     }
 }
 

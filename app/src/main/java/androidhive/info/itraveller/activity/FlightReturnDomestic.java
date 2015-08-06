@@ -14,6 +14,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidhive.info.itraveller.R;
 import androidhive.info.itraveller.adapter.FlightDomesticOnwardAdapter;
@@ -28,8 +29,9 @@ import androidhive.info.itraveller.model.ReturnDomesticFlightModel;
 public class FlightReturnDomestic extends Fragment {
 
 
-    public static FlightDomesticReturnAdapter adapter;
+    public static FlightDomesticReturnAdapter adapter = null;
     ListView listview;
+    List<ReturnDomesticFlightModel> return_domestic_model;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,10 +39,14 @@ public class FlightReturnDomestic extends Fragment {
 
             View rootView = inflater.inflate(R.layout.flights_domestic_list, container, false);
 
-            listview = (ListView) rootView.findViewById(R.id.flights_listview);
-            adapter = new FlightDomesticReturnAdapter(getActivity(), FlightDomesticActivity.return_domestic_model);
+            ListView listview = (ListView) rootView.findViewById(R.id.flights_listview);
+            adapter = new FlightDomesticReturnAdapter(getActivity(), return_domestic_model);
             listview.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
             return rootView;
         }
 
+    public void setOnwardModel(List<ReturnDomesticFlightModel> return_domestic_model) {
+        this.return_domestic_model = return_domestic_model;
+    }
 }

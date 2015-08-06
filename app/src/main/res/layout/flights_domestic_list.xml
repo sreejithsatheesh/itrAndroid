@@ -8,12 +8,14 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:weightSum="1"
         android:gravity="center"
-        android:id="@+id/flight_dom">
+        android:id="@+id/flight_dom"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Flight No"
             android:id="@+id/name"
             android:layout_weight="0.2" />
@@ -21,34 +23,41 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Dep Code"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Departure"
             android:id="@+id/dep"
             android:layout_weight="0.2" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Arr Code"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Arrival"
             android:id="@+id/arr"
             android:layout_weight="0.2" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Price"
             android:id="@+id/price"
             android:layout_weight="0.3" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=""
+            android:layout_weight="0.1" />
 
 
     </LinearLayout>
     <ListView
         android:layout_width="fill_parent"
-        android:layout_height="573dp"
+        android:layout_height="match_parent"
         android:id="@+id/flights_listview"
-        android:textFilterEnabled="false" />
+        android:textFilterEnabled="false"
+        android:layout_marginTop="5dp" />
 
 </LinearLayout>

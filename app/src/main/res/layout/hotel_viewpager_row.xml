@@ -31,7 +31,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Selected"
+                    android:text=""
                     android:textColor="@color/black"
                     android:background="@color/white"
                     android:id="@+id/checkBox"
@@ -44,7 +44,6 @@
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
-
                 android:orientation="vertical"
                 android:id="@+id/h">
 
@@ -69,6 +68,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Package Title"
                 android:textColor="@color/black"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:alpha=".87"
                 android:id="@+id/title" />
 
@@ -77,6 +78,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Destination"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textSize="16sp"
                 android:id="@+id/destination" />
         </LinearLayout>

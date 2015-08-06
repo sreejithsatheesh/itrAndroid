@@ -7,22 +7,32 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidhive.info.itraveller.activity.FlightOnwardDomestic;
 import androidhive.info.itraveller.activity.FlightReturnDomestic;
+import androidhive.info.itraveller.model.OnwardDomesticFlightModel;
+import androidhive.info.itraveller.model.ReturnDomesticFlightModel;
 
 public class FlightViewPagerAdapter extends FragmentStatePagerAdapter {
 
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
     int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
-
+    FragmentManager fm;
+    FlightOnwardDomestic flight_onward;
+    FlightReturnDomestic flight_return;
+    List<OnwardDomesticFlightModel> onward_domestic_model;
+    List<ReturnDomesticFlightModel> return_domestic_model;
 
     // Build a Constructor and assign the passed Values to appropriate values in the class
-    public FlightViewPagerAdapter(FragmentManager fm,CharSequence mTitles[], int mNumbOfTabsumb) {
+    public FlightViewPagerAdapter(FragmentManager fm,CharSequence mTitles[], int mNumbOfTabsumb, List<OnwardDomesticFlightModel> onward_domestic_model, List<ReturnDomesticFlightModel> return_domestic_model) {
         super(fm);
-
+        this.fm = fm;
         this.Titles = mTitles;
         this.NumbOfTabs = mNumbOfTabsumb;
-
+        this.onward_domestic_model = onward_domestic_model;
+        this.return_domestic_model = return_domestic_model;
     }
 
     //This method return the fragment for the every position in the View Pager
@@ -30,12 +40,16 @@ public class FlightViewPagerAdapter extends FragmentStatePagerAdapter {
 
         if(position == 0) // if the position is 0 we are returning the First tab
         {
-            FlightOnwardDomestic flight_onward = new FlightOnwardDomestic();
+            flight_onward = new FlightOnwardDomestic();
+            flight_onward.setOnwardModel(onward_domestic_model);
+            //fm.beginTransaction().remove(flight_return).commit();
             return flight_onward;
         }
         else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
-            FlightReturnDomestic flight_return = new FlightReturnDomestic();
+            flight_return = new FlightReturnDomestic();
+            flight_return.setOnwardModel(return_domestic_model);
+            //afm.beginTransaction().remove(flight_onward).commit();
             return flight_return;
         }
 

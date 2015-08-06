@@ -23,6 +23,18 @@
             android:layout_gravity="bottom">
 
             <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:layout_alignParentRight="true"
+                android:id="@+id/checkbackground"
+                android:layout_alignParentEnd="true">
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -37,19 +49,6 @@
                     android:checked="false"
                     android:layout_gravity="right"
                     android:layout_marginRight="7dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:alpha=".7"
-                android:background="@android:color/black"
-                android:orientation="vertical"
-                android:layout_alignParentRight="true"
-                android:id="@+id/checkbackground"
-                android:layout_alignParentEnd="true">
-
             </LinearLayout>
 
         </RelativeLayout>
@@ -70,9 +69,15 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Package Title"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:alpha=".87"
-                android:id="@+id/title" />
+                android:id="@+id/title"
+                android:layout_toLeftOf="@+id/duration"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,6 +85,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Duration"
                 android:textSize="16sp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:id="@+id/duration"
                 android:layout_alignBottom="@+id/title"
                 android:layout_alignParentRight="true"

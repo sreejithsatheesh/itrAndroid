@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ import androidhive.info.itraveller.volley.AppController;
 public class ListViewPagerAdapter extends ArrayAdapter<String> {
     ViewPager[] vp;
     public static ViewPagerAdapter mViewPagerAdapter;
+    int swap_value = 0;
    //ViewPagerAdapter viewpageradapter;
 
   HotelActivity.pagerCheckBoxChangedListner1 ListviewChangedListener;
@@ -271,23 +273,32 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
                             hotel_model.setIFSC_Code(jsonarr.getString("IFSC_Code"));
                             hotel_model.setDate(jsonarr.getString("Date"));
                             hotel_model.setAdmin_Id(jsonarr.getString("admin_Id"));
-                            hotel_model.setChecked(false);
+
                             String[] value = defaultHotelRoom.get(index).trim().split(",");
                             if (Integer.parseInt(""+value[0]) == jsonarr.getInt("Hotel_Id")){
                                 hotel_model.setChecked(true);
+                                swap_value = i;
+                            }
+                            else{
+                                hotel_model.setChecked(false);
                             }
                         }
+                      //
                         hotelList.add(hotel_model);
 
                     }
-                   mHotelModels.put(position+"",hotelList);
+                    Collections.swap(hotelList, 0, swap_value);
+                   mHotelModels.put(position + "", hotelList);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                     VolleyLog.d("Volley Error", "Error: " + e.getMessage());
                 }
 
-                 notifyDataSetChanged();
+                HotelActivity.listViewPagerAdapter.notifyDataSetChanged();
+                mViewPagerAdapter.notifyDataSetChanged();
+
             }
         }, new Response.ErrorListener() {
 

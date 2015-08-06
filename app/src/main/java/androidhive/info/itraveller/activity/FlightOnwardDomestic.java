@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.List;
+
 import androidhive.info.itraveller.R;
 import androidhive.info.itraveller.adapter.FlightDomesticOnwardAdapter;
+import androidhive.info.itraveller.model.OnwardDomesticFlightModel;
 
 /**
  * Created by VNK on 7/28/2015.
@@ -18,8 +21,8 @@ import androidhive.info.itraveller.adapter.FlightDomesticOnwardAdapter;
 public class FlightOnwardDomestic extends Fragment {
 
 
-    public static FlightDomesticOnwardAdapter adapter;
-    ListView listview;
+    public static FlightDomesticOnwardAdapter adapter = null;
+    List<OnwardDomesticFlightModel> onward_domestic_model;
 
 
         @Override
@@ -28,11 +31,14 @@ public class FlightOnwardDomestic extends Fragment {
 
             View rootView = inflater.inflate(R.layout.flights_domestic_list, container, false);
             //CustomLoading.LoadingScreen(getActivity(), false);
-            listview = (ListView) rootView.findViewById(R.id.flights_listview);
-            adapter = new FlightDomesticOnwardAdapter(getActivity(), FlightDomesticActivity.onward_domestic_model);
+            ListView listview = (ListView) rootView.findViewById(R.id.flights_listview);
+            adapter = new FlightDomesticOnwardAdapter(getActivity(), onward_domestic_model);
             listview.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
             return rootView;
         }
 
-
+    public void setOnwardModel(List<OnwardDomesticFlightModel> onward_domestic_model) {
+        this.onward_domestic_model = onward_domestic_model;
+    }
 }

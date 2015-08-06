@@ -5,6 +5,7 @@ package androidhive.info.itraveller.activity;
  */
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -13,11 +14,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Set;
 
 import androidhive.info.itraveller.R;
+
+import static androidhive.info.itraveller.R.id.btn_confirm_payment;
 
 
 public class SummaryActivity extends ActionBarActivity {
@@ -35,13 +39,13 @@ public class SummaryActivity extends ActionBarActivity {
             setContentView(R.layout.payment_billing);
             mToolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(mToolbar);
-            getSupportActionBar().setTitle("Transportation");
+            getSupportActionBar().setTitle("Price Summary");
 
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            //getSupportActionBar().setDisplayShowHomeEnabled(true);
+            //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+            //mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -49,6 +53,14 @@ public class SummaryActivity extends ActionBarActivity {
                 }
             });
 
+            Button confirm = (Button) findViewById(R.id.btn_confirm_payment);
+            confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent in = new Intent(SummaryActivity.this, TestActionBar.class);
+                    startActivity(in);
+                }
+            });
             SharedPreferences prefs = getSharedPreferences("Itinerary", MODE_PRIVATE);
             Set<String> HotelData = prefs.getStringSet("HotelRooms", null);
             Set<String> ActivitiesData = prefs.getStringSet("ActivitiesData", null);
@@ -110,11 +122,15 @@ public class SummaryActivity extends ActionBarActivity {
 
                     String[] activities_Data = ActivitiesDataArray[index].trim().split(",");
                     Log.i("ActivityData","" +activities_Data);
+                    try{
                     if (count_bit == 0) {
                         activities_rate = Integer.parseInt("" + activities_Data[1]);
                         count_bit ++;
                     } else {
                         activities_rate = activities_rate + Integer.parseInt("" + activities_Data[1]);
+                    }}
+                    catch(Exception e){
+
                     }
                 }
             }

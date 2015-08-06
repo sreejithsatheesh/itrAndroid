@@ -90,8 +90,8 @@ public class FlightAdapter extends BaseAdapter {
             TextView departure = new TextView(convertView.getContext());
             TextView price = new TextView(convertView.getContext());
             flight.setText(""+Flightitems.get(position).getOnward_model().get(i).getFlightNumber());
-            arrival.setText(""+Flightitems.get(position).getOnward_model().get(i).getArrivalAirportName());
-            departure.setText(""+Flightitems.get(position).getOnward_model().get(i).getDepartureAirportName());
+            arrival.setText(""+Flightitems.get(position).getOnward_model().get(i).getDepartureAirportName());
+            departure.setText(""+Flightitems.get(position).getOnward_model().get(i).getArrivalAirportName());
             price.setText(""+Flightitems.get(position).getActualBaseFare());
 
             row.addView(flight);
@@ -114,8 +114,8 @@ public class FlightAdapter extends BaseAdapter {
             TextView r_departure = new TextView(convertView.getContext());
             TextView r_price = new TextView(convertView.getContext());
             r_flight.setText(""+Flightitems.get(position).getReturn_model().get(i).getFlightNumber());
-            r_arrival.setText(""+Flightitems.get(position).getReturn_model().get(i).getArrivalAirportName());
-            r_departure.setText(""+Flightitems.get(position).getReturn_model().get(i).getDepartureAirportName());
+            r_arrival.setText(""+Flightitems.get(position).getReturn_model().get(i).getDepartureAirportName());
+            r_departure.setText(""+Flightitems.get(position).getReturn_model().get(i).getArrivalAirportName());
             r_price.setText(""+Flightitems.get(position).getActualBaseFare());
 
             r_row.addView(r_flight);

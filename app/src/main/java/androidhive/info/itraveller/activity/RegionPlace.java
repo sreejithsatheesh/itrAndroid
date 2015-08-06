@@ -13,8 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,11 +69,11 @@ public class RegionPlace extends ActionBarActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        //mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,30 +85,33 @@ public class RegionPlace extends ActionBarActivity {
         final TextView maxval = (TextView) findViewById(R.id.maxvalue);
         filter_details = (LinearLayout) findViewById(R.id.filterdetails);
         final TextView day_night = (TextView) findViewById(R.id.day_night);
-        final Button sub_btn = (Button) findViewById(R.id.subbtn);
+        final ImageButton sub_btn = (ImageButton) findViewById(R.id.subbtn);
         sub_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(toggle > 0) {
+
+                if(toggle >  1) {
                     toggle--;
-                    if(toggle == 1)
-                    day_night.setText(toggle + " Night");
-                    else
-                        day_night.setText(toggle + " Nights");
                 }
-                else
-                    day_night.setText("Nights");
+                if(toggle == 1) {
+                    day_night.setText(toggle + " Night");
+                }
+                else {
+                    day_night.setText(toggle + " Nights");
+                }
             }
         });
-        final Button add_btn = (Button) findViewById(R.id.addbtn);
+        final ImageButton add_btn = (ImageButton) findViewById(R.id.addbtn);
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggle++;
-                if(toggle == 1)
+                if(toggle == 1) {
                     day_night.setText(toggle + " Night");
-                else
+                }
+                else {
                     day_night.setText(toggle + " Nights");
+                }
             }
         });
         final Button filter_btn = (Button) findViewById(R.id.addbtnfilter);
@@ -124,7 +129,7 @@ public class RegionPlace extends ActionBarActivity {
                 {
                     filter_details.setVisibility(View.GONE);
                     filter_btn.setText("Filter");
-                    adapter.getFilter().filter(minval.getText().toString() + "," + maxval.getText().toString() + "," + toggle);
+                    adapter.getFilter().filter(minval.getText().toString() + "," + maxval.getText().toString() + "," + (toggle+1));
                 }
             }
         });
@@ -165,7 +170,7 @@ public class RegionPlace extends ActionBarActivity {
         //Print
         System.out.println("RegionID: " + bundle.getInt("RegionID"));
         url= url + bundle.getInt("RegionID");
-        getSupportActionBar().setTitle(bundle.getString("RegionName"));
+        getSupportActionBar().setTitle(bundle.getString("RegionName") + " Packages");
 
       // mToolbar = (Toolbar) findViewById(R.id.toolbar);
     //   setSupportActionBar(mToolbar);

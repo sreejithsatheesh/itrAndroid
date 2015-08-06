@@ -44,16 +44,16 @@ import java.util.Set;
 
 import androidhive.info.itraveller.R;
 import androidhive.info.itraveller.adapter.HotelRoomAdapter;
+import androidhive.info.itraveller.adapter.ListViewPagerActivitiesAdapter;
 import androidhive.info.itraveller.adapter.ListViewPagerAdapter;
 import androidhive.info.itraveller.model.HotelModel;
 import androidhive.info.itraveller.model.HotelRoomModel;
 import androidhive.info.itraveller.volley.AppController;
 
-
 public class  HotelActivity extends ActionBarActivity {
 
     // Declare Variable
-    ListViewPagerAdapter listViewPagerAdapter;
+    public static ListViewPagerAdapter listViewPagerAdapter;
     int ListItemPostion;
     int heightHotelList = 5;
     Toolbar mToolbar;
@@ -85,10 +85,10 @@ public class  HotelActivity extends ActionBarActivity {
 
         getSupportActionBar().setTitle("Hotels");
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        //mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,7 +243,6 @@ public class  HotelActivity extends ActionBarActivity {
                 // In this case you can check how client is forming the api and debug accordingly.
                 // For ServerError 5xx, you can do retry or handle accordingly.
                 if( error instanceof NetworkError) {
-
 
                     Toast.makeText(HotelActivity.this, "No Internet Connection", Toast.LENGTH_LONG).show();
                 } else if( error instanceof ServerError) {
