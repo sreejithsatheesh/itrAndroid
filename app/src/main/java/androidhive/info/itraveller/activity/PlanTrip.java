@@ -144,12 +144,12 @@ public class PlanTrip extends ActionBarActivity implements OnClickListener {
 
                 }
 
-                Log.i("StartDate", "Date :" + Utility.addDays(travelDate.getText().toString(), duration - 1,"dd-MM-yyyy", "yyyy-MM-dd"));
+                //Log.i("StartDate", "Date :" + Utility.addDays(travelDate.getText().toString(), duration - 1,"dd-MM-yyyy", "yyyy-MM-dd"));
                 Log.i("StartDate", "Date :" + Utility.addDays(travelDate.getText().toString(), 0,"dd-MM-yyyy", "dd-MM-yyyy"));
 
                 editor.putString("DefaultDate", "" + Utility.addDays(travelDate.getText().toString(), 0,"dd-MM-yyyy", "dd-MM-yyyy"));
                 editor.putString("TravelDate", "" + Utility.addDays(travelDate.getText().toString(), 0, "dd-MM-yyyy","yyyy-MM-dd"));
-                editor.putString("EndDate", Utility.addDays(travelDate.getText().toString(), duration - 1,"dd-MM-yyyy","yyyy-MM-dd"));
+                //editor.putString("EndDate", Utility.addDays(travelDate.getText().toString(), duration - 1,"dd-MM-yyyy","yyyy-MM-dd"));
 
                 editor.commit();
 

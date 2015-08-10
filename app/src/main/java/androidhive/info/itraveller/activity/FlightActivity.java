@@ -92,6 +92,8 @@ public class FlightActivity extends ActionBarActivity {
                     "&departurePort=" + prefs.getString("TravelTo", null) +
                     "&travelTo=" + prefs.getString("DepartureAirport", null);
 
+            Log.i("Flight URL","" + url);
+
             Log.i("Transportation_Cost","" + prefs.getString("TransportationCost", null));
 
             JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,

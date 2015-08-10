@@ -61,6 +61,7 @@ public class RegionPlace extends ActionBarActivity {
     private Button filter_btn;
     private LinearLayout filter_details;
     private Bundle bundle;
+    int min_value = 0, max_value = 0;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +91,13 @@ public class RegionPlace extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                if(toggle >  1) {
+                if(toggle >=  1) {
                     toggle--;
                 }
-                if(toggle == 1) {
+                if(toggle == 0){
+                    day_night.setText("All");
+                }
+                else if(toggle == 1) {
                     day_night.setText(toggle + " Night");
                 }
                 else {
@@ -129,7 +133,7 @@ public class RegionPlace extends ActionBarActivity {
                 {
                     filter_details.setVisibility(View.GONE);
                     filter_btn.setText("Filter");
-                    adapter.getFilter().filter(minval.getText().toString() + "," + maxval.getText().toString() + "," + (toggle+1));
+                    adapter.getFilter().filter(minval.getText().toString() + "," + maxval.getText().toString() + "," + (toggle + 1));
                 }
             }
         });
@@ -140,14 +144,16 @@ public class RegionPlace extends ActionBarActivity {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width,(_screen_height - 60));
         filter_details.setLayoutParams(lp);
         filter_details.setVisibility(View.GONE);
-        RangeSeekBar<Integer> rangeSeekBar = new RangeSeekBar<Integer>(this);
+        final RangeSeekBar<Integer> rangeSeekBar = new RangeSeekBar<Integer>(this);
         // Set the range
-        rangeSeekBar.setRangeValues(12000, 110000);
+        /*rangeSeekBar.setRangeValues(12000, 110000);
         rangeSeekBar.setSelectedMinValue(12000);
-        rangeSeekBar.setSelectedMaxValue(110000);
+        rangeSeekBar.setSelectedMaxValue(110000);*/
         rangeSeekBar.setNotifyWhileDragging(true);
         // Add to layout
         LinearLayout layout = (LinearLayout) findViewById(R.id.seekbar_placeholder);
+        LinearLayout no_data_lay = (LinearLayout) findViewById(R.id.no_data_layout);
+
         layout.addView(rangeSeekBar);
 
         rangeSeekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
@@ -197,7 +203,7 @@ public class RegionPlace extends ActionBarActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-
+                    int index =0;
                     //Log.d("Boolean", "" + response.getJSONObject("Itinerary"));
                     JSONObject resobj = response.getJSONObject("Itinerary");
                     Iterator<?> keys = resobj.keys();
@@ -221,6 +227,17 @@ public class RegionPlace extends ActionBarActivity {
                            region_adp.setItinerary_Id(jsonobj.getJSONObject("Master").getInt("Itinerary_Id"));
                            region_adp.setDuration_Day(jsonobj.getJSONObject("Master").getInt("Duration_Day"));
                            region_adp.setPrice(jsonobj.getJSONObject("Master").getInt("Price"));
+                           if(index ==0) {
+                               min_value = jsonobj.getJSONObject("Master").getInt("Price");
+                               max_value = jsonobj.getJSONObject("Master").getInt("Price");
+                               index = 1;
+                           }
+                           if( min_value >= jsonobj.getJSONObject("Master").getInt("Price") ){
+                               min_value = jsonobj.getJSONObject("Master").getInt("Price");
+                           }
+                           else if( max_value <= jsonobj.getJSONObject("Master").getInt("Price") )
+                           {max_value = jsonobj.getJSONObject("Master").getInt("Price");
+                           }
                            region_adp.setDiscount(jsonobj.getInt("Discount"));
 
 
@@ -265,6 +282,9 @@ public class RegionPlace extends ActionBarActivity {
                 }
                // pDialog.hide();
                //  region_adapter.notifyDataSetChanged();
+                rangeSeekBar.setRangeValues(min_value - 1, max_value + 1);
+                rangeSeekBar.setSelectedMinValue(min_value - 1);
+                rangeSeekBar.setSelectedMaxValue(max_value + 1);
                 adapter.notifyDataSetChanged();
                 pDialog.hide();
                 //searchText.startAnimation(animFadein);
@@ -343,6 +363,20 @@ public class RegionPlace extends ActionBarActivity {
         else
         {
             finish();
+        }
+    }
+
+    public interface noDataInterface {
+        public void DataHandler();
+    }
+
+    public class CustomNoDataHandler implements noDataInterface{
+
+        public CustomNoDataHandler(){
+        }
+        @Override
+        public void DataHandler() {
+            Log.v("Interface","CalledInMainFunction");
         }
     }
 }

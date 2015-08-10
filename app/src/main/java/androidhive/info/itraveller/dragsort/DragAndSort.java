@@ -253,6 +253,7 @@ public class DragAndSort extends ActionBarActivity
                 String Destination_Name = null;
                 String Destination_Date = null;
                 String CheckDate = null;
+                int TotalCount = 0;
                 SharedPreferences prefsData = getSharedPreferences("Itinerary", MODE_PRIVATE);
 
                 for(int i = 0; i< rearrangeList.size();i++) {
@@ -261,6 +262,7 @@ public class DragAndSort extends ActionBarActivity
                     if(i==0) {
                         Destination_Value = "" + rearrangeList.get(i).getPlaceID();
                         Destination_Count = "" + rearrangeList.get(i).getNights();
+                        TotalCount = Integer.parseInt(Destination_Count.toString());
                         Destination_Name = "" + rearrangeList.get(i).getPlace();
                         CheckDate = Utility.addDays(prefsData.getString("DefaultDate", null).toString(), 0,"dd-MM-yyyy","yyyy-MM-dd");
                         Destination_Date = "" + CheckDate ;
@@ -270,6 +272,7 @@ public class DragAndSort extends ActionBarActivity
                         String Date_ = Utility.addDays(CheckDate,0,"yyyy-MM-dd","dd-MM-yyyy");
                         CheckDate  = Utility.addDays(Date_, Integer.parseInt(rearrangeList.get(i-1).getNights()),"dd-MM-yyyy","yyyy-MM-dd");
                         Destination_Date = Destination_Date + "," + CheckDate ;
+                        TotalCount = TotalCount + Integer.parseInt(rearrangeList.get(i).getNights());
                         Destination_Value = Destination_Value + "," + rearrangeList.get(i).getPlaceID();
                         Destination_Count = Destination_Count + "," + rearrangeList.get(i).getNights();
                         Destination_Name = Destination_Name + "," + rearrangeList.get(i).getPlace();
@@ -284,6 +287,8 @@ public class DragAndSort extends ActionBarActivity
                 editor.putString("DestinationCount", Destination_Count);
                 editor.putString("DestinationName", Destination_Name);
                 editor.putString("DestinationDate", Destination_Date);
+                editor.putString("EndDate", Utility.addDays(sharedpreferences.getString("TravelDate", null), TotalCount , "yyyy-MM-dd", "yyyy-MM-dd"));
+                Log.i("EndDate", "" + Utility.addDays(sharedpreferences.getString("TravelDate", null), TotalCount , "yyyy-MM-dd", "yyyy-MM-dd"));
                 editor.putString("ArrivalAirport",""+travelfrom);
                 editor.putString("DepartureAirport",""+travelto);
                 editor.putString("ArrivalPort",""+arrival_id);

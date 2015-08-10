@@ -24,8 +24,10 @@ import java.util.List;
 
 import androidhive.info.itraveller.R;
 import androidhive.info.itraveller.activity.PlanTrip;
+import androidhive.info.itraveller.activity.RegionPlace;
 import androidhive.info.itraveller.model.RegionPlaceModel;
 import androidhive.info.itraveller.volley.AppController;
+
 
 /**
  * Created by VNK on 6/10/2015.
@@ -133,10 +135,10 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
         return new Filter(){
 
             // ContactSetGet is your gettersetter class
+            //RegionPlace.noDataInterface custom_data_handler;
 
             @Override
             protected FilterResults performFiltering(CharSequence prefix) {
-                // TODO Auto-generated method stub
                 FilterResults results = new FilterResults();
                 String value = prefix.toString();
                 String[] parts = value.split(",");
@@ -158,17 +160,17 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
                                 Log.i("Days","Test");
                                 i.add(si);
                             }
-                       }
+                        }
                     }
                     results.values = i;
                     results.count = i.size();
                 }
-              //  else{
-                    //synchronized (mylstcont){
-                      //  results.values = mycontnamesetget;
-                        //results.count = mycontnamesetget.size();
-                  //  }
-               // }
+                //  else{
+                //synchronized (mylstcont){
+                //  results.values = mycontnamesetget;
+                //results.count = mycontnamesetget.size();
+                //  }
+                // }
                 return results;
             }
 
@@ -180,6 +182,9 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
                 Log.i("Price","."+results.values);
                 Places = (ArrayList<RegionPlaceModel>) results.values;
                 RegionPlaceAdapter.this.notifyDataSetChanged();
+               // RegionPlace.customNoDataHandler obj = new RegionPlace.;
+                //obj.DataHandler();
+
                // Places = PlacesFilter;
             }
         };
