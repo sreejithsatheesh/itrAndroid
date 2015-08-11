@@ -229,4 +229,5 @@ public class NetworkImageView extends ImageView {
         super.drawableStateChanged();
         invalidate();
     }
+    
 }

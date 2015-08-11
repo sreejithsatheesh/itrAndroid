@@ -76,6 +76,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Package Title"
                 android:textColor="@color/black"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:alpha=".87"
                 android:id="@+id/title" />
 
@@ -84,6 +86,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Destination"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textSize="16sp"
                 android:id="@+id/destination" />
         </LinearLayout>

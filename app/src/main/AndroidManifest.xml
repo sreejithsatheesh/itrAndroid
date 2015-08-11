@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="androidhive.info.materialdesign" >
+    package="androidhive.info.itraveller">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".volley.AppController"
+        android:name="androidhive.info.itraveller.volley.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ilogo"
         android:label="@string/app_name"
-        android:theme="@style/MyMaterialTheme" >
+        android:theme="@style/MyMaterialTheme">
         <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/app_name" >
+            android:name="androidhive.info.itraveller.activity.MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,14 +21,45 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.RegionPlace">
+            android:name="androidhive.info.itraveller.activity.RegionPlace"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
+                android:value="androidhive.info.itraveller.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".activity.TestActionBar">
-        </activity>
+            android:name="androidhive.info.itraveller.activity.TestActionBar"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="androidhive.info.itraveller.activity.HotelRoomActvity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="androidhive.info.itraveller.activity.FlightDomesticActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="androidhive.info.itraveller.activity.SummaryActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="androidhive.info.itraveller.activity.TransportationActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="androidhive.info.itraveller.activity.PlanTrip"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="androidhive.info.itraveller.dragsort.DragAndSort"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="androidhive.info.itraveller.activity.FlightActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="androidhive.info.itraveller.dragsort.AirportList"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="androidhive.info.itraveller.activity.ActivitiesActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="androidhive.info.itraveller.activity.HotelActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

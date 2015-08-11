@@ -1,1 +1,1 @@
-include ':app', ':app1', ':rangeseekbar'
+include ':app', ':app1', ':rangeseekbar', ':dragsortlistview'

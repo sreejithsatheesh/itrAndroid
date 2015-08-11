@@ -92,5 +92,6 @@
     <orderEntry type="library" exported="" name="recyclerview-v7-21.0.3" level="project" />
     <orderEntry type="module" module-name="rangeseekbar" exported="" />
     <orderEntry type="module" module-name="app1" exported="" />
+    <orderEntry type="module" module-name="dragsortlistview" exported="" />
   </component>
 </module>
