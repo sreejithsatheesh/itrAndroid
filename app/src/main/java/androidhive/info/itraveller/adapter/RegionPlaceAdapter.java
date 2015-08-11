@@ -40,12 +40,15 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
         public static final String MY_PREFS = "ScreenHeight";
         private  int _screen_height;
         private ArrayList<RegionPlaceModel> arraylist;
-        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    RegionPlace.CustomNoDataHandler custom_data_handler;
 
-        public RegionPlaceAdapter(Activity activity, List Places) {
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
+        public RegionPlaceAdapter(Activity activity, List Places, RegionPlace.CustomNoDataHandler customNoDataHandler) {
             this.activity = activity;
             this.Places = Places;
             this.PlacesFilter = Places;
+            this.custom_data_handler = customNoDataHandler;
         }
 
         @Override
@@ -129,13 +132,11 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
             return convertView;
         }
 
-    @Override
     public Filter getFilter() {
         // TODO Auto-generated method stub
         return new Filter(){
 
             // ContactSetGet is your gettersetter class
-            //RegionPlace.noDataInterface custom_data_handler;
 
             @Override
             protected FilterResults performFiltering(CharSequence prefix) {
@@ -152,7 +153,7 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
                         //String number
                         if((si.getPrice()>= Integer.parseInt(parts[0]))&&(si.getPrice()<=Integer.parseInt(parts[1]))){
                             Log.i("Days"," "+si.getDuration_Day()+" Days" + Integer.parseInt(parts[2]));
-                            if((si.getDuration_Day() == Integer.parseInt(parts[2]))&& (si.getDuration_Day() != 0)) {
+                            if(((si.getDuration_Day() - 1) == Integer.parseInt(parts[2]))&& ((si.getDuration_Day() - 1) != 0)) {
                                 i.add(si);
                                 Log.i("Days 123", " " + si.getDuration_Day() + " Days" + Integer.parseInt(parts[2]));
                             }
@@ -182,9 +183,7 @@ public class RegionPlaceAdapter extends BaseAdapter implements Filterable{
                 Log.i("Price","."+results.values);
                 Places = (ArrayList<RegionPlaceModel>) results.values;
                 RegionPlaceAdapter.this.notifyDataSetChanged();
-               // RegionPlace.customNoDataHandler obj = new RegionPlace.;
-                //obj.DataHandler();
-
+                custom_data_handler.DataHandler(results.count);
                // Places = PlacesFilter;
             }
         };

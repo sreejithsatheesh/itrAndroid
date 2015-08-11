@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +29,6 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
@@ -62,6 +60,7 @@ public class RegionPlace extends ActionBarActivity {
     private LinearLayout filter_details;
     private Bundle bundle;
     int min_value = 0, max_value = 0;
+    LinearLayout no_data_lay;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +132,7 @@ public class RegionPlace extends ActionBarActivity {
                 {
                     filter_details.setVisibility(View.GONE);
                     filter_btn.setText("Filter");
-                    adapter.getFilter().filter(minval.getText().toString() + "," + maxval.getText().toString() + "," + (toggle + 1));
+                    adapter.getFilter().filter(minval.getText().toString() + "," + maxval.getText().toString() + "," + (toggle));
                 }
             }
         });
@@ -152,7 +151,7 @@ public class RegionPlace extends ActionBarActivity {
         rangeSeekBar.setNotifyWhileDragging(true);
         // Add to layout
         LinearLayout layout = (LinearLayout) findViewById(R.id.seekbar_placeholder);
-        LinearLayout no_data_lay = (LinearLayout) findViewById(R.id.no_data_layout);
+        no_data_lay = (LinearLayout) findViewById(R.id.no_data_layout);
 
         layout.addView(rangeSeekBar);
 
@@ -183,7 +182,7 @@ public class RegionPlace extends ActionBarActivity {
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new RegionPlaceAdapter(this, regionList);
+        adapter = new RegionPlaceAdapter(this, regionList, new CustomNoDataHandler());
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -366,17 +365,23 @@ public class RegionPlace extends ActionBarActivity {
         }
     }
 
-    public interface noDataInterface {
-        public void DataHandler();
+    public interface NoDataInterface {
+        public void DataHandler(int count);
     }
 
-    public class CustomNoDataHandler implements noDataInterface{
+    public class CustomNoDataHandler implements NoDataInterface{
 
-        public CustomNoDataHandler(){
+        public CustomNoDataHandler() {
         }
+
         @Override
-        public void DataHandler() {
-            Log.v("Interface","CalledInMainFunction");
+        public void DataHandler(int count) {
+
+            Log.v("Interface","CalledInMainFunction" +count);
+            if(count == 0)
+            no_data_lay.setVisibility(View.VISIBLE);
+            else
+                no_data_lay.setVisibility(View.INVISIBLE);
         }
     }
 }
