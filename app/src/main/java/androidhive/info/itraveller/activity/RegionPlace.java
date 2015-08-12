@@ -281,6 +281,9 @@ public class RegionPlace extends ActionBarActivity {
                 }
                // pDialog.hide();
                //  region_adapter.notifyDataSetChanged();
+                // Update UI elements
+                minval.setText(""+ (min_value - 1));
+                maxval.setText(""+ (max_value + 1));
                 rangeSeekBar.setRangeValues(min_value - 1, max_value + 1);
                 rangeSeekBar.setSelectedMinValue(min_value - 1);
                 rangeSeekBar.setSelectedMaxValue(max_value + 1);

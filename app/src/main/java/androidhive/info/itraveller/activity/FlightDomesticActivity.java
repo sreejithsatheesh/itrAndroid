@@ -112,7 +112,7 @@ public class FlightDomesticActivity extends ActionBarActivity{
                 "&infants=" + prefs.getString("Children_5_2", "0") +
                 "&departurePort=" + prefs.getString("TravelTo", null) +
                 "&travelTo=" + prefs.getString("DepartureAirport", null);
-
+        Log.i("Domestic URL",""+url);
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
@@ -215,8 +215,8 @@ public class FlightDomesticActivity extends ActionBarActivity{
                             monward.setAirEquipType(""+getCharacterDataFromElement((Element) name.item(0)));
                             NodeList name1 = element.getElementsByTagName("ArrivalAirportCode");
                             monward.setArrivalAirportCode(""+getCharacterDataFromElement((Element) name1.item(0)));
-                                /*NodeList name2 = element.getElementsByTagName("ArrivalAirportName");
-                                monward.setArrivalAirportName(""+getCharacterDataFromElement((Element) name2.item(0)));*/
+                            NodeList name2 = element.getElementsByTagName("airLineName");
+                            monward.setOperatingAirlineName("" + getCharacterDataFromElement((Element) name2.item(0)));
                             NodeList name3 = element.getElementsByTagName("ArrivalDateTime");
                             monward.setArrivalDateTime(""+getCharacterDataFromElement((Element) name3.item(0)));
                             NodeList name4 = element.getElementsByTagName("DepartureAirportCode");
@@ -284,8 +284,8 @@ public class FlightDomesticActivity extends ActionBarActivity{
                             monward.setAirEquipType("" + getCharacterDataFromElement((Element) name.item(0)));
                             NodeList name1 = element.getElementsByTagName("ArrivalAirportCode");
                             monward.setArrivalAirportCode("" + getCharacterDataFromElement((Element) name1.item(0)));
-                                /*NodeList name2 = element.getElementsByTagName("ArrivalAirportName");
-                                monward.setArrivalAirportName(""+getCharacterDataFromElement((Element) name2.item(0)));*/
+                            NodeList name2 = element.getElementsByTagName("airLineName");
+                                monward.setOperatingAirlineName(""+getCharacterDataFromElement((Element) name2.item(0)));
                             NodeList name3 = element.getElementsByTagName("ArrivalDateTime");
                             monward.setArrivalDateTime("" + getCharacterDataFromElement((Element) name3.item(0)));
                             NodeList name4 = element.getElementsByTagName("DepartureAirportCode");

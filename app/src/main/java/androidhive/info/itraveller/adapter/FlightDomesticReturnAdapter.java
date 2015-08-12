@@ -86,10 +86,15 @@ public class FlightDomesticReturnAdapter extends BaseAdapter {
 
         final ReturnDomesticFlightModel m = Flightitems.get(position);
 
-            holder.fl_name.setText(m.getFlightNumber());
-            holder.fl_arr.setText(m.getDepartureAirportCode());
-            holder.fl_dep.setText(m.getArrivalAirportCode());
-            holder.fl_price.setText(m.getActualBaseFare());
+        int Total_flight_fare = Integer.parseInt(m.getActualBaseFare()) + Integer.parseInt(m.getTax()) +
+                Integer.parseInt(m.getSTax()) + Integer.parseInt(m.getSCharge()) +
+                Integer.parseInt(m.getTDiscount()) + Integer.parseInt(m.getTPartnerCommission()) +
+                Integer.parseInt(m.getTCharge()) + Integer.parseInt(m.getTMarkup()) +
+                Integer.parseInt(m.getTSdiscount());
+        holder.fl_name.setText(m.getOperatingAirlineName() + "\n" + m.getFlightNumber());
+        holder.fl_arr.setText(m.getDepartureAirportCode() + "\n" + m.getDepartureDateTime());
+        holder.fl_dep.setText(m.getArrivalAirportCode() + "\n" + m.getArrivalDateTime());
+        holder.fl_price.setText(""+Total_flight_fare);
         holder.radioButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
