@@ -6,7 +6,7 @@ public class HotelRoomModel {
 
     private int Hotel_Room_Id, Hotel_Id, Room_Status, Rack_Rate, Default_Number, Maximum_Number, Hotel_Room_Tariff_Id, TAC, Cost, Mark_Up, Display_Tariff, Company_Id;
     private String Room_Type, Room_Description, From, To;
-    private Boolean Check;
+    private Boolean Check = false;
 
 
     public HotelRoomModel() {
