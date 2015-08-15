@@ -275,10 +275,11 @@ public class  HotelActivity extends ActionBarActivity {
                     Log.d("Boolean", "" + response.getBoolean("success"));
                     Log.d("Error", "" + response.getJSONObject("error"));
                     Log.d("Payload_RoomRate", "" + response.getJSONArray("payload"));
-
+                    int flag_bit = 0;
                     for (int i = 0; i < response.getJSONArray("payload").length(); i++) {
                         JSONObject jsonarr = response.getJSONArray("payload").getJSONObject(i);
                         HotelRoomModel hrm = new HotelRoomModel();
+                        if(flag_bit == 0){
                         for(int index = 0;index < lowesthotelList.size();index++) {
                             hrm.setHotel_Room_Id(jsonarr.getInt("Hotel_Room_Id"));
                             hrm.setHotel_Id(jsonarr.getInt("Hotel_Id"));
@@ -296,15 +297,20 @@ public class  HotelActivity extends ActionBarActivity {
                             hrm.setRoom_Description(jsonarr.getString("Room_Description"));
                             hrm.setFrom(jsonarr.getString("From"));
                             hrm.setTo(jsonarr.getString("To"));
-                            hrm.setCheck(false);
                             String[] value = lowesthotelList.get(index).trim().split(",");
-                            if(Integer.parseInt("" + value[0]) == jsonarr.getInt("Hotel_Id")) {
+                            if (Integer.parseInt("" + value[0]) == jsonarr.getInt("Hotel_Id")) {
                                 if (Integer.parseInt("" + value[1]) == jsonarr.getInt("Hotel_Room_Id")) {
                                     hrm.setCheck(true);
+                                    flag_bit = 1;
+                                }
+                                else{
+                                    //hrm.setCheck(false);
                                 }
                             }
                         }
+                        }
                         roomList.add(hrm);
+                        flag_bit =0;
                     }
                     adapter.notifyDataSetChanged();
 

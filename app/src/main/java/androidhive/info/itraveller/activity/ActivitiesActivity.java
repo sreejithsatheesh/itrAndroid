@@ -212,6 +212,7 @@ public class ActivitiesActivity extends ActionBarActivity {
         activitiesList = new ArrayList<>();
         for(int i = 0 ; i< TotalCountDays;i++)
         {
+            Log.v("Activities URL",""+"http://stage.itraveller.com/backend/api/v1/activities?fromDestination=" + Mat2_Destination.get(i) + "&toDestination=" + Mat2_Destination.get(i + 1) + "&regionIds=" + Region_id + "&day=" + Mat2_DayCount.get(i) + "&hotelId=" + Mat2_HotelID.get(i));
             activitiesList.add("http://stage.itraveller.com/backend/api/v1/activities?fromDestination=" + Mat2_Destination.get(i) + "&toDestination=" + Mat2_Destination.get(i + 1) + "&regionIds=" + Region_id + "&day=" + Mat2_DayCount.get(i) + "&hotelId=" + Mat2_HotelID.get(i));
             /*Log.i("FinaL", "" + Mat2_Destination.get(i));
             Log.i("FinaLValue", "" + Mat2_HotelID.get(i));

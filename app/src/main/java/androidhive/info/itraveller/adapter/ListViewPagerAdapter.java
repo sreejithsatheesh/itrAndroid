@@ -219,6 +219,7 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
 
     public void airportJSONForText (String url, final int position )
     {
+
         JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,
                 url, new Response.Listener<JSONObject>() {
 
@@ -232,13 +233,14 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
 
                     // JSONObject jsonobj = response.getJSONObject("payload").get;
                     // Parsing json
+                    int flag_bit = 0;
                     ArrayList hotelList=new ArrayList();
                     for (int i = 0; i < response.getJSONArray("payload").length(); i++) {
                         JSONObject jsonarr = response.getJSONArray("payload").getJSONObject(i);
 
                         HotelModel hotel_model = new HotelModel();
                         for(int index = 0;index < defaultHotelRoom.size();index++) {
-
+                            if(flag_bit  == 0) {
                             hotel_model.setHotel_Id(jsonarr.getInt("Hotel_Id"));
                             hotel_model.setRegion_Id(jsonarr.getString("Region_Id"));
                             hotel_model.setDestination_Id(jsonarr.getString("Destination_Id"));
@@ -275,20 +277,28 @@ public class ListViewPagerAdapter extends ArrayAdapter<String> {
                             hotel_model.setAdmin_Id(jsonarr.getString("admin_Id"));
 
                             String[] value = defaultHotelRoom.get(index).trim().split(",");
-                            if (Integer.parseInt(""+value[0]) == jsonarr.getInt("Hotel_Id")){
-                                hotel_model.setChecked(true);
-                                swap_value = i;
+
+                                if (Integer.parseInt("" + value[0]) == jsonarr.getInt("Hotel_Id")) {
+                                    hotel_model.setChecked(true);
+                                    swap_value = i;
+                                    flag_bit = 1;
+                                } else {
+                                    hotel_model.setChecked(false);
+                                }
                             }
-                            else{
-                                hotel_model.setChecked(false);
-                            }
+                            //hotel_model.setChecked(true);
                         }
                       //
                         hotelList.add(hotel_model);
-
+                        flag_bit =0;
                     }
                     Collections.swap(hotelList, 0, swap_value);
-                   mHotelModels.put(position + "", hotelList);
+
+                    //added on 12/08/2015
+                    //HotelActivity.listViewPagerAdapter.notifyDataSetChanged();
+                    mViewPagerAdapter.notifyDataSetChanged();
+
+                    mHotelModels.put(position + "", hotelList);
 
 
                 } catch (JSONException e) {
