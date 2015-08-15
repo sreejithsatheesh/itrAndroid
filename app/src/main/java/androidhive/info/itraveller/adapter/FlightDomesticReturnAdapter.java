@@ -3,6 +3,9 @@ package androidhive.info.itraveller.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +39,27 @@ public class FlightDomesticReturnAdapter extends BaseAdapter {
         this.Flightitems = flightitems;
         SharedPreferences sharedpreferences = activity.getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
+    }
+
+    private SpannableString spanIt(String text, String queryText) {
+        // search for query on text
+        int startIndex = text.indexOf(queryText);
+        int endIndex = startIndex + queryText.length();
+        // spannable to show the search query
+        SpannableString spanText = new SpannableString(text);
+        if (startIndex > -1) {
+            spanText.setSpan(new StyleSpan(Typeface.BOLD), 0,queryText.length() , 0);
+        }
+        return spanText;
+    }
+
+    public String getConvertedDate(String str)
+    {
+        String month[]={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+        String temp[]=str.split("-");
+        int temp_month=Integer.parseInt(temp[1]);
+        str=month[temp_month-1]+" "+temp[2]+","+temp[0];
+        return str;
     }
 
     @Override
@@ -91,10 +115,22 @@ public class FlightDomesticReturnAdapter extends BaseAdapter {
                 Integer.parseInt(m.getTDiscount()) + Integer.parseInt(m.getTPartnerCommission()) +
                 Integer.parseInt(m.getTCharge()) + Integer.parseInt(m.getTMarkup()) +
                 Integer.parseInt(m.getTSdiscount());
-        holder.fl_name.setText(m.getOperatingAirlineName() + "\n" + m.getFlightNumber());
-        holder.fl_arr.setText(m.getDepartureAirportCode() + "\n" + m.getDepartureDateTime());
-        holder.fl_dep.setText(m.getArrivalAirportCode() + "\n" + m.getArrivalDateTime());
-        holder.fl_price.setText(""+Total_flight_fare);
+
+
+        String dep_date_time=""+ m.getDepartureDateTime();
+        String dep_date[]=dep_date_time.split("T");
+        dep_date[0]=getConvertedDate(dep_date[0]);
+
+        String arr_date_time=""+m.getArrivalDateTime();
+        String arr_date[]=arr_date_time.split("T");
+        arr_date[0]=getConvertedDate(arr_date[0]);
+
+        holder.fl_name.setText(spanIt(""+m.getOperatingAirlineName() + "\n" + m.getFlightNumber(),""+m.getOperatingAirlineName()));
+        holder.fl_arr.setTextAppearance(activity,R.style.font_size_1);
+        holder.fl_arr.setText( dep_date[0]+"\n"+dep_date[1]);
+        holder.fl_dep.setTextAppearance(activity,R.style.font_size_1);
+        holder.fl_dep.setText( "\n" + arr_date[0]+"\n"+arr_date[1]);
+        holder.fl_price.setText("\u20B9"+" "+Total_flight_fare);
         holder.radioButton.setOnClickListener(new View.OnClickListener() {
 
             @Override

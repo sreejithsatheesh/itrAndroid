@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/MyMaterialTheme">
         <activity
-            android:name="androidhive.info.itraveller.activity.MainActivity"
+            android:name="androidhive.info.itraveller.activity.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.SignupActivity"/>
+
         <activity
             android:name="androidhive.info.itraveller.activity.RegionPlace"
             android:screenOrientation="portrait">
@@ -27,9 +30,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="androidhive.info.itraveller.activity.MainActivity" />
         </activity>
-        <activity
-            android:name="androidhive.info.itraveller.activity.TestActionBar"
-            android:screenOrientation="portrait"></activity>
         <activity
             android:name="androidhive.info.itraveller.activity.HotelRoomActvity"
             android:screenOrientation="portrait"></activity>
@@ -60,6 +60,22 @@
         <activity
             android:name="androidhive.info.itraveller.activity.HotelActivity"
             android:screenOrientation="portrait"></activity>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+        <meta-data android:name="com.facebook.sdk.ApplicationName"
+            android:value="@string/facebook_app_name" />
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1699899676905365"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+        <receiver android:name=".activity.HelloFacebookBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.facebook.platform.AppCallResultBroadcast" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

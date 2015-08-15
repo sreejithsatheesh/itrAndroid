@@ -38,4 +38,13 @@
         <item name="toolbarNavigationButtonStyle">@style/myToolbarNavigationButtonStyle</item>
     </style>
 
+
+    <style name="font_size">
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="font_size_1">
+        <item name="android:textSize">14dp</item>
+    </style>
+
 </resources>
