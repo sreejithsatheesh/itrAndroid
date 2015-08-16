@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:gravity="center"
-    android:id="@+id/main_flight_dom">
-
-    <LinearLayout
-        android:orientation="horizontal"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/tableLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/flight_dom"
-        android:weightSum="1"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp">
+        android:layout_height="match_parent"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="60dp">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radiobtn"
+            android:checked="false"
+            android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,8 +26,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="421"
             android:id="@+id/name"
-            android:layout_weight="0.2"
-            android:gravity="center" />
+            android:gravity="left|center" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,8 +34,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="14:54"
             android:id="@+id/dep"
-            android:layout_weight="0.2"
-            android:gravity="center" />
+            android:textSize="16dp"
+            android:gravity="left|center" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,8 +43,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="15:54"
             android:id="@+id/arr"
-            android:layout_weight="0.2"
-            android:gravity="center" />
+            android:textSize="16dp"
+            android:gravity="left|center" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,16 +52,9 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Rs 10,000"
             android:id="@+id/price"
-            android:layout_weight="0.3"
             android:gravity="center" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radiobtn"
-            android:checked="false"
-            android:layout_weight="0.1"
-            android:gravity="center" />
-    </LinearLayout>
 
-</LinearLayout>
+    </TableRow>
+</TableLayout>
+

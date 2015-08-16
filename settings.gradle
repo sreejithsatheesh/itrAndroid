@@ -1,1 +1,1 @@
-include ':app', ':app1', ':rangeseekbar', ':dragsortlistview'
+include ':app', ':app1', ':rangeseekbar', ':dragsortlistview',  ':facebook',  ':junitTests', ':tests'
