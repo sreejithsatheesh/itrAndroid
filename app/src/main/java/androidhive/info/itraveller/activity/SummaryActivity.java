@@ -57,7 +57,7 @@ public class SummaryActivity extends ActionBarActivity {
             confirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent in = new Intent(SummaryActivity.this, TestActionBar.class);
+                    Intent in = new Intent(SummaryActivity.this, ItinerarySummaryActivity.class);
                     startActivity(in);
                 }
             });

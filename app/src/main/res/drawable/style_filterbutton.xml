@@ -9,6 +9,6 @@
     <stroke
         android:width="2dip"
         android:color="#FFFFFF" />-->
-    <corners android:radius="5dp" />
+   <!-- <corners android:radius="5dp" />-->
     <solid android:color="@color/filterbtn"></solid>
 </shape>
