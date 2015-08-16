@@ -28,7 +28,7 @@ import androidhive.info.itraveller.model.ActivitiesModel;
 public class ActivitiesActivity extends ActionBarActivity {
 
     // Declare Variable
-    public static ListViewPagerActivitiesAdapter listViewPagerAdapter;
+    public ListViewPagerActivitiesAdapter listViewPagerAdapter;
     int ListItemPostion;
     int heightactivitiesList = 4;
     private ArrayList<String> activitiesList;
@@ -74,7 +74,7 @@ public class ActivitiesActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 if(Utility.isNetworkConnected(getApplicationContext())) {
-                    Set<String> set = null;
+                    Set<String> set = new HashSet<String>();
                     SharedPreferences sharedpreferences = getSharedPreferences("Itinerary", Context.MODE_PRIVATE);
                     final SharedPreferences.Editor editor = sharedpreferences.edit();
                     ActivityData = new String[ListViewPagerActivitiesAdapter.mActivitiesModel.size()];
@@ -85,16 +85,16 @@ public class ActivitiesActivity extends ActionBarActivity {
                         for (int j = 0; j < modelRow.size(); j++) {
                             if (modelRow.get(j).isChecked() == true) {
                                 if (x == 0) {
-                                    Datas = "" + modelRow.get(j).getId() + "," + modelRow.get(j).getCost();
+                                    Datas = "" + modelRow.get(j).getId() + "," + modelRow.get(j).getCost() + "," + modelRow.get(j).getTitle();
                                     x = 1;
                                 } else {
-                                    Datas = Datas + ":" + modelRow.get(j).getId() + "," + modelRow.get(j).getCost();
+                                    Datas = Datas + "-" + modelRow.get(j).getId() + "," + modelRow.get(j).getCost() + "," + modelRow.get(j).getTitle();
                                 }
                                 //Log.i("DataValue ", i + " Clicked " + j + " Check " + modelRow.get(j).isChecked());
                             }
 
                         }
-                        set = new HashSet<String>();
+
                         ActivityData[i] = "" + Datas;
                         set.add("" + ActivityData[i]);
                         Log.i("ActivitiesData", "" + ActivityData[i]);
@@ -111,6 +111,7 @@ public class ActivitiesActivity extends ActionBarActivity {
         SharedPreferences prefs = getSharedPreferences("Itinerary", MODE_PRIVATE);
         String Region_id = prefs.getString("RegionID", null);
         //Log.i("Hoteldataaaaaa","RID"+ Region_id);
+        //DestinationName
 
         String Destinations = prefs.getString("DestinationID", null);
         destination_id = Destinations.trim().split(",");
@@ -183,13 +184,13 @@ public class ActivitiesActivity extends ActionBarActivity {
         int x = 0;
         for (int index = 1; index < Mat2_Destination.size(); index++) {
             if (Mat2_Destination.get(index - 1) == Mat2_Destination.get(index)) {
-                if (x == 0) {
+               /* if (x == 0) {
                     Mat2_count = 1;
                     x = 1;
-                } else
+                } else*/
                     Mat2_count++;
             } else {
-                x = 0;
+                //x = 0;
                 Mat2_count = 1;
 
             }
@@ -210,8 +211,9 @@ public class ActivitiesActivity extends ActionBarActivity {
 
         }
         activitiesList = new ArrayList<>();
-        for(int i = 0 ; i< TotalCountDays;i++)
+        for(int i = 0 ; i< TotalCountDays +1;i++)
         {
+            Log.v("Activities URL",""+"http://stage.itraveller.com/backend/api/v1/activities?fromDestination=" + Mat2_Destination.get(i) + "&toDestination=" + Mat2_Destination.get(i + 1) + "&regionIds=" + Region_id + "&day=" + Mat2_DayCount.get(i) + "&hotelId=" + Mat2_HotelID.get(i));
             activitiesList.add("http://stage.itraveller.com/backend/api/v1/activities?fromDestination=" + Mat2_Destination.get(i) + "&toDestination=" + Mat2_Destination.get(i + 1) + "&regionIds=" + Region_id + "&day=" + Mat2_DayCount.get(i) + "&hotelId=" + Mat2_HotelID.get(i));
             /*Log.i("FinaL", "" + Mat2_Destination.get(i));
             Log.i("FinaLValue", "" + Mat2_HotelID.get(i));
@@ -260,6 +262,10 @@ public class ActivitiesActivity extends ActionBarActivity {
 
         // listViewPagerAdapter.add(null);
         lv1.setAdapter(listViewPagerAdapter);
+        //ListViewPagerActivitiesAdapter listviewactivities = new ListViewPagerActivitiesAdapter();
+        listViewPagerAdapter.SetAdapterListview(listViewPagerAdapter,activitiesList);
+        //ListViewPagerActivitiesAdapter.SetAdapterListview();
+
     }
 
     interface pagerCheckBoxChangedListner {
@@ -285,6 +291,9 @@ public class ActivitiesActivity extends ActionBarActivity {
         public void OnImageClickListenerCustomPager(int childpostion) {
             ArrayList<ActivitiesModel> modelRow = ListViewPagerActivitiesAdapter.mActivitiesModel.get("" + groupPosition);
             Log.i("PagerView Clicked", groupPosition + "Clicked" + childpostion + " Check " + modelRow.get(childpostion).isChecked());
+            //activitiesList.size();
+
+            //listViewPagerAdapter.notifyDataSetChanged();
         }
     }
 
