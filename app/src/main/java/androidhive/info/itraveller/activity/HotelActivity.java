@@ -37,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -46,6 +47,7 @@ import androidhive.info.itraveller.R;
 import androidhive.info.itraveller.adapter.HotelRoomAdapter;
 import androidhive.info.itraveller.adapter.ListViewPagerActivitiesAdapter;
 import androidhive.info.itraveller.adapter.ListViewPagerAdapter;
+import androidhive.info.itraveller.model.ActivitiesModel;
 import androidhive.info.itraveller.model.HotelModel;
 import androidhive.info.itraveller.model.HotelRoomModel;
 import androidhive.info.itraveller.volley.AppController;
@@ -132,24 +134,42 @@ public class  HotelActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Set<String> set = new HashSet<String>();
+                Set<String> set_hotel = new HashSet<String>();
+
               /*  for(int i =0; i< HotelRoomData.length;i++)
                 {
                     Log.i("Hotel Room "+i,""+ HotelRoomData[i]);
                     set.add("" + HotelRoomData[i]);
                 }*/
+                HashMap<String,ArrayList<ActivitiesModel>> mActivitiesModel = new HashMap<String, ArrayList<ActivitiesModel>>();
+
+
+
                 for(int i =0; i< lowesthotelList.size();i++)
-                {
-                    String datas = ""+ HotelRoomData[i];
+                {    String datas = ""+ HotelRoomData[i];
                     Log.i("lowestHotelData1 " + i, "" + lowesthotelList.get(i));
                     Log.i("HotelData1 " + i, "" + HotelRoomData[i]);
+                    String[] hotel_room_Data = lowesthotelList.get(i).trim().split(",");
+
+                    for(int j = 0 ;j < lowesthotelList.size(); j++) {
+                        ArrayList<HotelModel> modelRow = ListViewPagerAdapter.mHotelModels.get("" + j);
+                        for(int k = 0;k< modelRow.size();k++) {
+                            if (modelRow.get(k).getHotel_Id() == Integer.parseInt(hotel_room_Data[0])) {
+                                set_hotel.add("" + modelRow.get(k).getHotel_Name() + "," +  modelRow.get(k).getHotel_Description() + "," +  modelRow.get(k).getHotel_Id());
+                            }
+                        }
+                    }
+
                     //if(datas.equalsIgnoreCase("null")) {
                         set.add("" + lowesthotelList.get(i));
+
                     /*}
                     else{
                     set.add("" + HotelRoomData[i]);}*/
-                    Log.i("Hotel Room 123" + i, "" + set.toArray()[i]);
+                    //Log.i("Hotel Room 123" + i, "" + set.toArray()[i]);
 
                 }
+                editor.putStringSet("Hotels", set_hotel);
                 editor.putStringSet("HotelRooms", set);
                 editor.commit();
 
@@ -355,8 +375,9 @@ public class  HotelActivity extends ActionBarActivity {
                     //for (int i = 0; i < response.getJSONObject("payload").length(); i++) {
 
                         JSONObject jsonarr = response.getJSONObject("payload");
-                        Log.i("DefaultData",""+ jsonarr.getString("Hotel_Id") + "," + jsonarr.getString("Hotel_Room_Id") + "," + jsonarr.getString("Display_Tariff"));
-                        lowesthotelList.add(jsonarr.getString("Hotel_Id") + "," + jsonarr.getString("Hotel_Room_Id") + "," + jsonarr.getString("Display_Tariff") +",1");
+                        Log.i("DefaultData",""+ jsonarr.getString("Hotel_Id") + "," + jsonarr.getString("Hotel_Room_Id") + "," + jsonarr.getString("Display_Tariff") +",1");
+                    //here no of rooms add defaul
+                    lowesthotelList.add(jsonarr.getString("Hotel_Id") + "," + jsonarr.getString("Hotel_Room_Id") + "," + jsonarr.getString("Display_Tariff") +",1" );
                         //roomList.add();
                     //}
                     if(depth==(hotel_destination.length-1)){

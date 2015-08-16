@@ -35,11 +35,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidhive.info.itraveller.R;
 import androidhive.info.itraveller.activity.ActivitiesActivity;
 import androidhive.info.itraveller.model.ActivitiesModel;
+import androidhive.info.itraveller.model.ReturnDomesticFlightModel;
 import androidhive.info.itraveller.volley.AppController;
 
 
@@ -56,6 +58,8 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
     ProgressDialog pDialog;
     // ViewPager vp;
     ViewPagerActivitiesAdapter mViewPagerAdapter;
+    ListViewPagerActivitiesAdapter listViewPagerAdapter;
+    ArrayList<String> activitiesList;
 
 
     public ListViewPagerActivitiesAdapter(Context context, ArrayList<String> navigationItems) {
@@ -66,8 +70,10 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
         mActivitiesModel=new HashMap<>();
         for(int index=0;index<navigationItems.size();index++){
             mActivitiesModel.put(""+index,new ArrayList<ActivitiesModel>());
+
             Log.i("TestingRound","Test");
         }
+
         mPagerPositions= new HashMap<Integer, Integer>();
      //mViewPagerAdapter=new ViewPagerAdapter[navigationItems.size()];
        vp=new ViewPager[navigationItems.size()];
@@ -113,6 +119,7 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
         }
         vp[position] = (ViewPager) convertView.findViewById(R.id.list_pager);
         mViewPagerAdapter = new ViewPagerActivitiesAdapter(mActivitiesModel.get(""+position),new PagerCheckedChangeListnerCustom(position));
+
         vp[position].setAdapter(mViewPagerAdapter);
         TextView txtview = (TextView) convertView.findViewById(R.id.hotel_place_name);
         txtview.setText("Day" + (position+1));
@@ -123,6 +130,15 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
           //  Log.e("Pager position ", "parent " + position + "child position " + mPagerPositions.get(position));
              vp[position].setCurrentItem(mPagerPositions.get(position));
         }
+        ArrayList<ActivitiesModel> modelRow=mActivitiesModel.get("" + position);
+        if(modelRow.size() == 0){
+            vp[position].setVisibility(View.GONE);
+        }
+        else{
+            vp[position].setVisibility(View.VISIBLE);
+        }
+
+
      /*   vp[position].setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -143,7 +159,7 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
 
      if(mActivitiesModel.get(""+position).size()<1){
          Log.i("TestingRound","Testing123");
-         airportJSONForText(navigationItems.get(position), position);
+         int ref_Val = airportJSONForText(navigationItems.get(position), position);
 
 
 
@@ -219,7 +235,7 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
 //        }
 //    }
 
-    public void airportJSONForText (String url, final int position )
+    public int airportJSONForText (String url, final int position )
     {
 
         JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.GET,
@@ -261,10 +277,26 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
                             activities_model.setNot_Available_Days(jsonarr.getString("Not_Available_Days"));
                             activities_model.setDestination_Id_From(jsonarr.getString("Destination_Id_From"));
                             activities_model.setBookable(jsonarr.getString("Bookable"));
-
+                           if (response.getJSONArray("payload").length() != 0)
                             activitiesList.add(activities_model);
-                    }
+                        }
+                   // if(refresh_val != 0)
                    mActivitiesModel.put(position+"",activitiesList);
+                    ArrayList<ActivitiesModel> modelRow=mActivitiesModel.get("" + position);
+                    if(modelRow.size() == 0){
+                        vp[position].setVisibility(View.GONE);
+                    }
+                    else{
+                        vp[position].setVisibility(View.VISIBLE);
+                    }
+                    //// else {
+                        //vp[position].setVisibility(View.GONE);
+                        //listvw will crash below code used here
+                        //listViewPagerAdapter.remove(listViewPagerAdapter.getItem(position));
+                        //activitiesList.remove(position);
+                        //listViewPagerAdapter.remove(""+0);
+                        //listViewPagerAdapter.notifyDataSetChanged();
+                   // }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -273,7 +305,11 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
                 if(refresh_val!=0) {
 
                     mViewPagerAdapter.notifyDataSetChanged();
-                    ActivitiesActivity.listViewPagerAdapter.notifyDataSetChanged();
+                    listViewPagerAdapter.notifyDataSetChanged();
+                }
+                else {
+                    //listViewPagerAdapter.remove(listViewPagerAdapter.getItem(position));
+
                 }
             }
         }, new Response.ErrorListener() {
@@ -305,6 +341,12 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
                 5,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));*/
         AppController.getInstance().addToRequestQueue(strReq);
+        return refresh_val;
+    }
+
+    public void SetAdapterListview(ListViewPagerActivitiesAdapter listViewPagerAdapter, ArrayList<String> activitiesList) {
+        this.listViewPagerAdapter = listViewPagerAdapter;
+        this.activitiesList = activitiesList;
     }
 
     private class ViewPagerClickListner implements ViewPager.OnClickListener{
@@ -338,6 +380,7 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
         public void onPageSelected(int position) {
             Log.d("PAGER ", "PAGER SCROLL child POSITION " + position + "parent position " + selectPosition);
             mPagerPositions.put(selectPosition,position);
+
         }
 
         @Override
@@ -378,7 +421,7 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
         @Override
         public void OnImageClickListenerCustomPager(int childpostion) {
             ArrayList<ActivitiesModel> modelRow=mActivitiesModel.get(""+groupPosition);
-
+            listViewPagerAdapter.notifyDataSetChanged();
             //Log.i("PagerView Clicked",groupPosition+"Clicked"+childpostion+ " Check "+  modelRow.get(childpostion).getHotel_Name());
         }
     }

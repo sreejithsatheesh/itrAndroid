@@ -96,7 +96,7 @@ public class HotelRoomAdapter extends BaseAdapter {
             public void onClick(View view) {
                   int x = Integer.parseInt(finalHolder.btn_count.getText().toString()) + 1;
                   finalHolder.btn_count.setText("" + x);
-                RadioListener.RadioChangeListenerCustom(m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff()+ "," +finalHolder.btn_count.getText().toString() );
+                RadioListener.RadioChangeListenerCustom(m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff()+ "," +finalHolder.btn_count.getText().toString() + "," + m.getRoom_Type());
                   //m.set("" + x);
             }
         });
@@ -107,7 +107,7 @@ public class HotelRoomAdapter extends BaseAdapter {
                int x = Integer.parseInt(finalHolder.btn_count.getText().toString()) - 1;
                 if (x > 0) {
                     finalHolder.btn_count.setText("" + x);
-                    RadioListener.RadioChangeListenerCustom(m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff()+ "," +finalHolder.btn_count.getText().toString() );
+                    RadioListener.RadioChangeListenerCustom(m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff()+ "," +finalHolder.btn_count.getText().toString() + "," + m.getRoom_Type());
                 }
                 //m.setNights("" + x);
             }
@@ -124,7 +124,7 @@ public class HotelRoomAdapter extends BaseAdapter {
 
                 mSelectedPosition = position;
                 mSelectedRB = (RadioButton)v;
-                RadioListener.RadioChangeListenerCustom(m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff()+ "," +finalHolder.btn_count.getText().toString() );
+                RadioListener.RadioChangeListenerCustom(m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff()+ "," +finalHolder.btn_count.getText().toString() + "," + m.getRoom_Type());
                 Log.i("Room Data", m.getHotel_Id() + "," + m.getHotel_Room_Id() +"," + m.getDisplay_Tariff());
             }
         });
