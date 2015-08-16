@@ -47,21 +47,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Room Type"
+                android:text="Room Types"
                 android:id="@+id/discount_txt"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginLeft="10dp"
+                android:textColor="#ff0b0b0b"
+                android:textStyle="bold" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+"
-                android:id="@+id/button6"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
         <ListView
@@ -70,11 +64,33 @@
             android:id="@+id/room_type"
             android:layout_gravity="center_horizontal" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Meal Plans"
+                android:id="@+id/room"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:textColor="#ff040404" />
+
+        </RelativeLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="0.9" >
+            android:weightSum="0.9"
+            android:layout_below="@+id/room_type_full"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -100,33 +116,8 @@
                 android:id="@+id/checkBox7"
                 android:checked="false" />
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="center_horizontal" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Room Type"
-                android:id="@+id/room"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="10dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+"
-                android:id="@+id/btn6"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-        </RelativeLayout>
     </LinearLayout>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="40dp"
