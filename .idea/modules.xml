@@ -7,9 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/dragsortlistview/dragsortlistview.iml" filepath="$PROJECT_DIR$/dragsortlistview/dragsortlistview.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/itrAndroid.iml" filepath="$PROJECT_DIR$/itrAndroid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/junitTests/junitTests.iml" filepath="$PROJECT_DIR$/junitTests/junitTests.iml" />
       <module fileurl="file://$PROJECT_DIR$/rangeseekbar/rangeseekbar.iml" filepath="$PROJECT_DIR$/rangeseekbar/rangeseekbar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tests/tests.iml" filepath="$PROJECT_DIR$/tests/tests.iml" />
     </modules>
   </component>
 </project>

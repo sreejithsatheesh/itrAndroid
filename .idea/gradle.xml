@@ -3,10 +3,9 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="LOCAL" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.4" />
-        <option name="gradleJvm" value="1.8" />
+        <option name="gradleJvm" value="1.7" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -14,9 +13,7 @@
             <option value="$PROJECT_DIR$/app1" />
             <option value="$PROJECT_DIR$/dragsortlistview" />
             <option value="$PROJECT_DIR$/facebook" />
-            <option value="$PROJECT_DIR$/junitTests" />
             <option value="$PROJECT_DIR$/rangeseekbar" />
-            <option value="$PROJECT_DIR$/tests" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -8,8 +8,9 @@ project.group = 'com.facebook.android'
 
 dependencies {
     compile 'com.android.support:support-v4:[22,23)'
-    compile 'com.parse.bolts:bolts-android:1.2.0'
+    compile 'com.parse.bolts:bolts-android:1.1.2'
 }
+
 
 android {
     compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
@@ -18,6 +19,9 @@ android {
     defaultConfig {
         minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+    }
+    repositories {
+        jcenter()
     }
 
     lintOptions {

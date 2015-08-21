@@ -115,6 +115,13 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
            // mPagerPositions.put(position,0);
 
         }else{
+            ArrayList<ActivitiesModel> modelRow=mActivitiesModel.get("" + position);
+            if(modelRow.size() == 0){
+                vp[position].setVisibility(View.GONE);
+            }
+            else{
+                vp[position].setVisibility(View.VISIBLE);
+            }
 
         }
         vp[position] = (ViewPager) convertView.findViewById(R.id.list_pager);
@@ -129,13 +136,6 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
         if(mPagerPositions.get(position)!=null){
           //  Log.e("Pager position ", "parent " + position + "child position " + mPagerPositions.get(position));
              vp[position].setCurrentItem(mPagerPositions.get(position));
-        }
-        ArrayList<ActivitiesModel> modelRow=mActivitiesModel.get("" + position);
-        if(modelRow.size() == 0){
-            vp[position].setVisibility(View.GONE);
-        }
-        else{
-            vp[position].setVisibility(View.VISIBLE);
         }
 
 
@@ -421,7 +421,7 @@ public class ListViewPagerActivitiesAdapter extends ArrayAdapter<String> {
         @Override
         public void OnImageClickListenerCustomPager(int childpostion) {
             ArrayList<ActivitiesModel> modelRow=mActivitiesModel.get(""+groupPosition);
-            listViewPagerAdapter.notifyDataSetChanged();
+           // listViewPagerAdapter.notifyDataSetChanged();
             //Log.i("PagerView Clicked",groupPosition+"Clicked"+childpostion+ " Check "+  modelRow.get(childpostion).getHotel_Name());
         }
     }

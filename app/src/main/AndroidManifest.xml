@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/MyMaterialTheme">
         <activity
-            android:name="androidhive.info.itraveller.activity.LoginActivity"
+            android:name="androidhive.info.itraveller.activity.SplashScreenActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,8 +20,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"/>
-        <activity android:name=".activity.SignupActivity"/>
+        <activity android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait">
+            </activity>
+        <activity android:name=".activity.MainActivity"
+            android:screenOrientation="portrait">
+            </activity>
+        <activity android:name=".activity.SignupActivity"
+            android:screenOrientation="portrait">
+            </activity>
 
         <activity
             android:name="androidhive.info.itraveller.activity.RegionPlace"
@@ -39,7 +46,7 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="androidhive.info.itraveller.activity.HotelRoomActvity"
-            android:screenOrientation="portrait"></activity
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="androidhive.info.itraveller.activity.FlightDomesticActivity"
             android:screenOrientation="portrait"></activity>
